@@ -307,4 +307,23 @@ function AppContent() {
           <motion.div
             initial={{ y: 100 }}
             animate={{ y: 0 }}
-            transition={{ type: "spring
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
+            <BottomNav
+              active={currentScreen}
+              onNavigate={(screen) => handleNavigation(screen as AppScreen)}
+            />
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+}
