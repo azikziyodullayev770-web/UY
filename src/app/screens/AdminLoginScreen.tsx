@@ -1,32 +1,34 @@
 import { motion } from "motion/react";
-import { Shield, Lock, Phone, Eye, EyeOff, AlertTriangle } from "lucide-react";
+import { Shield, Lock, User, Eye, EyeOff, AlertTriangle } from "lucide-react";
 import { GlassCard } from "../components/GlassCard";
+import { useTranslation } from "../context/LanguageContext";
 import { useState } from "react";
 
 interface AdminLoginScreenProps {
-  onAdminLogin: () => void;
+  onAdminLogin: (role: "superadmin" | "admin" | "moderator") => void;
   onBackToUser: () => void;
 }
 
-// Hardcoded admin credentials
-const ADMIN_PHONE = "+998901234567";
-const ADMIN_PASSWORD = "707077";
+import { useAuth } from "../context/AuthContext";
 
 export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScreenProps) {
+  const { login } = useAuth();
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    phone: "",
+    username: "",
     password: "",
   });
 
   const handleLogin = () => {
-    const normalizedPhone = formData.phone.replace(/\s+/g, "");
-    if (normalizedPhone === ADMIN_PHONE && formData.password === ADMIN_PASSWORD) {
+    const success = login(formData.username, formData.password);
+
+    if (success) {
       setError(null);
-      onAdminLogin();
+      onAdminLogin(formData.username.toLowerCase() as any);
     } else {
-      setError("Invalid phone number or password.");
+      setError("Invalid administrative credentials.");
     }
   };
 
@@ -69,24 +71,24 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
               <Lock className="h-4 w-4 text-white" />
             </div>
           </motion.div>
-          <h1 className="mb-2 text-3xl font-bold text-white">Admin Access</h1>
+          <h1 className="mb-2 text-3xl font-bold text-white">{t("login.adminLogin")}</h1>
           <p className="text-red-400/80">System Administration Panel</p>
         </div>
 
         {/* Login Form */}
         <GlassCard className="border-white/20">
           <div className="p-6 space-y-5">
-            {/* Phone Input */}
+            {/* Username Input */}
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-medium text-white/90">
-                <Phone className="h-4 w-4 text-red-400" />
-                Phone Number
+                <User className="h-4 w-4 text-red-400" />
+                Username
               </label>
               <input
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                placeholder="+998 90 123 45 67"
+                type="text"
+                value={formData.username}
+                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                placeholder="superadmin / admin / moderator"
                 className="w-full rounded-xl border border-red-500/20 bg-black/40 px-4 py-3 text-white placeholder-white/30 outline-none transition-all focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
               />
             </div>
@@ -125,7 +127,7 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
               onClick={handleLogin}
               className="w-full rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-red-500/30 transition-all hover:shadow-red-500/50 hover:scale-[1.02]"
             >
-              Access Admin Panel
+              {t("common.confirm")}
             </button>
 
             {/* Divider */}
@@ -134,7 +136,7 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
                 <div className="w-full border-t border-white/10" />
               </div>
               <div className="relative flex justify-center text-xs">
-                <span className="bg-[#121212] px-2 text-white/40">or</span>
+                <span className="bg-[#121212] px-2 text-white/40">{t("login.or")}</span>
               </div>
             </div>
 
@@ -143,7 +145,7 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
               onClick={onBackToUser}
               className="w-full rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-medium text-white transition-all hover:bg-white/10"
             >
-              Back to User Login
+              {t("common.back")}
             </button>
           </div>
         </GlassCard>
@@ -153,7 +155,7 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
           All access attempts are logged and monitored
         </p>
         <p className="text-center text-xs text-white/25 mt-1">
-          Demo: +998901234567 / 707077
+          Demo: admin / 222222
         </p>
       </motion.div>
     </div>

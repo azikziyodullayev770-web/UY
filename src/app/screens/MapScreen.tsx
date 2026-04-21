@@ -1,12 +1,14 @@
 import { motion } from "motion/react";
-import { MapPin, SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 import { GlassCard } from "../components/GlassCard";
 
 interface MapScreenProps {
   onNavigate: (screen: string, data?: any) => void;
 }
+import { useTranslation } from "../context/LanguageContext";
 
 export function MapScreen({ onNavigate }: MapScreenProps) {
+  const { t } = useTranslation();
   const pins = [
     { id: 1, price: "$425K", x: "30%", y: "40%" },
     { id: 2, price: "$850K", x: "60%", y: "30%" },
@@ -55,7 +57,7 @@ export function MapScreen({ onNavigate }: MapScreenProps) {
         <GlassCard hover onClick={() => onNavigate("search")}>
           <button className="flex items-center gap-2 px-6 py-3">
             <SlidersHorizontal className="h-5 w-5 text-white" />
-            <span className="font-medium text-white">Filters</span>
+            <span className="font-medium text-white">{t("search.filters")}</span>
           </button>
         </GlassCard>
       </motion.div>
@@ -68,10 +70,10 @@ export function MapScreen({ onNavigate }: MapScreenProps) {
       >
         <GlassCard>
           <div className="p-4 space-y-2">
-            <p className="text-sm font-medium text-white">Map Legend</p>
+            <p className="text-sm font-medium text-white">{t("login.mapLegend")}</p>
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded-full bg-[#00D4FF]" />
-              <span className="text-xs text-white/70">Available Properties</span>
+              <span className="text-xs text-white/70">{t("login.available")}</span>
             </div>
           </div>
         </GlassCard>

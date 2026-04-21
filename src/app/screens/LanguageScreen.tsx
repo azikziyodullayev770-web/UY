@@ -1,14 +1,16 @@
 import { motion } from "motion/react";
 import { GlassCard } from "../components/GlassCard";
 import { Globe } from "lucide-react";
+import { useTranslation } from "../context/LanguageContext";
 
 interface LanguageScreenProps {
   onSelectLanguage: (lang: string) => void;
 }
 
 export function LanguageScreen({ onSelectLanguage }: LanguageScreenProps) {
+  const { t } = useTranslation();
   const languages = [
-    { code: "en", name: "English", flag: "EN" },
+    { code: "en", name: "English", flag: "🇺🇸" },
     { code: "ru", name: "Русский", flag: "🇷🇺" },
     { code: "uz", name: "O'zbek", flag: "🇺🇿" },
   ];
@@ -23,8 +25,8 @@ export function LanguageScreen({ onSelectLanguage }: LanguageScreenProps) {
       >
         <div className="text-center">
           <Globe className="mx-auto mb-4 h-16 w-16 text-[#00D4FF]" />
-          <h1 className="mb-2 text-3xl font-bold text-white">Choose Language</h1>
-          <p className="text-white/60">Select your preferred language</p>
+          <h1 className="mb-2 text-3xl font-bold text-white">{t("login.chooseLanguage")}</h1>
+          <p className="text-white/60">{t("login.selectLanguage")}</p>
         </div>
 
         <div className="space-y-4">

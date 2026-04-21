@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 // Screens
@@ -13,52 +13,46 @@ import { MapScreen } from "./screens/MapScreen";
 import { ChatScreen } from "./screens/ChatScreen";
 import { ProfileScreen } from "./screens/ProfileScreen";
 import { AddListingScreen } from "./screens/AddListingScreen";
-import { TopListingsScreen } from "./screens/TopListingsScreen";
+import { FavoritesScreen } from "./screens/FavoritesScreen";
 
 // Components
 import { BottomNav } from "./components/BottomNav";
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { PropertyProvider, Property } from "./context/PropertyContext.tsx";
 import { AdminDashboardScreen } from "./screens/AdminDashboardScreen";
 
-type AppScreen = "splash" | "language" | "login" | "adminLogin" | "adminDashboard" | "home" | "search" | "detail" | "map" | "chat" | "profile" | "add" | "top";
+import { LanguageProvider, useTranslation } from "./context/LanguageContext";
 
-type Property = {
-  id: number;
-  image: string;
-  price: string;
-  location: string;
-  rooms: number;
-  size: number;
-  isTop?: boolean;
-};
+type AppScreen = "splash" | "language" | "login" | "adminLogin" | "adminDashboard" | "home" | "search" | "detail" | "map" | "chat" | "profile" | "add" | "favorites";
 
 function AppContent() {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>("splash");
-  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [navigationHistory, setNavigationHistory] = useState<AppScreen[]>([]);
+  const [pendingAction, setPendingAction] = useState<{ screen: AppScreen; data?: Property } | null>(null);
 
-  const { isAuthenticated, role, isInitialized, login, logout } = useAuth();
-
-  useEffect(() => {
-    const hasSelectedLanguage = localStorage.getItem("language");
-    if (hasSelectedLanguage) {
-      setSelectedLanguage(hasSelectedLanguage);
-    }
-  }, []);
+  const { isAuthenticated, role, isInitialized, logout } = useAuth();
+  const { setLanguage } = useTranslation();
 
   const handleNavigation = (screen: AppScreen, data?: Property) => {
     // Prevent normal users from navigating to adminDashboard manually
-    if (screen === "adminDashboard" && role !== "admin") return;
+    const isAdmin = ["superadmin", "admin", "moderator"].includes(role || "");
+    if (screen === "adminDashboard" && !isAdmin) return;
 
-    // Use functional updater to avoid stale closure on navigationHistory
+    // INTERCEPT: Protected screens for guest users
+    const protectedScreens: AppScreen[] = ["add", "chat", "favorites"];
+    if (!isAuthenticated && protectedScreens.includes(screen)) {
+      setPendingAction({ screen, data });
+      setCurrentScreen("login");
+      return;
+    }
+
     setNavigationHistory(prev => [...prev, currentScreen]);
 
     if (data !== undefined) {
       setSelectedProperty(data);
     } else if (screen !== "detail") {
-      // Clear stale property when navigating away from detail
       setSelectedProperty(null);
     }
 
@@ -68,21 +62,24 @@ function AppContent() {
   const handleBack = () => {
     if (navigationHistory.length > 0) {
       const previousScreen = navigationHistory[navigationHistory.length - 1];
-      // Use functional updater to avoid stale closure on navigationHistory
       setNavigationHistory(prev => prev.slice(0, -1));
       setCurrentScreen(previousScreen);
     }
   };
 
   const handleLanguageSelect = (lang: string) => {
-    setSelectedLanguage(lang);
-    localStorage.setItem("language", lang);
-    setCurrentScreen("login");
+    setLanguage(lang as any);
+    setCurrentScreen("home"); 
   };
 
   const handleLogin = () => {
-    login("user");
-    setCurrentScreen("home");
+    if (pendingAction) {
+      const { screen, data } = pendingAction as any;
+      setPendingAction(null);
+      handleNavigation(screen, data);
+    } else {
+      setCurrentScreen("home");
+    }
   };
 
   const handleLogout = () => {
@@ -91,13 +88,16 @@ function AppContent() {
   };
 
   const handleSplashComplete = () => {
-    // Wait for auth hydration from localStorage before routing
     if (!isInitialized) return;
 
-    if (selectedLanguage && isAuthenticated) {
-      setCurrentScreen(role === "admin" ? "adminDashboard" : "home");
-    } else if (selectedLanguage) {
-      setCurrentScreen("login");
+    const hasLang = localStorage.getItem("language");
+    if (hasLang) {
+      const isAdmin = ["superadmin", "admin", "moderator"].includes(role || "");
+      if (isAuthenticated && isAdmin) {
+        setCurrentScreen("adminDashboard");
+      } else {
+        setCurrentScreen("home");
+      }
     } else {
       setCurrentScreen("language");
     }
@@ -107,12 +107,7 @@ function AppContent() {
     setCurrentScreen("language");
   };
 
-  const handleAdminAccess = () => {
-    setCurrentScreen("adminLogin");
-  };
-
   const handleAdminLogin = () => {
-    login("admin");
     setCurrentScreen("adminDashboard");
   };
 
@@ -120,199 +115,59 @@ function AppContent() {
     setCurrentScreen("login");
   };
 
-  // Only show bottom nav for users, not admins
-  const showBottomNav = role === "user" && ["home", "search", "map", "chat", "profile", "top"].includes(currentScreen);
+  const showBottomNav = role === "user" && ["home", "search", "map", "chat", "profile", "favorites"].includes(currentScreen);
+
+  const renderScreen = () => {
+    const fadeProps = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
+    const slideXProps = { initial: { opacity: 0, x: 100 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: -100 }, transition: { type: "spring", stiffness: 300, damping: 30 } };
+    const popSlideProps = { initial: { opacity: 0, x: 100 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: 100 }, transition: { type: "spring", stiffness: 300, damping: 30 } };
+    const slideYProps = { initial: { opacity: 0, y: 100 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: 100 }, transition: { type: "spring", stiffness: 300, damping: 30 } };
+    const scaleProps = { initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0, scale: 0.9 }, transition: { type: "spring", stiffness: 300, damping: 30 } };
+
+    const ScreenWrapper = ({ children, animation, keyName }: { children: React.ReactNode, animation: any, keyName: string }) => (
+      <motion.div key={keyName} {...animation} className="absolute inset-0">
+        {children}
+      </motion.div>
+    );
+
+    switch (currentScreen) {
+      case "splash":
+        return <ScreenWrapper keyName="splash" animation={{ initial: { opacity: 1 }, exit: { opacity: 0 } }}><SplashScreen onComplete={handleSplashComplete} /></ScreenWrapper>;
+      case "language":
+        return <ScreenWrapper keyName="language" animation={slideXProps}><LanguageScreen onSelectLanguage={handleLanguageSelect} /></ScreenWrapper>;
+      case "login":
+        return (
+          <ScreenWrapper keyName="login" animation={slideXProps}>
+            <LoginScreen onLogin={handleLogin} onSkip={() => { setPendingAction(null); handleBack(); }} />
+          </ScreenWrapper>
+        );
+      case "adminLogin":
+        return <ScreenWrapper keyName="adminLogin" animation={scaleProps}><AdminLoginScreen onAdminLogin={handleAdminLogin} onBackToUser={handleBackToUserLogin} /></ScreenWrapper>;
+      case "adminDashboard":
+        const isAdmin = ["superadmin", "admin", "moderator"].includes(role || "");
+        return isAdmin ? <ScreenWrapper keyName="adminDashboard" animation={fadeProps}><AdminDashboardScreen onLogout={handleLogout} /></ScreenWrapper> : null;
+      case "home":           return <ScreenWrapper keyName="home" animation={fadeProps}><HomeScreen onNavigate={(s, d) => handleNavigation(s as AppScreen, d as Property)} /></ScreenWrapper>;
+      case "search":         return <ScreenWrapper keyName="search" animation={fadeProps}><SearchScreen onNavigate={(s, d) => handleNavigation(s as AppScreen, d as Property)} /></ScreenWrapper>;
+      case "detail":         return selectedProperty ? <ScreenWrapper keyName="detail" animation={popSlideProps}><PropertyDetailScreen property={selectedProperty} onNavigate={(s, d) => handleNavigation(s as AppScreen, d as Property)} onBack={handleBack} /></ScreenWrapper> : null;
+      case "map":            return <ScreenWrapper keyName="map" animation={fadeProps}><MapScreen onNavigate={(s, d) => handleNavigation(s as AppScreen, d as Property)} /></ScreenWrapper>;
+      case "chat":           return <ScreenWrapper keyName="chat" animation={fadeProps}><ChatScreen onBack={handleBack} /></ScreenWrapper>;
+      case "profile":        return <ScreenWrapper keyName="profile" animation={fadeProps}><ProfileScreen onNavigate={(s, d) => handleNavigation(s as AppScreen, d as Property)} onLanguageChange={handleLanguageChange} onLogout={handleLogout} /></ScreenWrapper>;
+      case "add":            return <ScreenWrapper keyName="add" animation={slideYProps}><AddListingScreen onBack={handleBack} onSubmit={handleBack} /></ScreenWrapper>;
+      case "favorites":      return <ScreenWrapper keyName="favorites" animation={fadeProps}><FavoritesScreen onNavigate={(s, d) => handleNavigation(s as AppScreen, d as Property)} onBack={handleBack} /></ScreenWrapper>;
+      default:               return null;
+    }
+  };
 
   return (
-    <div className="fixed inset-0 flex h-full w-full items-center justify-center bg-[#121212]">
-      <div className="relative h-full w-full max-w-md overflow-hidden bg-[#121212] shadow-2xl">
+    <div className="fixed inset-0 flex h-full w-full items-center justify-center bg-background">
+      <div className="relative h-full w-full max-w-md overflow-hidden bg-background shadow-2xl">
         <AnimatePresence mode="wait">
-          {currentScreen === "splash" && (
-            <motion.div
-              key="splash"
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0"
-            >
-              <SplashScreen onComplete={handleSplashComplete} />
-            </motion.div>
-          )}
-
-          {currentScreen === "language" && (
-            <motion.div
-              key="language"
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="absolute inset-0"
-            >
-              <LanguageScreen onSelectLanguage={handleLanguageSelect} />
-            </motion.div>
-          )}
-
-          {currentScreen === "login" && (
-            <motion.div
-              key="login"
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="absolute inset-0"
-            >
-              <LoginScreen onLogin={handleLogin} onAdminAccess={handleAdminAccess} />
-            </motion.div>
-          )}
-
-          {currentScreen === "adminLogin" && (
-            <motion.div
-              key="adminLogin"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="absolute inset-0"
-            >
-              <AdminLoginScreen
-                onAdminLogin={handleAdminLogin}
-                onBackToUser={handleBackToUserLogin}
-              />
-            </motion.div>
-          )}
-          
-          {currentScreen === "adminDashboard" && role === "admin" && (
-            <motion.div
-              key="adminDashboard"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0"
-            >
-              <AdminDashboardScreen onLogout={handleLogout} />
-            </motion.div>
-          )}
-
-          {currentScreen === "home" && (
-            <motion.div
-              key="home"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0"
-            >
-              <HomeScreen onNavigate={handleNavigation} />
-            </motion.div>
-          )}
-
-          {currentScreen === "search" && (
-            <motion.div
-              key="search"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0"
-            >
-              <SearchScreen onNavigate={handleNavigation} />
-            </motion.div>
-          )}
-
-          {currentScreen === "detail" && selectedProperty && (
-            <motion.div
-              key="detail"
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 100 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="absolute inset-0"
-            >
-              <PropertyDetailScreen
-                property={selectedProperty}
-                onNavigate={handleNavigation}
-                onBack={handleBack}
-              />
-            </motion.div>
-          )}
-
-          {currentScreen === "map" && (
-            <motion.div
-              key="map"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0"
-            >
-              <MapScreen onNavigate={handleNavigation} />
-            </motion.div>
-          )}
-
-          {currentScreen === "chat" && (
-            <motion.div
-              key="chat"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0"
-            >
-              <ChatScreen onBack={handleBack} />
-            </motion.div>
-          )}
-
-          {currentScreen === "profile" && (
-            <motion.div
-              key="profile"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0"
-            >
-              <ProfileScreen
-                onNavigate={handleNavigation}
-                onLanguageChange={handleLanguageChange}
-                onLogout={handleLogout}
-              />
-            </motion.div>
-          )}
-
-          {currentScreen === "add" && (
-            <motion.div
-              key="add"
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 100 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="absolute inset-0"
-            >
-              <AddListingScreen
-                onBack={handleBack}
-                onSubmit={handleBack}
-              />
-            </motion.div>
-          )}
-
-          {currentScreen === "top" && (
-            <motion.div
-              key="top"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0"
-            >
-              <TopListingsScreen onNavigate={handleNavigation} />
-            </motion.div>
-          )}
+          {renderScreen()}
         </AnimatePresence>
 
-        {/* Bottom Navigation */}
         {showBottomNav && (
-          <motion.div
-            initial={{ y: 100 }}
-            animate={{ y: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          >
-            <BottomNav
-              active={currentScreen}
-              onNavigate={(screen) => handleNavigation(screen as AppScreen)}
-            />
+          <motion.div initial={{ y: 100 }} animate={{ y: 0 }} transition={{ type: "spring", stiffness: 300, damping: 30 }}>
+            <BottomNav active={currentScreen} onNavigate={(screen) => handleNavigation(screen as AppScreen)} />
           </motion.div>
         )}
       </div>
@@ -322,8 +177,12 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <LanguageProvider>
+      <PropertyProvider>
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
+      </PropertyProvider>
+    </LanguageProvider>
   );
 }

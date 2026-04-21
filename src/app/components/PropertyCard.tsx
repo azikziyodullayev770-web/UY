@@ -1,76 +1,138 @@
+import { Heart, MapPin, Bed, Maximize, Star } from "lucide-react";
 import { motion } from "motion/react";
-import { Heart, MapPin, Bed, Maximize } from "lucide-react";
 import { GlassCard } from "./GlassCard";
-import { Badge } from "./Badge";
 
 interface PropertyCardProps {
+  id: number;
   image: string;
   price: string;
   location: string;
   rooms?: number;
   size?: number;
-  isPremium?: boolean;
   isTop?: boolean;
-  onSave?: () => void;
+  isFavorite?: boolean;
+  onToggleFavorite?: (id: number) => void;
   onClick?: () => void;
 }
 
 export function PropertyCard({
+  id,
   image,
   price,
   location,
   rooms,
   size,
-  isPremium,
   isTop,
-  onSave,
+  isFavorite,
+  onToggleFavorite,
   onClick,
 }: PropertyCardProps) {
   return (
-    <GlassCard hover onClick={onClick} className={`overflow-hidden ${isTop ? "ring-2 ring-[#FFD700]" : ""}`}>
-      <div className="relative">
-        <img src={image} alt={location} className="h-48 w-full object-cover" />
-        {isTop && (
-          <div className="absolute top-3 left-3">
-            <Badge variant="premium">TOP</Badge>
-          </div>
-        )}
-        <button
+    <GlassCard 
+      onClick={onClick} 
+      className={`group overflow-hidden border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all hover:shadow-[0_12px_40px_rgba(34,211,238,0.15)] ${
+        isTop ? "ring-1 ring-cyan-500/50" : ""
+      }`}
+    >
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
+        <motion.img 
+          src={image} 
+          alt={location} 
+          className="h-full w-full object-cover"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.6 }}
+        />
+        
+        {/* Badges Overlay */}
+        <div className="absolute top-3 left-3 flex flex-col gap-2">
+          {isTop && (
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-600 text-black font-black text-[10px] uppercase tracking-wider shadow-lg shadow-yellow-500/20">
+              <Star className="w-3.5 h-3.5 fill-current" />
+              <span>TOP</span>
+            </div>
+          )}
+        </div>
+
+        {/* Favorite Button */}
+        <motion.button
           onClick={(e) => {
             e.stopPropagation();
-            onSave?.();
+            onToggleFavorite?.(id);
           }}
-          className="absolute top-3 right-3 rounded-full bg-black/40 p-2 backdrop-blur-md transition-colors hover:bg-black/60"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className={`absolute top-3 right-3 rounded-2xl p-2.5 backdrop-blur-md transition-all ${
+            isFavorite 
+              ? "bg-red-500 text-white shadow-lg shadow-red-500/40" 
+              : "bg-black/30 text-white/90 hover:bg-black/50"
+          }`}
         >
-          <Heart className="h-5 w-5 text-white" />
-        </button>
+          <Heart className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`} />
+        </motion.button>
+
+        {/* Price Blur Overlay */}
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-slate-950 to-transparent opacity-80" />
       </div>
-      <div className="p-4 space-y-3">
-        <div className="flex items-baseline justify-between">
-          <span className="text-2xl font-semibold text-[#00D4FF]">{price}</span>
-          {isPremium && <Badge variant="premium">Premium</Badge>}
+
+      <div className="p-4 space-y-4">
+        <div className="space-y-1">
+          <div className="flex items-baseline gap-1">
+            <span className="text-2xl font-black text-white tracking-tight">{price}</span>
+            <span className="text-cyan-400 text-xs font-bold uppercase tracking-wider italic">Kelishiladi</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-slate-400 text-sm">
+            <MapPin className="h-3.5 w-3.5 text-cyan-500/70" />
+            <span className="truncate">{location}</span>
+          </div>
         </div>
-        <div className="flex items-center gap-2 text-sm text-white/60">
-          <MapPin className="h-4 w-4" />
-          <span className="truncate">{location}</span>
-        </div>
-        {(rooms || size) && (
-          <div className="flex items-center gap-4 text-sm text-white/80">
+
+        <div className="flex items-center justify-between pt-2 border-t border-white/5">
+          <div className="flex gap-4">
             {rooms && (
-              <div className="flex items-center gap-1.5">
-                <Bed className="h-4 w-4" />
-                <span>{rooms} rooms</span>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">Xonalar</span>
+                <div className="flex items-center gap-1.5">
+                  <Bed className="h-4 w-4 text-white/60" />
+                  <span className="text-white font-medium">{rooms} xona</span>
+                </div>
               </div>
             )}
             {size && (
-              <div className="flex items-center gap-1.5">
-                <Maximize className="h-4 w-4" />
-                <span>{size} m²</span>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">Maydon</span>
+                <div className="flex items-center gap-1.5">
+                  <Maximize className="h-4 w-4 text-white/60" />
+                  <span className="text-white font-medium">{size} m²</span>
+                </div>
               </div>
             )}
           </div>
-        )}
+          
+          <div className="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <ArrowRight className="w-4 h-4 text-cyan-400" />
+          </div>
+        </div>
       </div>
     </GlassCard>
+  );
+}
+
+// Simple ArrowRight component if not imported
+function ArrowRight({ className }: { className?: string }) {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="24" height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={className}
+    >
+      <path d="M5 12h14" />
+      <path d="m12 5 7 7-7 7" />
+    </svg>
   );
 }

@@ -1,158 +1,138 @@
 import { motion } from "motion/react";
-import { Search, MapPin, SlidersHorizontal } from "lucide-react";
+import { Search, MapPin, SlidersHorizontal, Sparkles } from "lucide-react";
 import { PropertyCard } from "../components/PropertyCard";
 import { GlassCard } from "../components/GlassCard";
+import { useProperties, Property } from "../context/PropertyContext.tsx";
+import { useAuth } from "../context/AuthContext";
+
+import { useTranslation } from "../context/LanguageContext";
 
 interface HomeScreenProps {
   onNavigate: (screen: string, data?: any) => void;
 }
 
 export function HomeScreen({ onNavigate }: HomeScreenProps) {
-  const topListings = [
-    {
-      id: 1,
-      image: "https://images.unsplash.com/photo-1706808849827-7366c098b317?w=1080",
-      price: "$850,000",
-      location: "QASHQADARYO, SHAXRISABZ, CENTER",
-      rooms: 4,
-      size: 320,
-      isTop: true,
-    },
-    {
-      id: 2,
-      image: "https://images.unsplash.com/photo-1706855203772-c249b75fe016?w=1080",
-      price: "$1,200,000",
-      location: "QASHQADARYO, GUZOR, CENTER",
-      rooms: 5,
-      size: 450,
-      isTop: true,
-    },
-  ];
+  const { properties, favorites, toggleFavorite } = useProperties();
+  const { isAuthenticated } = useAuth();
+  const { t } = useTranslation();
 
-  const newListings = [
-    {
-      id: 3,
-      image: "https://images.unsplash.com/photo-1663756915304-40b7eda63e41?w=1080",
-      price: "$425,000",
-      location: "Tashkent, Yunusabad",
-      rooms: 3,
-      size: 150,
-    },
-    {
-      id: 4,
-      image: "https://images.unsplash.com/photo-1628592102751-ba83b0314276?w=1080",
-      price: "$380,000",
-      location: "Samarkand, Center",
-      rooms: 2,
-      size: 120,
-    },
-    {
-      id: 5,
-      image: "https://images.unsplash.com/photo-1706808849780-7a04fbac83ef?w=1080",
-      price: "$620,000",
-      location: "Bukhara, Center",
-      rooms: 4,
-      size: 200,
-    },
-    {
-      id: 6,
-      image: "https://images.unsplash.com/photo-1638454795595-0a0abf68614d?w=1080",
-      price: "$295,000",
-      location: "Tashkent, Mirzo Ulugbek",
-      rooms: 2,
-      size: 95,
-    },
-  ];
+  const handleToggleFavorite = (id: number) => {
+    if (!isAuthenticated) {
+      onNavigate("login", { id, action: "toggleFavorite" });
+      return;
+    }
+    toggleFavorite(id);
+  };
+
+  const approvedProperties = properties.filter((p: Property) => p.status === "approved");
+  const topListings = approvedProperties.filter((p: Property) => p.isTop);
+  const newListings = approvedProperties.filter((p: Property) => !p.isTop);
 
   return (
-    <div className="h-full overflow-y-auto bg-[#121212] pb-24">
+    <div className="h-full overflow-y-auto bg-slate-950 pb-32 scroll-smooth">
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[100px] rounded-full -z-10" />
+      
       {/* Header */}
-      <div className="sticky top-0 z-10 border-b border-white/10 bg-[#0B1D3A]/95 backdrop-blur-xl px-6 py-4">
+      <div className="sticky top-0 z-20 border-b border-white/5 bg-slate-950/80 backdrop-blur-xl px-6 py-5">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="space-y-4"
         >
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-white">Find Your Home</h1>
-              <p className="text-sm text-white/60">Discover the perfect property</p>
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-cyan-400" />
+              <div>
+                <h1 className="text-xl font-bold text-white tracking-tight">{t("home.title")}</h1>
+                <p className="text-[10px] text-cyan-400/80 uppercase font-black tracking-widest leading-none">{t("home.subtitle")}</p>
+              </div>
             </div>
             <button
               onClick={() => onNavigate("search")}
-              className="rounded-full bg-white/10 p-3 backdrop-blur-md transition-colors hover:bg-white/20"
+              className="w-10 h-10 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 text-white transition-all active:scale-95 hover:bg-white/10"
             >
-              <SlidersHorizontal className="h-5 w-5 text-white" />
+              <SlidersHorizontal className="h-5 w-5" />
             </button>
           </div>
 
           {/* Search Bar */}
-          <GlassCard onClick={() => onNavigate("search")}>
-            <div className="flex items-center gap-3 p-4">
-              <Search className="h-5 w-5 text-white/40" />
-              <input
-                type="text"
-                placeholder="Search location, property..."
-                className="flex-1 bg-transparent text-white placeholder-white/40 outline-none"
-                readOnly
-              />
-              <MapPin className="h-5 w-5 text-[#00D4FF]" />
+          <GlassCard onClick={() => onNavigate("search")} className="border-white/5">
+            <div className="flex items-center gap-3 p-3.5">
+              <Search className="h-5 w-5 text-slate-500" />
+              <div className="flex-1 bg-transparent text-slate-400 text-sm">
+                {t("home.searchPlaceholder")}
+              </div>
+              <div className="h-4 w-px bg-white/10 mx-1" />
+              <MapPin className="h-4 w-4 text-cyan-500" />
             </div>
           </GlassCard>
         </motion.div>
       </div>
 
       {/* Content */}
-      <div className="space-y-8 px-6 py-6">
+      <div className="space-y-10 px-6 py-8">
         {/* Top Listings */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-white">Top Listings</h2>
-            <button
-              onClick={() => onNavigate("top")}
-              className="text-sm text-[#00D4FF] hover:underline"
-            >
-              View All
-            </button>
-          </div>
-          <div className="space-y-4">
-            {topListings.map((property, index) => (
-              <motion.div
-                key={property.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 * index }}
+        {topListings.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+          >
+            <div className="mb-5 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-6 bg-cyan-500 rounded-full" />
+                <h2 className="text-lg font-bold text-white tracking-tight">{t("home.topListings")}</h2>
+              </div>
+              <button
+                onClick={() => onNavigate("favorites")}
+                className="text-xs font-bold text-cyan-400 uppercase tracking-wider hover:text-cyan-300"
               >
-                <PropertyCard
-                  {...property}
-                  onClick={() => onNavigate("detail", property)}
-                />
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+                {t("common.all")}
+              </button>
+            </div>
+            <div className="space-y-5">
+              {topListings.map((property, index) => (
+                <motion.div
+                  key={property.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.05 * index }}
+                >
+                  <PropertyCard
+                    {...property}
+                    isFavorite={favorites.includes(property.id)}
+                    onToggleFavorite={handleToggleFavorite}
+                    onClick={() => onNavigate("detail", property)}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        )}
 
         {/* New Listings */}
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.3 }}
         >
-          <h2 className="mb-4 text-xl font-semibold text-white">New Listings</h2>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="mb-5 flex items-center gap-2">
+            <div className="w-1.5 h-6 bg-slate-700 rounded-full" />
+            <h2 className="text-lg font-bold text-white tracking-tight">{t("home.newListings")}</h2>
+          </div>
+          <div className="grid grid-cols-1 gap-5">
             {newListings.map((property, index) => (
               <motion.div
                 key={property.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * index }}
+                transition={{ delay: 0.05 * index }}
               >
                 <PropertyCard
                   {...property}
+                  isFavorite={favorites.includes(property.id)}
+                  onToggleFavorite={handleToggleFavorite}
                   onClick={() => onNavigate("detail", property)}
                 />
               </motion.div>

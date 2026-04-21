@@ -1,5 +1,6 @@
-import { Home, Search, PlusCircle, MessageSquare, User, Crown } from "lucide-react";
+import { Home, Search, PlusCircle, MessageSquare, User, Heart } from "lucide-react";
 import { motion } from "motion/react";
+import { useTranslation } from "../context/LanguageContext";
 
 interface BottomNavProps {
   active: string;
@@ -7,18 +8,20 @@ interface BottomNavProps {
 }
 
 export function BottomNav({ active, onNavigate }: BottomNavProps) {
+  const { t } = useTranslation();
+  
   const items = [
-    { id: "home", icon: Home, label: "Home" },
-    { id: "search", icon: Search, label: "Search" },
-    { id: "add", icon: PlusCircle, label: "Add", special: true },
-    { id: "top", icon: Crown, label: "Top", premium: true },
-    { id: "chat", icon: MessageSquare, label: "Chat" },
-    { id: "profile", icon: User, label: "Profile" },
+    { id: "home", icon: Home, label: t("nav.home") },
+    { id: "search", icon: Search, label: t("nav.search") },
+    { id: "add", icon: PlusCircle, label: t("nav.add"), special: true },
+    { id: "favorites", icon: Heart, label: t("nav.favorites") },
+    { id: "chat", icon: MessageSquare, label: t("nav.chat") },
+    { id: "profile", icon: User, label: t("nav.profile") },
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[#0B1D3A]/95 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-md items-center justify-around px-2 py-3">
+    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/5 bg-slate-950/80 backdrop-blur-2xl px-2 pb-safe">
+      <div className="mx-auto flex max-w-md items-center justify-around py-3">
         {items.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;
@@ -26,47 +29,43 @@ export function BottomNav({ active, onNavigate }: BottomNavProps) {
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className={`relative flex flex-col items-center gap-1 ${
-                item.special ? "scale-110" : ""
+              className={`relative flex flex-col items-center gap-1 flex-1 transition-all ${
+                item.special ? "scale-110 -translate-y-1" : "active:scale-90"
               }`}
             >
               <div className="relative">
-                {item.special && !isActive ? (
-                  <div className="rounded-full bg-gradient-to-br from-[#00D4FF] to-[#0B1D3A] p-2">
-                    <Icon className="h-6 w-6 text-white" />
+                {item.special ? (
+                  <div className={`rounded-full shadow-lg transition-all ${
+                    isActive 
+                      ? "bg-white text-slate-950 shadow-white/20" 
+                      : "bg-cyan-500 text-slate-950 shadow-cyan-500/20"
+                  } p-2.5`}>
+                    <Icon className="h-6 w-6" />
                   </div>
                 ) : (
                   <Icon
-                    className={`h-6 w-6 transition-colors ${
-                      isActive
-                        ? item.premium
-                          ? "text-[#FFD700]"
-                          : "text-[#00D4FF]"
-                        : "text-white/60"
+                    className={`h-6 w-6 transition-colors duration-300 ${
+                      isActive ? "text-cyan-400" : "text-slate-500"
                     }`}
                   />
                 )}
                 {isActive && !item.special && (
                   <motion.div
                     layoutId="active-nav"
-                    className={`absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full ${
-                      item.premium ? "bg-[#FFD700]" : "bg-[#00D4FF]"
-                    }`}
+                    className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-cyan-400 rounded-full"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
               </div>
-              <span
-                className={`text-xs ${
-                  isActive
-                    ? item.premium
-                      ? "text-[#FFD700]"
-                      : "text-[#00D4FF]"
-                    : "text-white/60"
-                }`}
-              >
-                {item.label}
-              </span>
+              {!item.special && (
+                <span
+                  className={`text-[10px] font-medium transition-colors duration-300 ${
+                    isActive ? "text-white" : "text-slate-500"
+                  }`}
+                >
+                  {item.label}
+                </span>
+              )}
             </button>
           );
         })}

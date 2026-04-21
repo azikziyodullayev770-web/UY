@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 interface BadgeProps {
   children: ReactNode;
-  variant?: "default" | "premium" | "verified";
+  variant?: "default" | "premium" | "verified" | "secondary";
   className?: string;
 }
 
@@ -11,6 +11,7 @@ export function Badge({ children, variant = "default", className = "" }: BadgePr
     default: "bg-white/10 text-white border-white/20",
     premium: "bg-[#FFD700] text-black border-[#FFD700]",
     verified: "bg-[#00D4FF] text-black border-[#00D4FF]",
+    secondary: "bg-white/10 text-white border-white/10",
   };
 
   return (
