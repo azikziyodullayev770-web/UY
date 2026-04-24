@@ -46,7 +46,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // ─── Role map (add UIDs/emails → roles here) ─────────────────────────────────
 const ROLE_MAP: Record<string, Role> = {
-  "admin@uyjoy.uz": "superadmin",
+  "superadmin@uyjoy.uz": "superadmin",
+  "admin@uyjoy.uz": "admin",
+  "moderator@uyjoy.uz": "moderator",
 };
 
 // ─── Demo mode users ──────────────────────────────────────────────────────────
@@ -149,15 +151,16 @@ function useDemoAuth() {
     setIsGoogleLoading(true); // Reusing loading state for simplicity
     await new Promise(r => setTimeout(r, 1500));
     setIsGoogleLoading(false);
+    const assignedRole = ROLE_MAP[email.toLowerCase()] ?? "user";
     setUser({
       uid: `demo-email-${Date.now()}`,
       email,
       displayName: name,
       phoneNumber: null,
       photoURL: null,
-      role: "user",
+      role: assignedRole,
     });
-    setRole("user");
+    setRole(assignedRole);
     setIsAuthenticated(true);
     return true;
   };
