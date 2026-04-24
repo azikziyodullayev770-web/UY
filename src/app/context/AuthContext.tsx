@@ -169,15 +169,16 @@ function useDemoAuth() {
     setIsGoogleLoading(true);
     await new Promise(r => setTimeout(r, 1200));
     setIsGoogleLoading(false);
+    const assignedRole = ROLE_MAP[email.toLowerCase()] ?? "user";
     setUser({
       uid: `demo-email-login`,
       email,
       displayName: email.split("@")[0],
       phoneNumber: null,
       photoURL: null,
-      role: "user",
+      role: assignedRole,
     });
-    setRole("user");
+    setRole(assignedRole);
     setIsAuthenticated(true);
     return true;
   };
