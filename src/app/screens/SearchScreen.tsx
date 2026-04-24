@@ -67,12 +67,12 @@ export function SearchScreen({ onNavigate }: SearchScreenProps) {
   }, [properties, searchQuery, filters]);
 
   return (
-    <div className="flex h-full flex-col bg-slate-950">
+    <div className="flex h-full flex-col bg-background">
       {/* Header */}
-      <div className="z-30 border-b border-white/5 bg-slate-950/80 backdrop-blur-xl px-6 py-4">
+      <div className="z-30 border-b border-black/5 dark:border-white/5 bg-background/80 backdrop-blur-xl px-6 py-4">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <GlassCard className="flex-1 border-white/10 bg-white/5">
+            <GlassCard className="flex-1 border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
               <div className="flex items-center gap-3 p-3">
                 <Search className="h-5 w-5 text-slate-500" />
                 <input
@@ -80,14 +80,14 @@ export function SearchScreen({ onNavigate }: SearchScreenProps) {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t("home.searchPlaceholder")}
-                  className="flex-1 bg-transparent text-white placeholder-slate-500 outline-none text-sm"
+                  className="flex-1 bg-transparent text-foreground placeholder-slate-500 outline-none text-sm"
                 />
               </div>
             </GlassCard>
             <button
               onClick={() => setShowFilters(!showFilters)}
               className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all ${
-                showFilters ? "bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20" : "bg-white/5 text-white border border-white/10"
+                showFilters ? "bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20" : "bg-black/5 dark:bg-white/5 text-foreground border border-black/10 dark:border-white/10"
               }`}
             >
               <SlidersHorizontal className="h-5 w-5" />
@@ -95,13 +95,13 @@ export function SearchScreen({ onNavigate }: SearchScreenProps) {
           </div>
 
           {/* Quick Type Filter */}
-          <div className="flex gap-2 p-1 bg-white/5 rounded-xl border border-white/5">
+          <div className="flex gap-2 p-1 bg-black/5 dark:bg-white/5 rounded-xl border border-black/5 dark:border-white/5">
             {["all", "sale", "rent"].map((type) => (
               <button
                 key={type}
                 onClick={() => setFilters({ ...filters, type: type })}
                 className={`flex-1 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
-                  filters.type === type ? "bg-white text-slate-950 shadow-sm" : "text-slate-400 hover:text-white"
+                  filters.type === type ? "bg-white text-slate-950 shadow-sm" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {type === "all" ? t("common.all") : type === "sale" ? t("add.sale") : t("add.rent")}
@@ -120,11 +120,11 @@ export function SearchScreen({ onNavigate }: SearchScreenProps) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute inset-0 z-40 bg-slate-950 p-6 overflow-y-auto"
+              className="absolute inset-0 z-40 bg-background p-6 overflow-y-auto"
             >
               <div className="flex items-center justify-between mb-8">
-                <h2 className="text-xl font-bold text-white">{t("search.filters")}</h2>
-                <button onClick={() => setShowFilters(false)} className="p-2 text-slate-400 hover:text-white">
+                <h2 className="text-xl font-bold text-foreground">{t("search.filters")}</h2>
+                <button onClick={() => setShowFilters(false)} className="p-2 text-muted-foreground hover:text-foreground">
                   <X className="w-6 h-6" />
                 </button>
               </div>
@@ -137,7 +137,7 @@ export function SearchScreen({ onNavigate }: SearchScreenProps) {
                     <button
                       onClick={() => setFilters({ ...filters, district: "all" })}
                       className={`px-4 py-3 rounded-xl border text-sm transition-all ${
-                        filters.district === "all" ? "bg-cyan-500 text-slate-950 border-cyan-500 font-bold" : "bg-white/5 border-white/10 text-white"
+                        filters.district === "all" ? "bg-cyan-500 text-slate-950 border-cyan-500 font-bold" : "bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 text-foreground"
                       }`}
                     >
                       {t("common.all")}
@@ -147,7 +147,7 @@ export function SearchScreen({ onNavigate }: SearchScreenProps) {
                         key={d}
                         onClick={() => setFilters({ ...filters, district: d })}
                         className={`px-4 py-3 rounded-xl border text-sm transition-all ${
-                          filters.district === d ? "bg-cyan-500 text-slate-950 border-cyan-500 font-bold" : "bg-white/5 border-white/10 text-white"
+                          filters.district === d ? "bg-cyan-500 text-slate-950 border-cyan-500 font-bold" : "bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 text-foreground"
                         }`}
                       >
                         {d}
@@ -160,7 +160,7 @@ export function SearchScreen({ onNavigate }: SearchScreenProps) {
                 <div className="space-y-4">
                   <div className="flex justify-between items-baseline">
                     <label className="text-sm font-bold text-slate-500 uppercase tracking-widest">{t("search.maxPrice")}</label>
-                    <span className="text-lg font-bold text-white">${filters.maxPrice.toLocaleString()}</span>
+                    <span className="text-lg font-bold text-foreground">${filters.maxPrice.toLocaleString()}</span>
                   </div>
                   <input
                     type="range"
@@ -189,7 +189,7 @@ export function SearchScreen({ onNavigate }: SearchScreenProps) {
         {/* Results List */}
         <div className="h-full overflow-y-auto px-6 py-6 pb-24">
           <div className="mb-6 flex items-center justify-between">
-            <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest">
+            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest">
               {results.length} {t("search.results")}
             </h3>
             <div className="flex items-center gap-1 text-xs text-cyan-400 font-bold cursor-pointer">
@@ -211,10 +211,10 @@ export function SearchScreen({ onNavigate }: SearchScreenProps) {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-20 text-center">
-              <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6">
+              <div className="w-20 h-20 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center mb-6">
                 <Search className="w-8 h-8 text-slate-600" />
               </div>
-              <p className="text-white font-medium mb-2">{t("search.noResults")}</p>
+              <p className="text-foreground font-medium mb-2">{t("search.noResults")}</p>
               <p className="text-slate-500 text-sm">{t("search.noResults")}</p>
             </div>
           )}

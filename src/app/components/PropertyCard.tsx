@@ -5,11 +5,13 @@ import { GlassCard } from "./GlassCard";
 interface PropertyCardProps {
   id: number;
   image: string;
+  title?: string;
   price: string;
   location: string;
   rooms?: number;
   size?: number;
   isTop?: boolean;
+  topExpiresAt?: number;
   isFavorite?: boolean;
   onToggleFavorite?: (id: number) => void;
   onClick?: () => void;
@@ -18,19 +20,22 @@ interface PropertyCardProps {
 export function PropertyCard({
   id,
   image,
+  title,
   price,
   location,
   rooms,
   size,
   isTop,
+  topExpiresAt,
   isFavorite,
   onToggleFavorite,
   onClick,
 }: PropertyCardProps) {
+  const isTopActive = isTop && (!topExpiresAt || topExpiresAt > Date.now());
   return (
     <GlassCard 
       onClick={onClick} 
-      className={`group overflow-hidden border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all hover:shadow-[0_12px_40px_rgba(34,211,238,0.15)] ${
+      className={`group overflow-hidden border-black/5 dark:border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all hover:shadow-[0_12px_40px_rgba(34,211,238,0.15)] ${
         isTop ? "ring-1 ring-cyan-500/50" : ""
       }`}
     >
@@ -45,7 +50,7 @@ export function PropertyCard({
         
         {/* Badges Overlay */}
         <div className="absolute top-3 left-3 flex flex-col gap-2">
-          {isTop && (
+          {isTopActive && (
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-600 text-black font-black text-[10px] uppercase tracking-wider shadow-lg shadow-yellow-500/20">
               <Star className="w-3.5 h-3.5 fill-current" />
               <span>TOP</span>
@@ -63,8 +68,8 @@ export function PropertyCard({
           whileTap={{ scale: 0.9 }}
           className={`absolute top-3 right-3 rounded-2xl p-2.5 backdrop-blur-md transition-all ${
             isFavorite 
-              ? "bg-red-500 text-white shadow-lg shadow-red-500/40" 
-              : "bg-black/30 text-white/90 hover:bg-black/50"
+              ? "bg-red-500 text-foreground shadow-lg shadow-red-500/40" 
+              : "bg-black/30 text-foreground/90 hover:bg-black/50"
           }`}
         >
           <Heart className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`} />
@@ -76,24 +81,25 @@ export function PropertyCard({
 
       <div className="p-4 space-y-4">
         <div className="space-y-1">
+          {title && <h3 className="text-sm font-bold text-foreground/90 truncate mb-1">{title}</h3>}
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-black text-white tracking-tight">{price}</span>
+            <span className="text-2xl font-black text-foreground tracking-tight">{price}</span>
             <span className="text-cyan-400 text-xs font-bold uppercase tracking-wider italic">Kelishiladi</span>
           </div>
-          <div className="flex items-center gap-1.5 text-slate-400 text-sm">
+          <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
             <MapPin className="h-3.5 w-3.5 text-cyan-500/70" />
             <span className="truncate">{location}</span>
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-white/5">
+        <div className="flex items-center justify-between pt-2 border-t border-black/5 dark:border-white/5">
           <div className="flex gap-4">
             {rooms && (
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">Xonalar</span>
                 <div className="flex items-center gap-1.5">
-                  <Bed className="h-4 w-4 text-white/60" />
-                  <span className="text-white font-medium">{rooms} xona</span>
+                  <Bed className="h-4 w-4 text-foreground/60" />
+                  <span className="text-foreground font-medium">{rooms} xona</span>
                 </div>
               </div>
             )}
@@ -101,14 +107,14 @@ export function PropertyCard({
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">Maydon</span>
                 <div className="flex items-center gap-1.5">
-                  <Maximize className="h-4 w-4 text-white/60" />
-                  <span className="text-white font-medium">{size} m²</span>
+                  <Maximize className="h-4 w-4 text-foreground/60" />
+                  <span className="text-foreground font-medium">{size} m²</span>
                 </div>
               </div>
             )}
           </div>
           
-          <div className="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="h-8 w-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
             <ArrowRight className="w-4 h-4 text-cyan-400" />
           </div>
         </div>

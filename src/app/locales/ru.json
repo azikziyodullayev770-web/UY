@@ -70,7 +70,10 @@
     "districtRequired": "Выберите район",
     "addressRequired": "Выберите адрес на карте",
     "priceRequired": "Укажите цену",
-    "phoneRequired": "Укажите номер телефона"
+    "phoneRequired": "Укажите номер телефона",
+    "step": "Шаг",
+    "of": "из",
+    "resendIn": "повторно через"
   },
   "add": {
     "title": "Добавить Объявление",
@@ -86,6 +89,7 @@
     "mapPlaceholder": "Выбрать на карте",
     "details": "Детали",
     "pricePlaceholder": "Цена (сум или $)",
+    "titlePlaceholder": "Заголовок (например: 3-комнатная квартира)",
     "roomsPlaceholder": "Комнаты",
     "sizePlaceholder": "Площадь (м²)",
     "descPlaceholder": "Дополнительная информация...",
@@ -97,7 +101,9 @@
     "total": "Итого",
     "payNow": "Оплатить",
     "benefit1": "Первое место в течение 7 дней",
-    "benefit2": "Выделяющийся знак (ТОП)"
+    "benefit2": "Выделяющийся знак (ТОП)",
+    "titleRequired": "Заголовок обязателен",
+    "minImagesError": "Пожалуйста, загрузите минимум 4 изображения"
   },
   "detail": {
     "description": "Описание",

@@ -24,17 +24,18 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
     toggleFavorite(id);
   };
 
+  const now = Date.now();
   const approvedProperties = properties.filter((p: Property) => p.status === "approved");
-  const topListings = approvedProperties.filter((p: Property) => p.isTop);
-  const newListings = approvedProperties.filter((p: Property) => !p.isTop);
+  const topListings = approvedProperties.filter((p: Property) => p.isTop && (!p.topExpiresAt || p.topExpiresAt > now));
+  const newListings = approvedProperties.filter((p: Property) => !p.isTop || (p.topExpiresAt && p.topExpiresAt <= now));
 
   return (
-    <div className="h-full overflow-y-auto bg-slate-950 pb-32 scroll-smooth">
+    <div className="h-full overflow-y-auto bg-background pb-32 scroll-smooth">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[100px] rounded-full -z-10" />
       
       {/* Header */}
-      <div className="sticky top-0 z-20 border-b border-white/5 bg-slate-950/80 backdrop-blur-xl px-6 py-5">
+      <div className="sticky top-0 z-20 border-b border-black/5 dark:border-white/5 bg-background/80 backdrop-blur-xl px-6 py-5">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -44,23 +45,23 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-cyan-400" />
               <div>
-                <h1 className="text-xl font-bold text-white tracking-tight">{t("home.title")}</h1>
+                <h1 className="text-xl font-bold text-foreground tracking-tight">{t("home.title")}</h1>
                 <p className="text-[10px] text-cyan-400/80 uppercase font-black tracking-widest leading-none">{t("home.subtitle")}</p>
               </div>
             </div>
             <button
               onClick={() => onNavigate("search")}
-              className="w-10 h-10 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 text-white transition-all active:scale-95 hover:bg-white/10"
+              className="w-10 h-10 flex items-center justify-center rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-foreground transition-all active:scale-95 hover:bg-white/10"
             >
               <SlidersHorizontal className="h-5 w-5" />
             </button>
           </div>
 
           {/* Search Bar */}
-          <GlassCard onClick={() => onNavigate("search")} className="border-white/5">
+          <GlassCard onClick={() => onNavigate("search")} className="border-black/5 dark:border-white/5">
             <div className="flex items-center gap-3 p-3.5">
               <Search className="h-5 w-5 text-slate-500" />
-              <div className="flex-1 bg-transparent text-slate-400 text-sm">
+              <div className="flex-1 bg-transparent text-muted-foreground text-sm">
                 {t("home.searchPlaceholder")}
               </div>
               <div className="h-4 w-px bg-white/10 mx-1" />
@@ -82,7 +83,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
             <div className="mb-5 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-6 bg-cyan-500 rounded-full" />
-                <h2 className="text-lg font-bold text-white tracking-tight">{t("home.topListings")}</h2>
+                <h2 className="text-lg font-bold text-foreground tracking-tight">{t("home.topListings")}</h2>
               </div>
               <button
                 onClick={() => onNavigate("favorites")}
@@ -119,7 +120,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
         >
           <div className="mb-5 flex items-center gap-2">
             <div className="w-1.5 h-6 bg-slate-700 rounded-full" />
-            <h2 className="text-lg font-bold text-white tracking-tight">{t("home.newListings")}</h2>
+            <h2 className="text-lg font-bold text-foreground tracking-tight">{t("home.newListings")}</h2>
           </div>
           <div className="grid grid-cols-1 gap-5">
             {newListings.map((property, index) => (

@@ -70,7 +70,10 @@
     "districtRequired": "District is required",
     "addressRequired": "Address on map is required",
     "priceRequired": "Price is required",
-    "phoneRequired": "Phone number is required"
+    "phoneRequired": "Phone number is required",
+    "step": "Step",
+    "of": "of",
+    "resendIn": "resend in"
   },
   "add": {
     "title": "Add Listing",
@@ -86,6 +89,7 @@
     "mapPlaceholder": "Select on map",
     "details": "Details",
     "pricePlaceholder": "Price (sum or $)",
+    "titlePlaceholder": "Title (e.g., 3-bedroom house)",
     "roomsPlaceholder": "Rooms",
     "sizePlaceholder": "Area (m²)",
     "descPlaceholder": "Additional information...",
@@ -97,7 +101,9 @@
     "total": "Total",
     "payNow": "Pay Now",
     "benefit1": "Top position for 7 days",
-    "benefit2": "Special badge (TOP)"
+    "benefit2": "Special badge (TOP)",
+    "titleRequired": "Title is required",
+    "minImagesError": "Please upload at least 4 images"
   },
   "detail": {
     "description": "Description",

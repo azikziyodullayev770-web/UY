@@ -68,10 +68,10 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
               <Shield className="h-12 w-12 text-red-400" />
             </div>
             <div className="absolute -right-1 -bottom-1 rounded-full bg-red-500 p-2">
-              <Lock className="h-4 w-4 text-white" />
+              <Lock className="h-4 w-4 text-foreground" />
             </div>
           </motion.div>
-          <h1 className="mb-2 text-3xl font-bold text-white">{t("login.adminLogin")}</h1>
+          <h1 className="mb-2 text-3xl font-bold text-foreground">{t("login.adminLogin")}</h1>
           <p className="text-red-400/80">System Administration Panel</p>
         </div>
 
@@ -80,7 +80,7 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
           <div className="p-6 space-y-5">
             {/* Username Input */}
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-sm font-medium text-white/90">
+              <label className="flex items-center gap-2 text-sm font-medium text-foreground/90">
                 <User className="h-4 w-4 text-red-400" />
                 Username
               </label>
@@ -89,13 +89,13 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
                 value={formData.username}
                 onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                 placeholder="superadmin / admin / moderator"
-                className="w-full rounded-xl border border-red-500/20 bg-black/40 px-4 py-3 text-white placeholder-white/30 outline-none transition-all focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                className="w-full rounded-xl border border-red-500/20 bg-black/40 px-4 py-3 text-foreground placeholder-white/30 outline-none transition-all focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
               />
             </div>
 
             {/* Password Input */}
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-sm font-medium text-white/90">
+              <label className="flex items-center gap-2 text-sm font-medium text-foreground/90">
                 <Lock className="h-4 w-4 text-red-400" />
                 Password
               </label>
@@ -105,12 +105,12 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   placeholder="••••••••"
-                  className="w-full rounded-xl border border-red-500/20 bg-black/40 px-4 py-3 pr-12 text-white placeholder-white/30 outline-none transition-all focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                  className="w-full rounded-xl border border-red-500/20 bg-black/40 px-4 py-3 pr-12 text-foreground placeholder-white/30 outline-none transition-all focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/80"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground/40 hover:text-foreground/80"
                 >
                   {showPassword ? (
                     <EyeOff className="h-5 w-5" />
@@ -125,7 +125,7 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
             {/* Login Button */}
             <button
               onClick={handleLogin}
-              className="w-full rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-red-500/30 transition-all hover:shadow-red-500/50 hover:scale-[1.02]"
+              className="w-full rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-6 py-3.5 font-semibold text-foreground shadow-lg shadow-red-500/30 transition-all hover:shadow-red-500/50 hover:scale-[1.02]"
             >
               {t("common.confirm")}
             </button>
@@ -133,17 +133,17 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
             {/* Divider */}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/10" />
+                <div className="w-full border-t border-black/10 dark:border-white/10" />
               </div>
               <div className="relative flex justify-center text-xs">
-                <span className="bg-[#121212] px-2 text-white/40">{t("login.or")}</span>
+                <span className="bg-[#121212] px-2 text-foreground/40">{t("login.or")}</span>
               </div>
             </div>
 
             {/* Back to User Login */}
             <button
               onClick={onBackToUser}
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-medium text-white transition-all hover:bg-white/10"
+              className="w-full rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-6 py-3 font-medium text-foreground transition-all hover:bg-white/10"
             >
               {t("common.back")}
             </button>
@@ -151,10 +151,10 @@ export function AdminLoginScreen({ onAdminLogin, onBackToUser }: AdminLoginScree
         </GlassCard>
 
         {/* Security Notice */}
-        <p className="text-center text-xs text-white/40">
+        <p className="text-center text-xs text-foreground/40">
           All access attempts are logged and monitored
         </p>
-        <p className="text-center text-xs text-white/25 mt-1">
+        <p className="text-center text-xs text-foreground/25 mt-1">
           Demo: admin / 222222
         </p>
       </motion.div>

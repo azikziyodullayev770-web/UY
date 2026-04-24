@@ -14,6 +14,7 @@ import { ChatScreen } from "./screens/ChatScreen";
 import { ProfileScreen } from "./screens/ProfileScreen";
 import { AddListingScreen } from "./screens/AddListingScreen";
 import { FavoritesScreen } from "./screens/FavoritesScreen";
+import { MyListingsScreen } from "./screens/MyListingsScreen";
 
 // Components
 import { BottomNav } from "./components/BottomNav";
@@ -23,8 +24,10 @@ import { PropertyProvider, Property } from "./context/PropertyContext.tsx";
 import { AdminDashboardScreen } from "./screens/AdminDashboardScreen";
 
 import { LanguageProvider, useTranslation } from "./context/LanguageContext";
+import { ChatProvider } from "./context/ChatContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
-type AppScreen = "splash" | "language" | "login" | "adminLogin" | "adminDashboard" | "home" | "search" | "detail" | "map" | "chat" | "profile" | "add" | "favorites";
+type AppScreen = "splash" | "language" | "login" | "adminLogin" | "adminDashboard" | "home" | "search" | "detail" | "map" | "chat" | "profile" | "add" | "favorites" | "myListings" | "edit";
 
 function AppContent() {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>("splash");
@@ -41,7 +44,7 @@ function AppContent() {
     if (screen === "adminDashboard" && !isAdmin) return;
 
     // INTERCEPT: Protected screens for guest users
-    const protectedScreens: AppScreen[] = ["add", "chat", "favorites"];
+    const protectedScreens: AppScreen[] = ["add", "chat", "favorites", "myListings", "edit"];
     if (!isAuthenticated && protectedScreens.includes(screen)) {
       setPendingAction({ screen, data });
       setCurrentScreen("login");
@@ -82,8 +85,8 @@ function AppContent() {
     }
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     setCurrentScreen("login");
   };
 
@@ -115,7 +118,7 @@ function AppContent() {
     setCurrentScreen("login");
   };
 
-  const showBottomNav = role === "user" && ["home", "search", "map", "chat", "profile", "favorites"].includes(currentScreen);
+  const showBottomNav = role === "user" && ["home", "search", "map", "chat", "profile", "favorites", "myListings"].includes(currentScreen);
 
   const renderScreen = () => {
     const fadeProps = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
@@ -153,8 +156,24 @@ function AppContent() {
       case "chat":           return <ScreenWrapper keyName="chat" animation={fadeProps}><ChatScreen onBack={handleBack} /></ScreenWrapper>;
       case "profile":        return <ScreenWrapper keyName="profile" animation={fadeProps}><ProfileScreen onNavigate={(s, d) => handleNavigation(s as AppScreen, d as Property)} onLanguageChange={handleLanguageChange} onLogout={handleLogout} /></ScreenWrapper>;
       case "add":            return <ScreenWrapper keyName="add" animation={slideYProps}><AddListingScreen onBack={handleBack} onSubmit={handleBack} /></ScreenWrapper>;
+      case "edit":           return selectedProperty ? <ScreenWrapper keyName="edit" animation={slideYProps}><AddListingScreen editProperty={selectedProperty} onBack={handleBack} onSubmit={handleBack} /></ScreenWrapper> : null;
+      case "myListings":     return <ScreenWrapper keyName="myListings" animation={slideXProps}><MyListingsScreen onBack={handleBack} onEdit={(p) => handleNavigation("edit", p)} /></ScreenWrapper>;
       case "favorites":      return <ScreenWrapper keyName="favorites" animation={fadeProps}><FavoritesScreen onNavigate={(s, d) => handleNavigation(s as AppScreen, d as Property)} onBack={handleBack} /></ScreenWrapper>;
-      default:               return null;
+      default:               return (
+        <div className="flex h-full flex-col items-center justify-center bg-background p-6 text-center">
+          <div className="w-20 h-20 bg-black/5 dark:bg-white/5 rounded-3xl flex items-center justify-center mb-6">
+            <span className="text-4xl">⚠️</span>
+          </div>
+          <h2 className="text-xl font-black text-foreground mb-2">Sahifa topilmadi</h2>
+          <p className="text-sm text-slate-500 mb-8">Kechirasiz, siz qidirayotgan sahifa mavjud emas yoki xatolik yuz berdi.</p>
+          <button 
+            onClick={() => setCurrentScreen("home")}
+            className="w-full py-4 rounded-2xl bg-cyan-500 text-slate-950 font-black uppercase tracking-widest text-xs active:scale-95 transition-all"
+          >
+            Bosh sahifaga qaytish
+          </button>
+        </div>
+      );
     }
   };
 
@@ -177,12 +196,16 @@ function AppContent() {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <PropertyProvider>
+    <ThemeProvider>
+      <LanguageProvider>
         <AuthProvider>
-          <AppContent />
+          <PropertyProvider>
+            <ChatProvider>
+              <AppContent />
+            </ChatProvider>
+          </PropertyProvider>
         </AuthProvider>
-      </PropertyProvider>
-    </LanguageProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }

@@ -20,7 +20,7 @@ export function BottomNav({ active, onNavigate }: BottomNavProps) {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/5 bg-slate-950/80 backdrop-blur-2xl px-2 pb-safe">
+    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-black/5 dark:border-white/5 bg-background/80 backdrop-blur-2xl px-2 pb-safe">
       <div className="mx-auto flex max-w-md items-center justify-around py-3">
         {items.map((item) => {
           const Icon = item.icon;
@@ -60,7 +60,7 @@ export function BottomNav({ active, onNavigate }: BottomNavProps) {
               {!item.special && (
                 <span
                   className={`text-[10px] font-medium transition-colors duration-300 ${
-                    isActive ? "text-white" : "text-slate-500"
+                    isActive ? "text-foreground" : "text-slate-500"
                   }`}
                 >
                   {item.label}

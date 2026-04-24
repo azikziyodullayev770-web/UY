@@ -81,12 +81,12 @@ export function LocationPicker({ onClose, onSelect, initialLocation }: LocationP
       className="fixed inset-0 z-[100] flex flex-col bg-black"
     >
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/10 bg-[#0B1D3A] p-4">
+      <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 bg-[#0B1D3A] p-4">
         <div className="flex items-center gap-3">
-          <button onClick={onClose} className="rounded-full bg-white/10 p-2 text-white">
+          <button onClick={onClose} className="rounded-full bg-white/10 p-2 text-foreground">
             <X className="h-5 w-5" />
           </button>
-          <h2 className="text-lg font-bold text-white">Select Location</h2>
+          <h2 className="text-lg font-bold text-foreground">Select Location</h2>
         </div>
         <button
           onClick={handleConfirm}
@@ -122,8 +122,8 @@ export function LocationPicker({ onClose, onSelect, initialLocation }: LocationP
                 <MapPin className="h-5 w-5 text-[#00D4FF]" />
               </div>
               <div className="flex-1">
-                <p className="text-xs font-medium text-white/50 uppercase tracking-wider">Property Address</p>
-                <p className="mt-1 text-sm text-white line-clamp-2">
+                <p className="text-xs font-medium text-foreground/50 uppercase tracking-wider">Property Address</p>
+                <p className="mt-1 text-sm text-foreground line-clamp-2">
                   {address}
                 </p>
               </div>
@@ -135,7 +135,7 @@ export function LocationPicker({ onClose, onSelect, initialLocation }: LocationP
           <div className="absolute inset-0 flex items-center justify-center bg-[#0B1D3A]">
             <div className="flex flex-col items-center gap-4">
               <Loader2 className="h-12 w-12 animate-spin text-[#00D4FF]" />
-              <p className="text-white/60">Initializing Map...</p>
+              <p className="text-foreground/60">Initializing Map...</p>
             </div>
           </div>
         )}

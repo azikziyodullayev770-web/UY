@@ -25,8 +25,8 @@ export function LanguageScreen({ onSelectLanguage }: LanguageScreenProps) {
       >
         <div className="text-center">
           <Globe className="mx-auto mb-4 h-16 w-16 text-[#00D4FF]" />
-          <h1 className="mb-2 text-3xl font-bold text-white">{t("login.chooseLanguage")}</h1>
-          <p className="text-white/60">{t("login.selectLanguage")}</p>
+          <h1 className="mb-2 text-3xl font-bold text-foreground">{t("login.chooseLanguage")}</h1>
+          <p className="text-foreground/60">{t("login.selectLanguage")}</p>
         </div>
 
         <div className="space-y-4">
@@ -40,7 +40,7 @@ export function LanguageScreen({ onSelectLanguage }: LanguageScreenProps) {
               <GlassCard hover onClick={() => onSelectLanguage(lang.code)}>
                 <button className="flex w-full items-center gap-4 p-5">
                   <span className="text-4xl">{lang.flag}</span>
-                  <span className="text-xl font-medium text-white">{lang.name}</span>
+                  <span className="text-xl font-medium text-foreground">{lang.name}</span>
                 </button>
               </GlassCard>
             </motion.div>

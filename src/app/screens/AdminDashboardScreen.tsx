@@ -12,7 +12,7 @@ interface AdminDashboardScreenProps {
 
 export function AdminDashboardScreen({ onLogout }: AdminDashboardScreenProps) {
   const { role } = useAuth();
-  const { properties, updatePropertyStatus } = useProperties();
+  const { properties, updatePropertyStatus, deleteProperty } = useProperties();
   const [moderatingId, setModeratingId] = useState<number | null>(null);
   const [moderationResults, setModerationResults] = useState<Record<number, ModerationResult>>({});
 
@@ -44,12 +44,12 @@ export function AdminDashboardScreen({ onLogout }: AdminDashboardScreenProps) {
   ];
 
   return (
-    <div className="h-full overflow-y-auto bg-slate-950 pb-24">
+    <div className="h-full overflow-y-auto bg-background pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-20 border-b border-white/5 bg-slate-950/80 backdrop-blur-xl px-6 py-5">
+      <div className="sticky top-0 z-20 border-b border-black/5 dark:border-white/5 bg-background/80 backdrop-blur-xl px-6 py-5">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-black text-white tracking-tight">Admin Panel</h1>
+            <h1 className="text-2xl font-black text-foreground tracking-tight">Admin Panel</h1>
             <p className="text-[10px] text-red-400 uppercase font-black tracking-[0.2em]">
               {role?.toUpperCase()} · Boshqaruv tizimi
             </p>
@@ -72,13 +72,13 @@ export function AdminDashboardScreen({ onLogout }: AdminDashboardScreenProps) {
             {stats.map((stat, i) => {
               const Icon = stat.icon;
               return (
-                <GlassCard key={i} className="border-white/5">
+                <GlassCard key={i} className="border-black/5 dark:border-white/5">
                   <div className="p-5 space-y-3">
                     <div className={`w-10 h-10 rounded-xl ${stat.bg} flex items-center justify-center`}>
                       <Icon className={`h-5 w-5 ${stat.color}`} />
                     </div>
                     <div>
-                      <p className="text-3xl font-black text-white">{stat.value}</p>
+                      <p className="text-3xl font-black text-foreground">{stat.value}</p>
                       <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-0.5">{stat.title}</p>
                     </div>
                   </div>
@@ -100,17 +100,17 @@ export function AdminDashboardScreen({ onLogout }: AdminDashboardScreenProps) {
           </div>
 
           {pendingProperties.length === 0 ? (
-            <GlassCard className="border-white/5 p-8 text-center">
+            <GlassCard className="border-black/5 dark:border-white/5 p-8 text-center">
               <div className="flex flex-col items-center gap-3 text-slate-600">
                 <Check className="w-10 h-10" />
-                <p className="text-sm font-medium text-slate-400">Barcha e'lonlar ko'rib chiqildi</p>
+                <p className="text-sm font-medium text-muted-foreground">Barcha e'lonlar ko'rib chiqildi</p>
               </div>
             </GlassCard>
           ) : (
             <div className="space-y-4">
               {pendingProperties.map((item) => (
                 <div key={item.id} className="space-y-2">
-                  <GlassCard className="border-white/5 overflow-hidden">
+                  <GlassCard className="border-black/5 dark:border-white/5 overflow-hidden">
                     {/* Property Preview */}
                     <div className="flex gap-4 p-4">
                       <img
@@ -121,14 +121,14 @@ export function AdminDashboardScreen({ onLogout }: AdminDashboardScreenProps) {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2 mb-1">
                           <div className="min-w-0">
-                            <p className="font-bold text-white truncate text-sm">{item.location}</p>
-                            <p className="text-xs text-slate-400">{item.region}, {item.district}</p>
+                            <p className="font-bold text-foreground truncate text-sm">{item.title || item.location}</p>
+                            <p className="text-xs text-muted-foreground">{item.region}, {item.district}</p>
                           </div>
                           <span className="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2 py-0.5 rounded-full font-bold shrink-0">
                             Pending
                           </span>
                         </div>
-                        <p className="text-lg font-black text-white">{item.price}</p>
+                        <p className="text-lg font-black text-foreground">{item.price}</p>
                         <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
                           <span>{item.rooms} xona</span>
                           <span>•</span>
@@ -156,13 +156,25 @@ export function AdminDashboardScreen({ onLogout }: AdminDashboardScreenProps) {
 
                       <div className="flex-1" />
 
-                      {/* Approve / Reject */}
+                      {/* Approve / Reject / Delete */}
                       {!isModerator && (
                         <>
                           <motion.button
                             whileTap={{ scale: 0.9 }}
+                            onClick={() => {
+                              if (confirm("Haqiqatan ham o'chirmoqchimisiz?")) {
+                                deleteProperty(item.id);
+                              }
+                            }}
+                            className="flex items-center gap-1 px-3 py-2 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 text-xs font-bold transition-all hover:bg-red-500/20"
+                          >
+                            <X className="h-4 w-4" />
+                            O'chirish
+                          </motion.button>
+                          <motion.button
+                            whileTap={{ scale: 0.9 }}
                             onClick={() => updatePropertyStatus(item.id, "rejected")}
-                            className="flex items-center gap-1 px-3 py-2 rounded-xl bg-red-500/10 text-red-400 border border-red-500/20 text-xs font-bold transition-all hover:bg-red-500/20"
+                            className="flex items-center gap-1 px-3 py-2 rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20 text-xs font-bold transition-all hover:bg-orange-500/20"
                           >
                             <XCircle className="h-4 w-4" />
                             Rad
@@ -200,10 +212,10 @@ export function AdminDashboardScreen({ onLogout }: AdminDashboardScreenProps) {
                           moderationResults[item.id].status === 'Approved'
                             ? 'border-l-green-500 bg-green-500/5'
                             : 'border-l-red-500 bg-red-500/5'
-                        } border-white/5`}>
+                        } border-black/5 dark:border-white/5`}>
                           <div className="p-4">
                             <div className="mb-2 flex items-center justify-between">
-                              <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                              <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                                 <Brain className="h-3 w-3" />
                                 AI tahlil natijasi
                               </span>
@@ -217,8 +229,8 @@ export function AdminDashboardScreen({ onLogout }: AdminDashboardScreenProps) {
                                 Risk: {moderationResults[item.id].riskLevel}
                               </span>
                             </div>
-                            <p className="text-sm font-bold text-white">{moderationResults[item.id].status}</p>
-                            <p className="mt-1 text-xs text-slate-400 leading-relaxed">{moderationResults[item.id].reason}</p>
+                            <p className="text-sm font-bold text-foreground">{moderationResults[item.id].status}</p>
+                            <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{moderationResults[item.id].reason}</p>
                           </div>
                         </GlassCard>
                       </motion.div>
@@ -232,13 +244,13 @@ export function AdminDashboardScreen({ onLogout }: AdminDashboardScreenProps) {
 
         {/* System Settings */}
         <section>
-          <GlassCard className="border-white/5 cursor-pointer hover:bg-white/5 transition-colors">
+          <GlassCard className="border-black/5 dark:border-white/5 cursor-pointer hover:bg-black/5 dark:bg-white/5 transition-colors">
             <div className="flex items-center gap-4 p-5">
               <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center">
                 <Settings className="h-6 w-6 text-blue-400" />
               </div>
               <div>
-                <p className="font-bold text-white">Tizim sozlamalari</p>
+                <p className="font-bold text-foreground">Tizim sozlamalari</p>
                 <p className="text-xs text-slate-500">Ilovani boshqarish</p>
               </div>
             </div>

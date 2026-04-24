@@ -51,7 +51,7 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
     .slice(0, 4);
 
   return (
-    <div className="h-full overflow-y-auto bg-slate-950 pb-40">
+    <div className="h-full overflow-y-auto bg-background pb-40">
       {/* Premium Gallery Container */}
       <div className="relative h-[45vh] w-full overflow-hidden">
         <AnimatePresence mode="wait">
@@ -76,7 +76,7 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={onBack}
-            className="w-12 h-12 flex items-center justify-center rounded-2xl bg-black/20 backdrop-blur-xl border border-white/10 text-white"
+            className="w-12 h-12 flex items-center justify-center rounded-2xl bg-black/20 backdrop-blur-xl border border-black/10 dark:border-white/10 text-foreground"
           >
             <ArrowLeft className="h-6 w-6" />
           </motion.button>
@@ -84,7 +84,7 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
             <motion.button 
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="w-12 h-12 flex items-center justify-center rounded-2xl bg-black/20 backdrop-blur-xl border border-white/10 text-white"
+              className="w-12 h-12 flex items-center justify-center rounded-2xl bg-black/20 backdrop-blur-xl border border-black/10 dark:border-white/10 text-foreground"
             >
               <Share2 className="h-5 w-5" />
             </motion.button>
@@ -98,8 +98,8 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
                 }
                 toggleFavorite(property.id);
               }}
-              className={`w-12 h-12 flex items-center justify-center rounded-2xl backdrop-blur-xl border border-white/10 transition-colors ${
-                isFavorite ? "bg-red-500 text-white border-red-500/50" : "bg-black/20 text-white"
+              className={`w-12 h-12 flex items-center justify-center rounded-2xl backdrop-blur-xl border border-black/10 dark:border-white/10 transition-colors ${
+                isFavorite ? "bg-red-500 text-foreground border-red-500/50" : "bg-black/20 text-foreground"
               }`}
             >
               <Heart className={`h-5 w-5 ${isFavorite ? "fill-current" : ""}`} />
@@ -124,7 +124,7 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
       {/* Main Content */}
       <div className="px-6 -mt-8 relative z-10 space-y-8">
         {/* Info Header Card */}
-        <GlassCard className="p-6 border-white/5 shadow-2xl">
+        <GlassCard className="p-6 border-black/5 dark:border-white/5 shadow-2xl">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
@@ -140,41 +140,42 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
             </div>
 
             <div className="space-y-1">
-              <h1 className="text-4xl font-black text-white tracking-tighter leading-none mb-1">
+              {property.title && <h2 className="text-lg font-bold text-slate-300 mb-1">{property.title}</h2>}
+              <h1 className="text-4xl font-black text-foreground tracking-tighter leading-none mb-1">
                 {property.price}
               </h1>
-              <div className="flex items-center gap-1.5 text-slate-400">
+              <div className="flex items-center gap-1.5 text-muted-foreground">
                 <MapPin className="h-4 w-4 text-cyan-500" />
                 <p className="text-sm font-medium">{property.region}, {property.district}</p>
               </div>
             </div>
 
             {/* Micro Stats */}
-            <div className="pt-4 flex items-center gap-6 border-t border-white/5">
+            <div className="pt-4 flex items-center gap-6 border-t border-black/5 dark:border-white/5">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-cyan-400">
+                <div className="w-10 h-10 rounded-xl bg-black/5 dark:bg-white/5 flex items-center justify-center text-cyan-400">
                   <Bed className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-white font-bold leading-none">{property.rooms}</p>
+                  <p className="text-foreground font-bold leading-none">{property.rooms}</p>
                   <p className="text-[10px] text-slate-500 uppercase font-black">{t("common.rooms")}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-cyan-400">
+                <div className="w-10 h-10 rounded-xl bg-black/5 dark:bg-white/5 flex items-center justify-center text-cyan-400">
                   <Maximize className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-white font-bold leading-none">{property.size} {t("common.m2")}</p>
+                  <p className="text-foreground font-bold leading-none">{property.size} {t("common.m2")}</p>
                   <p className="text-[10px] text-slate-500 uppercase font-black">{t("common.size")}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-cyan-400">
+                <div className="w-10 h-10 rounded-xl bg-black/5 dark:bg-white/5 flex items-center justify-center text-cyan-400">
                   <Shield className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-white font-bold leading-none">{t("profile.verified")}</p>
+                  <p className="text-foreground font-bold leading-none">{t("profile.verified")}</p>
                   <p className="text-[10px] text-slate-500 uppercase font-black">{t("profile.status")}</p>
                 </div>
               </div>
@@ -185,16 +186,16 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
         {/* Seller Profile */}
         <section className="space-y-4">
           <h3 className="text-sm font-black text-slate-500 uppercase tracking-[0.2em]">{t("detail.seller")}</h3>
-          <div className="flex items-center justify-between p-4 rounded-3xl bg-white/5 border border-white/5">
+          <div className="flex items-center justify-between p-4 rounded-3xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 p-0.5">
-                <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center">
-                  <User className="w-6 h-6 text-white" />
+                <div className="w-full h-full rounded-full bg-card flex items-center justify-center">
+                  <User className="w-6 h-6 text-foreground" />
                 </div>
               </div>
               <div>
-                <h4 className="font-bold text-white">{property.seller?.name || "Premium Broker"}</h4>
-                <p className="text-xs text-slate-400">Platformada 2 yildan beri</p>
+                <h4 className="font-bold text-foreground">{property.seller?.name || "Premium Broker"}</h4>
+                <p className="text-xs text-muted-foreground">Platformada 2 yildan beri</p>
               </div>
             </div>
             <ChevronRight className="w-5 h-5 text-slate-600" />
@@ -204,7 +205,7 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
         {/* Description */}
         <section className="space-y-4">
           <h3 className="text-sm font-black text-slate-500 uppercase tracking-[0.2em]">{t("detail.description")}</h3>
-          <p className="text-slate-400 leading-relaxed text-sm">
+          <p className="text-muted-foreground leading-relaxed text-sm">
             {property.description || "Toshkent shahrining markazida joylashgan ushbu ko'chmas mulk barcha qulayliklarga ega. Zamonaviy dizayn va sifatli qurilish materiallari ishlatilgan. Atrofida maktab, bog'cha va savdo majmualari mavjud."}
           </p>
         </section>
@@ -213,7 +214,7 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
         {property.lat && property.lng && (
           <section className="space-y-4">
             <h3 className="text-sm font-black text-slate-500 uppercase tracking-[0.2em]">{t("detail.map")}</h3>
-            <div className="h-48 overflow-hidden rounded-3xl border border-white/5 bg-slate-900 ring-1 ring-white/5">
+            <div className="h-48 overflow-hidden rounded-3xl border border-black/5 dark:border-white/5 bg-card ring-1 ring-white/5">
               <div ref={mapContainerRef} className="h-full w-full grayscale contrast-125 opacity-70" />
             </div>
           </section>
@@ -239,7 +240,7 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
       </div>
 
       {/* Modern Fixed Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 border-t border-white/5 bg-slate-950/90 backdrop-blur-2xl p-6 z-50">
+      <div className="fixed bottom-0 left-0 right-0 border-t border-black/5 dark:border-white/5 bg-background/90 backdrop-blur-2xl p-6 z-50">
         <div className="mx-auto flex max-w-md gap-4">
           <motion.button 
             whileTap={{ scale: 0.95 }}
@@ -251,7 +252,7 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
               // In real app, this would trigger call/whatsapp
               console.log("Calling seller...");
             }}
-            className="flex-1 h-14 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center gap-3 text-white font-bold transition-all hover:bg-white/10"
+            className="flex-1 h-14 rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 flex items-center justify-center gap-3 text-foreground font-bold transition-all hover:bg-white/10"
           >
             <Phone className="h-5 w-5 text-cyan-400" />
             <span>{t("detail.call")}</span>

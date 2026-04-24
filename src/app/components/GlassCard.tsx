@@ -12,7 +12,7 @@ export function GlassCard({ children, className = "", onClick, hover = false }: 
   return (
     <motion.div
       onClick={onClick}
-      className={`rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl ${className}`}
+      className={`rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 backdrop-blur-xl ${className}`}
       whileHover={hover ? { scale: 1.02, y: -4 } : undefined}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >

@@ -56,8 +56,8 @@ export function MapScreen({ onNavigate }: MapScreenProps) {
       >
         <GlassCard hover onClick={() => onNavigate("search")}>
           <button className="flex items-center gap-2 px-6 py-3">
-            <SlidersHorizontal className="h-5 w-5 text-white" />
-            <span className="font-medium text-white">{t("search.filters")}</span>
+            <SlidersHorizontal className="h-5 w-5 text-foreground" />
+            <span className="font-medium text-foreground">{t("search.filters")}</span>
           </button>
         </GlassCard>
       </motion.div>
@@ -70,10 +70,10 @@ export function MapScreen({ onNavigate }: MapScreenProps) {
       >
         <GlassCard>
           <div className="p-4 space-y-2">
-            <p className="text-sm font-medium text-white">{t("login.mapLegend")}</p>
+            <p className="text-sm font-medium text-foreground">{t("login.mapLegend")}</p>
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded-full bg-[#00D4FF]" />
-              <span className="text-xs text-white/70">{t("login.available")}</span>
+              <span className="text-xs text-foreground/70">{t("login.available")}</span>
             </div>
           </div>
         </GlassCard>

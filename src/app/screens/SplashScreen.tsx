@@ -29,7 +29,7 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
         >
           <Building2 className="mx-auto mb-6 h-20 w-20 text-[#00D4FF]" />
         </motion.div>
-        <h1 className="mb-2 text-3xl font-bold text-white">UY JOY</h1>
+        <h1 className="mb-2 text-3xl font-bold text-foreground">UY JOY</h1>
         <p className="text-lg text-[#00D4FF]">SOTISH VA SOTIB OLISH</p>
         <motion.div
           initial={{ width: 0 }}

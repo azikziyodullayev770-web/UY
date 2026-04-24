@@ -2,8 +2,10 @@ import { createContext, useContext, useState, ReactNode, useEffect } from "react
 
 export interface Property {
   id: number;
+  userId: string; // To track ownership
   image: string;
-  images?: string[];
+  images: string[];
+  title: string;
   price: string;
   location: string;
   region: string;
@@ -17,7 +19,8 @@ export interface Property {
   type: "sale" | "rent";
   propertyType?: string;
   isTop?: boolean;
-  status: "pending" | "approved" | "rejected";
+  topExpiresAt?: number; // Timestamp when TOP status expires
+  status: "draft" | "active" | "sold" | "pending" | "approved" | "rejected";
   sellerName?: string;
   sellerPhone?: string;
   sellerTelegram?: string;
@@ -27,8 +30,10 @@ export interface Property {
 interface PropertyContextType {
   properties: Property[];
   favorites: number[];
-  addProperty: (property: Omit<Property, "id" | "status" | "createdAt" | "region">) => void;
-  updatePropertyStatus: (id: number, status: "approved" | "rejected") => void;
+  addProperty: (property: Omit<Property, "id" | "status" | "createdAt" | "region" | "userId">) => void;
+  updateProperty: (id: number, updates: Partial<Property>) => void;
+  deleteProperty: (id: number) => void;
+  updatePropertyStatus: (id: number, status: Property["status"]) => void;
   toggleFavorite: (id: number) => void;
 }
 
@@ -37,8 +42,10 @@ const PropertyContext = createContext<PropertyContextType | undefined>(undefined
 const INITIAL_PROPERTIES: Property[] = [
   {
     id: 1,
+    userId: "admin-superadmin",
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-    images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c", "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9"],
+    images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c", "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9", "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0", "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d"],
+    title: "Markazdagi shinam kvartira",
     price: "$85,000",
     location: "Qarshi, Oydin",
     region: "Qashqadaryo",
@@ -49,6 +56,7 @@ const INITIAL_PROPERTIES: Property[] = [
     lat: 38.8612,
     lng: 65.7847,
     isTop: true,
+    topExpiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
     status: "approved",
     type: "sale",
     propertyType: "apartment",
@@ -59,8 +67,10 @@ const INITIAL_PROPERTIES: Property[] = [
   },
   {
     id: 2,
+    userId: "demo-google-uid",
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
-    images: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750"],
+    images: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750", "https://images.unsplash.com/photo-1515263487990-61b07816b324", "https://images.unsplash.com/photo-1448630360428-6e238802eeaf", "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"],
+    title: "Shahrisabz markazida ijara",
     price: "$1,200,000 /oy",
     location: "Shahrisabz, Kesh",
     region: "Qashqadaryo",
@@ -81,7 +91,10 @@ const INITIAL_PROPERTIES: Property[] = [
   },
   {
     id: 3,
+    userId: "demo-phone-uid",
     image: "https://images.unsplash.com/photo-1580587767303-9cd919b3353c",
+    images: ["https://images.unsplash.com/photo-1580587767303-9cd919b3353c", "https://images.unsplash.com/photo-1518780664697-55e3ad937233", "https://images.unsplash.com/photo-1564013799919-ab600027ffc6", "https://images.unsplash.com/photo-1568605114967-8130f3a36994"],
+    title: "Kitob tumanida katta hovli",
     price: "$120,000",
     location: "Kitob shahar",
     region: "Qashqadaryo",
@@ -92,6 +105,7 @@ const INITIAL_PROPERTIES: Property[] = [
     lat: 39.1245,
     lng: 66.8643,
     isTop: true,
+    topExpiresAt: Date.now() + 3 * 24 * 60 * 60 * 1000,
     status: "approved",
     type: "sale",
     description: "Kitob tumanida katta hovli sotiladi. 6 sotixli yer, mevali daraxtlari bor.",
@@ -101,7 +115,10 @@ const INITIAL_PROPERTIES: Property[] = [
   }
 ];
 
+import { useAuth } from "./AuthContext";
+
 export function PropertyProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
   const [properties, setProperties] = useState<Property[]>(() => {
     const saved = localStorage.getItem("app_properties");
     return saved ? JSON.parse(saved) : INITIAL_PROPERTIES;
@@ -120,10 +137,11 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("app_favorites", JSON.stringify(favorites));
   }, [favorites]);
 
-  const addProperty = (newProp: Omit<Property, "id" | "status" | "createdAt" | "region">) => {
+  const addProperty = (newProp: Omit<Property, "id" | "status" | "createdAt" | "region" | "userId">) => {
     const property: Property = {
       ...newProp,
       id: Date.now(),
+      userId: user?.uid || "guest",
       status: "pending",
       createdAt: Date.now(),
       region: "Qashqadaryo"
@@ -131,7 +149,17 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     setProperties((prev) => [property, ...prev]);
   };
 
-  const updatePropertyStatus = (id: number, status: "approved" | "rejected") => {
+  const updateProperty = (id: number, updates: Partial<Property>) => {
+    setProperties((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, ...updates } : p))
+    );
+  };
+
+  const deleteProperty = (id: number) => {
+    setProperties((prev) => prev.filter((p) => p.id !== id));
+  };
+
+  const updatePropertyStatus = (id: number, status: Property["status"]) => {
     setProperties((prev) =>
       prev.map((p) => (p.id === id ? { ...p, status } : p))
     );
@@ -145,14 +173,25 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
 
   // Memoized and sorted properties
   const sortedProperties = [...properties].sort((a, b) => {
-    // Sort by isTop (boolean) first, then by createdAt (timestamp)
-    if (a.isTop && !b.isTop) return -1;
-    if (!a.isTop && b.isTop) return 1;
+    const now = Date.now();
+    const aIsTopActive = a.isTop && (!a.topExpiresAt || a.topExpiresAt > now);
+    const bIsTopActive = b.isTop && (!b.topExpiresAt || b.topExpiresAt > now);
+
+    if (aIsTopActive && !bIsTopActive) return -1;
+    if (!aIsTopActive && bIsTopActive) return 1;
     return b.createdAt - a.createdAt;
   });
 
   return (
-    <PropertyContext.Provider value={{ properties: sortedProperties, favorites, addProperty, updatePropertyStatus, toggleFavorite }}>
+    <PropertyContext.Provider value={{ 
+      properties: sortedProperties, 
+      favorites, 
+      addProperty, 
+      updateProperty,
+      deleteProperty,
+      updatePropertyStatus, 
+      toggleFavorite 
+    }}>
       {children}
     </PropertyContext.Provider>
   );
