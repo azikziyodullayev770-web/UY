@@ -53,7 +53,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
   {
     id: "conv-2",
     participants: [
-      { id: "demo-seller-2", name: "Manzora opa", photoURL: "https://i.pravatar.cc/150?u=manzora" }
+      { id: "demo-seller-2", name: "Senyorita", photoURL: "https://i.pravatar.cc/150?u=manzora" }
     ],
     lastMessage: {
       id: "m-2",
@@ -179,11 +179,11 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <ChatContext.Provider value={{ 
-      conversations, 
-      activeConversation, 
-      messages, 
-      setActiveConversation, 
+    <ChatContext.Provider value={{
+      conversations,
+      activeConversation,
+      messages,
+      setActiveConversation,
       sendMessage,
       archiveConversation,
       deleteConversation,

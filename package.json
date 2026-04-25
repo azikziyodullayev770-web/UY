@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package",
   "name": "uy-joy-sotish-va-sotib-olish-uchun",
   "private": true,
   "version": "0.0.1",
