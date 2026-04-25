@@ -17,7 +17,7 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
   const { 
     conversations, activeConversation, messages, 
     setActiveConversation, sendMessage, archiveConversation, 
-    deleteConversation, isTyping 
+    deleteConversation, typingConversations 
   } = useChat();
   
   const { user } = useAuth();
@@ -33,7 +33,7 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
 
   useEffect(() => {
     if (activeConversation) scrollToBottom();
-  }, [messages, activeConversation, isTyping]);
+  }, [messages, activeConversation, typingConversations]);
 
   const filteredConversations = conversations.filter(conv => 
     !conv.isArchived && 
@@ -202,7 +202,7 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
         <div className="flex-1 min-w-0">
           <h2 className="font-bold text-foreground truncate">{activeConvData?.participants[0].name}</h2>
           <p className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">
-            {isTyping ? "Yozmoqda..." : "Online"}
+            {activeConversation && typingConversations[activeConversation] ? "Yozmoqda..." : "Online"}
           </p>
         </div>
         <button className="p-2 text-slate-500 hover:text-foreground">
@@ -245,7 +245,7 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
             </div>
           </motion.div>
         ))}
-        {isTyping && (
+        {activeConversation && typingConversations[activeConversation] && (
           <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="flex justify-start">
             <div className="bg-black/5 dark:bg-white/5 rounded-2xl px-4 py-3 flex gap-1 items-center border border-black/10 dark:border-white/10">
               <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-bounce" />

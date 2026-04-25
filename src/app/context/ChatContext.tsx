@@ -30,7 +30,8 @@ interface ChatContextType {
   sendMessage: (conversationId: string, text: string, image?: string) => void;
   archiveConversation: (id: string) => void;
   deleteConversation: (id: string) => void;
-  isTyping: boolean;
+  typingConversations: Record<string, boolean>;
+  markAsSeen: (id: string) => void;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -107,7 +108,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   });
 
   const [activeConversation, setActiveConversation] = useState<string | null>(null);
-  const [isTyping, setIsTyping] = useState(false);
+  const [typingConversations, setTypingConversations] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     localStorage.setItem("app_conversations", JSON.stringify(conversations));
@@ -141,9 +142,9 @@ export function ChatProvider({ children }: { children: ReactNode }) {
 
     // Simulate reply
     if (!image) {
-      setTimeout(() => setIsTyping(true), 1000);
+      setTimeout(() => setTypingConversations(prev => ({ ...prev, [conversationId]: true })), 1000);
       setTimeout(() => {
-        setIsTyping(false);
+        setTypingConversations(prev => ({ ...prev, [conversationId]: false }));
         const reply: Message = {
           id: `m-reply-${Date.now()}`,
           senderId: "opponent",
@@ -157,13 +158,46 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         }));
         setConversations(prev => prev.map(conv => {
           if (conv.id === conversationId) {
-            return { ...conv, lastMessage: reply };
+            return { ...conv, lastMessage: reply, unreadCount: conv.unreadCount + (activeConversation === conversationId ? 0 : 1) };
           }
           return conv;
         }));
       }, 3000);
     }
   };
+
+  const markAsSeen = (id: string) => {
+    setMessages(prev => {
+      const convMessages = prev[id] || [];
+      const hasUnseen = convMessages.some(m => m.senderId !== user?.uid && m.status !== "seen");
+      if (!hasUnseen) return prev;
+      
+      return {
+        ...prev,
+        [id]: convMessages.map(m => 
+          m.senderId !== user?.uid && m.status !== "seen" ? { ...m, status: "seen" as const } : m
+        )
+      };
+    });
+    setConversations(prev => prev.map(conv => {
+      if (conv.id === id) {
+        return { 
+          ...conv, 
+          unreadCount: 0,
+          lastMessage: conv.lastMessage && conv.lastMessage.senderId !== user?.uid 
+            ? { ...conv.lastMessage, status: "seen" } as Message
+            : conv.lastMessage
+        };
+      }
+      return conv;
+    }));
+  };
+
+  useEffect(() => {
+    if (activeConversation) {
+      markAsSeen(activeConversation);
+    }
+  }, [activeConversation, messages]);
 
   const archiveConversation = (id: string) => {
     setConversations(prev => prev.map(conv => conv.id === id ? { ...conv, isArchived: true } : conv));
@@ -187,7 +221,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       sendMessage,
       archiveConversation,
       deleteConversation,
-      isTyping
+      typingConversations,
+      markAsSeen
     }}>
       {children}
     </ChatContext.Provider>

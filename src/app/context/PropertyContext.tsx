@@ -115,13 +115,16 @@ const INITIAL_PROPERTIES: Property[] = [
   }
 ];
 
+import { realisticListings } from "./dummyData";
+const COMBINED_PROPERTIES = [...INITIAL_PROPERTIES, ...realisticListings] as Property[];
+
 import { useAuth } from "./AuthContext";
 
 export function PropertyProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const [properties, setProperties] = useState<Property[]>(() => {
     const saved = localStorage.getItem("app_properties");
-    return saved ? JSON.parse(saved) : INITIAL_PROPERTIES;
+    return saved ? JSON.parse(saved) : COMBINED_PROPERTIES;
   });
 
   const [favorites, setFavorites] = useState<number[]>(() => {

@@ -10,6 +10,7 @@ import { LocationPicker } from "../components/LocationPicker";
 import { useProperties, Property } from "../context/PropertyContext";
 import { useTranslation } from "../context/LanguageContext";
 import { useAuth } from "../context/AuthContext";
+import { useRef } from "react";
 
 interface AddListingScreenProps {
   onBack: () => void;
@@ -49,6 +50,7 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
   const [isProcessing, setIsProcessing] = useState(false);
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const districts = [
     "Qarshi", "Shahrisabz", "Kitob", "G'uzor", "Kasbi", 
@@ -99,22 +101,34 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
 
   const handleImageAdd = () => {
     if (formData.images.length >= 10) return;
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.length) return;
     
     setIsOptimizing(true);
-    // Simulate image optimization/upload
-    setTimeout(() => {
-      const mockImages = [
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9",
-        "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0",
-        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d",
-        "https://images.unsplash.com/photo-1600566752355-35792bedcfea",
-        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde",
-      ];
-      const randomImg = mockImages[Math.floor(Math.random() * mockImages.length)];
-      setFormData(prev => ({ ...prev, images: [...prev.images, randomImg] }));
+    const files = Array.from(e.target.files);
+    
+    Promise.all(files.map(file => {
+      return new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          resolve(event.target?.result as string);
+        };
+        reader.readAsDataURL(file);
+      });
+    })).then(base64Images => {
+      setFormData(prev => {
+        const newImages = [...prev.images, ...base64Images].slice(0, 10);
+        return { ...prev, images: newImages };
+      });
       setIsOptimizing(false);
-    }, 800);
+      // Reset input so the same file can be selected again if needed
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    });
   };
 
   const removeImage = (index: number) => {
@@ -371,6 +385,14 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
                 <div className="w-20 h-20 bg-cyan-500/10 rounded-3xl flex items-center justify-center mx-auto">
                   <Camera className="w-10 h-10 text-cyan-400" />
                 </div>
+                <input 
+                  type="file" 
+                  ref={fileInputRef} 
+                  onChange={handleFileChange} 
+                  accept="image/*" 
+                  multiple 
+                  className="hidden" 
+                />
                 <div className="space-y-1">
                   <h3 className="text-lg font-black text-foreground">{t("add.images")}</h3>
                   <p className="text-xs text-slate-500 font-medium">
