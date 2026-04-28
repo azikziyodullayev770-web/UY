@@ -194,8 +194,13 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
                 </div>
               </div>
               <div>
-                <h4 className="font-bold text-foreground">{property.seller?.name || "Premium Broker"}</h4>
-                <p className="text-xs text-muted-foreground">Platformada 2 yildan beri</p>
+                <h4 className="font-bold text-foreground">{property.sellerName || "Premium Broker"}</h4>
+                <div className="flex flex-col gap-0.5">
+                  <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Sotuvchi</p>
+                  {property.sellerTelegram && (
+                    <p className="text-[10px] text-cyan-400 font-bold">@{property.sellerTelegram.replace("@", "")}</p>
+                  )}
+                </div>
               </div>
             </div>
             <ChevronRight className="w-5 h-5 text-slate-600" />
@@ -241,25 +246,32 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
 
       {/* Modern Fixed Bottom Actions */}
       <div className="fixed bottom-0 left-0 right-0 border-t border-black/5 dark:border-white/5 bg-background/90 backdrop-blur-2xl p-6 z-50">
-        <div className="mx-auto flex max-w-md gap-4">
-          <motion.button 
+        <div className="mx-auto flex max-w-7xl gap-4">
+          <motion.a 
             whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              if (!isAuthenticated) {
-                onNavigate("login");
-                return;
-              }
-              // In real app, this would trigger call/whatsapp
-              console.log("Calling seller...");
-            }}
+            href={`tel:${property.sellerPhone || ""}`}
             className="flex-1 h-14 rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 flex items-center justify-center gap-3 text-foreground font-bold transition-all hover:bg-white/10"
           >
             <Phone className="h-5 w-5 text-cyan-400" />
-            <span>{t("detail.call")}</span>
-          </motion.button>
+            <span className="hidden sm:inline">{t("detail.call")}</span>
+          </motion.a>
+
+          {property.sellerTelegram && (
+            <motion.a
+              whileTap={{ scale: 0.95 }}
+              href={`https://t.me/${property.sellerTelegram.replace("@", "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 h-14 rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 flex items-center justify-center gap-3 text-foreground font-bold transition-all hover:bg-white/10"
+            >
+              <div className="w-5 h-5 flex items-center justify-center bg-cyan-500 rounded-lg text-slate-950 font-black text-[10px]">T</div>
+              <span className="hidden sm:inline">Telegram</span>
+            </motion.a>
+          )}
+
           <motion.button
             whileTap={{ scale: 0.95 }}
-            onClick={() => onNavigate("chat", property.seller)}
+            onClick={() => onNavigate("chat", { uid: property.userId, displayName: property.sellerName })}
             className="flex-[1.5] h-14 rounded-2xl bg-white text-slate-950 flex items-center justify-center gap-3 font-black uppercase tracking-widest shadow-xl shadow-white/5"
           >
             <MessageCircle className="h-5 w-5" />

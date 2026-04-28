@@ -29,14 +29,17 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
   const [formData, setFormData] = useState({
     type: editProperty?.type || "sale" as "sale" | "rent",
     title: editProperty?.title || "",
-    price: editProperty?.price.replace("$", "") || "",
+    price: editProperty?.price.replace(/[^\d]/g, "") || "",
+    currency: editProperty?.price.includes("$") ? "USD" : "UZS",
     district: editProperty?.district || "",
     lat: editProperty?.lat || null as number | null,
     lng: editProperty?.lng || null as number | null,
     address: editProperty?.address || "",
     description: editProperty?.description || "",
     sellerName: editProperty?.sellerName || user?.displayName || "",
-    phone: editProperty?.sellerPhone || user?.phoneNumber || "",
+    phone: (editProperty?.sellerPhone || user?.phoneNumber || "").startsWith("+998") 
+      ? (editProperty?.sellerPhone || user?.phoneNumber || "") 
+      : "+998",
     telegram: editProperty?.sellerTelegram || "",
     rooms: editProperty?.rooms.toString() || "",
     size: editProperty?.size.toString() || "",
@@ -78,6 +81,8 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
       if (!formData.title) newErrors.push(t("add.titleRequired"));
       if (!formData.price) newErrors.push(t("login.priceRequired"));
       if (!formData.phone) newErrors.push(t("login.phoneRequired"));
+      else if (!formData.phone.startsWith("+998")) newErrors.push("Telefon raqami +998 bilan boshlanishi shart");
+      else if (formData.phone.length < 13) newErrors.push("Telefon raqami to'liq emas (masalan: +998901234567)");
     } else if (step === "IMAGES") {
       if (formData.images.length < 4) newErrors.push(t("add.minImagesError"));
     }
@@ -143,23 +148,25 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
   const finalSubmit = (statusOverride?: "draft" | "active") => {
     const status = statusOverride || formData.status;
     
-    // If it's a NEW listing and user chose TOP, show payment. 
-    // If it's an EDIT, we assume payment was already handled or handled separately.
-    if (formData.isTop && status === "active" && !editProperty) {
+    // If user chose TOP, show payment modal first.
+    if (formData.isTop && !editProperty) {
       setIsPaymentOpen(true);
     } else {
-      processSubmission(status);
+      // If it's not TOP or it's an EDIT, process normally.
+      processSubmission(status, formData.isTop);
     }
   };
 
-  const processSubmission = (status: Property["status"]) => {
+  const processSubmission = (status: Property["status"], confirmedTop: boolean = false) => {
     setIsProcessing(true);
     setTimeout(() => {
       const propertyData = {
         image: formData.images[0] || "https://images.unsplash.com/photo-1663756915304-40b7eda63e41?w=1080",
         images: formData.images,
         title: formData.title,
-        price: formData.price.startsWith("$") ? formData.price : `$${formData.price}`,
+        price: formData.currency === "USD" 
+          ? `$${Number(formData.price).toLocaleString()}` 
+          : `${Number(formData.price).toLocaleString()} UZS`,
         location: `${formData.district}, ${formData.address.split(",")[0]}`,
         address: formData.address,
         district: formData.district,
@@ -169,8 +176,8 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
         size: parseInt(formData.size) || 0,
         description: formData.description,
         type: formData.type,
-        isTop: formData.isTop,
-        topExpiresAt: formData.isTop ? Date.now() + 7 * 24 * 60 * 60 * 1000 : undefined,
+        isTop: confirmedTop,
+        topExpiresAt: confirmedTop ? Date.now() + 7 * 24 * 60 * 60 * 1000 : undefined,
         status: status,
         sellerName: formData.sellerName || user?.displayName || "Foydalanuvchi",
         sellerPhone: formData.phone,
@@ -319,15 +326,31 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
                   />
                 </div>
 
-                <div className="relative group">
-                  <DollarSign className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
-                  <input
-                    type="text"
-                    value={formData.price}
-                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                    placeholder={t("add.pricePlaceholder")}
-                    className="w-full h-16 pl-14 pr-6 rounded-3xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-foreground font-bold outline-none focus:border-cyan-500/50 transition-all placeholder:text-slate-600"
-                  />
+                <div className="flex gap-4">
+                  <div className="relative group flex-1">
+                    <DollarSign className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
+                    <input
+                      type="number"
+                      value={formData.price}
+                      onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                      placeholder={t("add.pricePlaceholder")}
+                      className="w-full h-16 pl-14 pr-6 rounded-3xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-foreground font-bold outline-none focus:border-cyan-500/50 transition-all placeholder:text-slate-600"
+                    />
+                  </div>
+                  <div className="flex p-1 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5 h-16 self-center">
+                    {["UZS", "USD"].map((curr) => (
+                      <button
+                        key={curr}
+                        type="button"
+                        onClick={() => setFormData({ ...formData, currency: curr as any })}
+                        className={`px-4 rounded-xl text-[10px] font-black transition-all ${
+                          formData.currency === curr ? "bg-white text-slate-950 shadow-lg" : "text-slate-500"
+                        }`}
+                      >
+                        {curr}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -367,8 +390,14 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
                     <input
                       type="tel"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder={t("add.phonePlaceholder")}
+                      onChange={(e) => {
+                        let val = e.target.value;
+                        if (!val.startsWith("+998")) {
+                          val = "+998" + val.replace(/\D/g, "");
+                        }
+                        setFormData({ ...formData, phone: val });
+                      }}
+                      placeholder="+998"
                       className="w-full h-16 pl-14 pr-6 rounded-3xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-foreground font-bold outline-none focus:border-cyan-500/50 transition-all placeholder:text-slate-600"
                     />
                   </div>
@@ -673,7 +702,7 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
 
               <div className="grid grid-cols-2 gap-4">
                 <button onClick={() => setIsPaymentOpen(false)} className="h-14 rounded-2xl border border-black/10 dark:border-white/10 text-foreground font-bold">{t("common.cancel")}</button>
-                <button onClick={() => { setIsPaymentOpen(false); processSubmission("active"); }} className="h-14 rounded-2xl bg-cyan-500 text-slate-950 font-black flex items-center justify-center gap-2">
+                <button onClick={() => { setIsPaymentOpen(false); processSubmission("active", true); }} className="h-14 rounded-2xl bg-cyan-500 text-slate-950 font-black flex items-center justify-center gap-2">
                   <CreditCard className="w-5 h-5" />
                   {t("add.payNow")}
                 </button>
