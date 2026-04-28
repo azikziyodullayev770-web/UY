@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { useEffect } from "react";
-import { Building2 } from "lucide-react";
+import logo from "../assets/logo.png";
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -27,7 +27,7 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
           animate={{ rotate: [0, 5, -5, 0] }}
           transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
         >
-          <Building2 className="mx-auto mb-6 h-20 w-20 text-[#00D4FF]" />
+          <img src={logo} alt="UY JOY Logo" className="mx-auto mb-6 h-24 w-24 object-contain" />
         </motion.div>
         <h1 className="mb-2 text-3xl font-bold text-foreground">UY JOY</h1>
         <p className="text-lg text-[#00D4FF]">SOTISH VA SOTIB OLISH</p>
