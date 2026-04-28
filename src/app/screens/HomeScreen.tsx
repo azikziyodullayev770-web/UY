@@ -92,7 +92,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
                 {t("common.all")}
               </button>
             </div>
-            <div className="space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {topListings.map((property, index) => (
                 <motion.div
                   key={property.id}
@@ -122,7 +122,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
             <div className="w-1.5 h-6 bg-slate-700 rounded-full" />
             <h2 className="text-lg font-bold text-foreground tracking-tight">{t("home.newListings")}</h2>
           </div>
-          <div className="grid grid-cols-1 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {newListings.map((property, index) => (
               <motion.div
                 key={property.id}

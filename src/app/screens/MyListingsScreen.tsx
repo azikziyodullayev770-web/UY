@@ -68,96 +68,96 @@ export function MyListingsScreen({ onBack, onEdit }: MyListingsScreenProps) {
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
-        {myListings.length === 0 ? (
-          <div className="h-[60vh] flex flex-col items-center justify-center text-center space-y-6">
-            <div className="w-24 h-24 bg-black/5 dark:bg-white/5 rounded-[2.5rem] flex items-center justify-center border border-black/10 dark:border-white/10">
-              <Home className="w-10 h-10 text-slate-700" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+          {myListings.length === 0 ? (
+            <div className="md:col-span-2 h-[60vh] flex flex-col items-center justify-center text-center space-y-6">
+              <div className="w-24 h-24 bg-black/5 dark:bg-white/5 rounded-[2.5rem] flex items-center justify-center border border-black/10 dark:border-white/10">
+                <Home className="w-10 h-10 text-slate-700" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-black text-foreground uppercase tracking-tight">E'lonlar yo'q</h3>
+                <p className="text-sm text-slate-500 px-10">Siz hali birorta ham e'lon joylamagansiz.</p>
+              </div>
             </div>
-            <div className="space-y-2">
-              <h3 className="text-xl font-black text-foreground uppercase tracking-tight">E'lonlar yo'q</h3>
-              <p className="text-sm text-slate-500 px-10">Siz hali birorta ham e'lon joylamagansiz.</p>
-            </div>
-          </div>
-        ) : (
-          myListings.map((listing) => (
-            <motion.div
-              key={listing.id}
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className={deletingId === listing.id ? "opacity-50 grayscale" : ""}
-            >
-              <GlassCard className="overflow-hidden border-black/5 dark:border-white/5 group">
-                <div className="flex gap-4 p-4">
-                  {/* Image */}
-                  <div className="w-24 h-24 rounded-2xl overflow-hidden shrink-0 border border-black/5 dark:border-white/5 relative">
-                    <img src={listing.image} alt="" className="w-full h-full object-cover" />
-                    {listing.isTop && (
-                      <div className="absolute top-1 left-1 bg-cyan-500 p-1 rounded-lg">
-                        <Star className="w-3 h-3 text-slate-950 fill-current" />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Details */}
-                  <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between">
-                        <div className={`px-2 py-0.5 rounded-full flex items-center gap-1 ${getStatusColor(listing.status)}`}>
-                          {getStatusIcon(listing.status)}
-                          <span className="text-[8px] font-black uppercase tracking-widest">{listing.status}</span>
+          ) : (
+            myListings.map((listing) => (
+              <motion.div
+                key={listing.id}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className={deletingId === listing.id ? "opacity-50 grayscale" : ""}
+              >
+                <GlassCard className="overflow-hidden border-black/5 dark:border-white/5 group h-full flex flex-col">
+                  <div className="flex gap-4 p-4 flex-1">
+                    {/* Image */}
+                    <div className="w-24 h-24 rounded-2xl overflow-hidden shrink-0 border border-black/5 dark:border-white/5 relative">
+                      <img src={listing.image} alt="" className="w-full h-full object-cover" />
+                      {listing.isTop && (
+                        <div className="absolute top-1 left-1 bg-cyan-500 p-1 rounded-lg">
+                          <Star className="w-3 h-3 text-slate-950 fill-current" />
                         </div>
-                        <span className="text-[10px] text-slate-500 font-bold tracking-wider">{new Date(listing.createdAt).toLocaleDateString()}</span>
-                      </div>
-                      <h4 className="text-[10px] font-bold text-muted-foreground truncate tracking-tight">{listing.title || "No Title"}</h4>
-                      <h4 className="text-lg font-black text-foreground truncate tracking-tight">{listing.price}</h4>
-                      <div className="flex items-center gap-1 text-muted-foreground">
-                        <MapPin className="w-3 h-3 text-cyan-500" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest truncate">{listing.district}</span>
+                      )}
+                    </div>
+
+                    {/* Details */}
+                    <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between">
+                          <div className={`px-2 py-0.5 rounded-full flex items-center gap-1 ${getStatusColor(listing.status)}`}>
+                            {getStatusIcon(listing.status)}
+                            <span className="text-[8px] font-black uppercase tracking-widest">{listing.status}</span>
+                          </div>
+                          <span className="text-[10px] text-slate-500 font-bold tracking-wider">{new Date(listing.createdAt).toLocaleDateString()}</span>
+                        </div>
+                        <h4 className="text-[10px] font-bold text-muted-foreground truncate tracking-tight">{listing.title || "No Title"}</h4>
+                        <h4 className="text-lg font-black text-foreground truncate tracking-tight">{listing.price}</h4>
+                        <div className="flex items-center gap-1 text-muted-foreground">
+                          <MapPin className="w-3 h-3 text-cyan-500" />
+                          <span className="text-[10px] font-bold uppercase tracking-widest truncate">{listing.district}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Actions */}
-                <div className="px-4 py-3 bg-black/5 dark:bg-white/5 flex items-center justify-between border-t border-black/5 dark:border-white/5">
-                  <div className="flex gap-4">
-                    <button className="flex items-center gap-1.5 text-muted-foreground hover:text-cyan-400 transition-colors">
-                      <Eye className="w-4 h-4" />
-                      <span className="text-[10px] font-black uppercase tracking-widest">128</span>
-                    </button>
-                  </div>
-                  
-                  <div className="flex gap-2">
-                    <button 
-                      onClick={() => onEdit(listing)}
-                      className="w-10 h-10 rounded-xl bg-black/5 dark:bg-white/5 flex items-center justify-center text-foreground hover:bg-cyan-500 hover:text-slate-950 transition-all"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </button>
-                    {(listing.status === "active" || listing.status === "approved") && (
-                      <button 
-                        onClick={() => updatePropertyStatus(listing.id, "sold")}
-                        className="px-4 h-10 rounded-xl bg-black/5 dark:bg-white/5 text-muted-foreground text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all"
-                      >
-                        Sotildi
+                  {/* Actions */}
+                  <div className="px-4 py-3 bg-black/5 dark:bg-white/5 flex items-center justify-between border-t border-black/5 dark:border-white/5 mt-auto">
+                    <div className="flex gap-4">
+                      <button className="flex items-center gap-1.5 text-muted-foreground hover:text-cyan-400 transition-colors">
+                        <Eye className="w-4 h-4" />
+                        <span className="text-[10px] font-black uppercase tracking-widest">128</span>
                       </button>
-                    )}
-                    <button 
-                      onClick={() => handleDelete(listing.id)}
-                      className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-foreground transition-all"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <button 
+                        onClick={() => onEdit(listing)}
+                        className="w-10 h-10 rounded-xl bg-black/5 dark:bg-white/5 flex items-center justify-center text-foreground hover:bg-cyan-500 hover:text-slate-950 transition-all"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </button>
+                      {(listing.status === "active" || listing.status === "approved") && (
+                        <button 
+                          onClick={() => updatePropertyStatus(listing.id, "sold")}
+                          className="px-4 h-10 rounded-xl bg-black/5 dark:bg-white/5 text-muted-foreground text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all"
+                        >
+                          Sotildi
+                        </button>
+                      )}
+                      <button 
+                        onClick={() => handleDelete(listing.id)}
+                        className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-foreground transition-all"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </GlassCard>
-            </motion.div>
-          ))
-        )}
-      </div>
+                </GlassCard>
+              </motion.div>
+            ))
+          )}
+        </div>
     </div>
   );
 }

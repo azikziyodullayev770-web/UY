@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { 
   ArrowLeft, MapPin, DollarSign, Phone, AlertCircle, Info, 
   Maximize, Bed, Star, CheckCircle2, CreditCard, Loader2, 
-  Camera, X, ChevronRight, Check
+  Camera, X, ChevronRight, Check, User
 } from "lucide-react";
 import { GlassCard } from "../components/GlassCard";
 import { useState } from "react";
@@ -35,7 +35,9 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
     lng: editProperty?.lng || null as number | null,
     address: editProperty?.address || "",
     description: editProperty?.description || "",
-    phone: editProperty?.sellerPhone || "",
+    sellerName: editProperty?.sellerName || user?.displayName || "",
+    phone: editProperty?.sellerPhone || user?.phoneNumber || "",
+    telegram: editProperty?.sellerTelegram || "",
     rooms: editProperty?.rooms.toString() || "",
     size: editProperty?.size.toString() || "",
     isTop: editProperty?.isTop || false,
@@ -170,8 +172,9 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
         isTop: formData.isTop,
         topExpiresAt: formData.isTop ? Date.now() + 7 * 24 * 60 * 60 * 1000 : undefined,
         status: status,
-        sellerName: user?.displayName || "Foydalanuvchi",
+        sellerName: formData.sellerName || user?.displayName || "Foydalanuvchi",
         sellerPhone: formData.phone,
+        sellerTelegram: formData.telegram,
       };
 
       if (editProperty) {
@@ -358,13 +361,36 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
                   className="w-full px-6 py-5 rounded-3xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-foreground font-medium outline-none focus:border-cyan-500/50 transition-all placeholder:text-slate-600 resize-none"
                 />
 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="relative group">
+                    <Phone className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      placeholder={t("add.phonePlaceholder")}
+                      className="w-full h-16 pl-14 pr-6 rounded-3xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-foreground font-bold outline-none focus:border-cyan-500/50 transition-all placeholder:text-slate-600"
+                    />
+                  </div>
+                  <div className="relative group">
+                    <div className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-cyan-400 transition-colors flex items-center justify-center font-black text-sm">@</div>
+                    <input
+                      type="text"
+                      value={formData.telegram}
+                      onChange={(e) => setFormData({ ...formData, telegram: e.target.value })}
+                      placeholder="Telegram username"
+                      className="w-full h-16 pl-14 pr-6 rounded-3xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-foreground font-bold outline-none focus:border-cyan-500/50 transition-all placeholder:text-slate-600"
+                    />
+                  </div>
+                </div>
+
                 <div className="relative group">
-                  <Phone className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
+                  <User className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
                   <input
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder={t("add.phonePlaceholder")}
+                    type="text"
+                    value={formData.sellerName}
+                    onChange={(e) => setFormData({ ...formData, sellerName: e.target.value })}
+                    placeholder="Sotuvchi ismi"
                     className="w-full h-16 pl-14 pr-6 rounded-3xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-foreground font-bold outline-none focus:border-cyan-500/50 transition-all placeholder:text-slate-600"
                   />
                 </div>
