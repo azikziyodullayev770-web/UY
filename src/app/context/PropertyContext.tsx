@@ -50,7 +50,11 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const [properties, setProperties] = useState<Property[]>(() => {
     const saved = localStorage.getItem("app_properties");
-    const parsed: Property[] = saved ? JSON.parse(saved) : [];
+    let parsed: Property[] = saved ? JSON.parse(saved) : [];
+    
+    // STRICT FILTER: Remove any properties that are not from Qashqadaryo
+    // This handles cleaning up old localStorage data from other regions
+    parsed = parsed.filter(p => p.region === "Qashqadaryo");
     
     // Ensure all combined properties (including dummyData) are present
     const existingIds = new Set(parsed.map((p) => p.id));
