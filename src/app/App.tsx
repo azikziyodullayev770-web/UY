@@ -178,14 +178,73 @@ function AppContent() {
   };
 
   return (
-    <div className="fixed inset-0 flex h-full w-full items-center justify-center bg-background">
-      <div className="relative h-full w-full max-w-md overflow-hidden bg-background shadow-2xl">
-        <AnimatePresence mode="wait">
-          {renderScreen()}
-        </AnimatePresence>
+    <div className="fixed inset-0 flex h-full w-full bg-background">
+      {/* Desktop Sidebar */}
+      {showBottomNav && (
+        <div className="hidden md:flex h-full w-64 flex-col border-r border-black/5 dark:border-white/5 bg-background/80 backdrop-blur-xl p-6">
+          <div className="flex items-center gap-2 mb-10">
+            <div className="w-10 h-10 bg-cyan-500 rounded-2xl flex items-center justify-center">
+              <span className="text-xl font-black text-slate-950">UY</span>
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-foreground leading-none">UY JOY</h2>
+              <p className="text-[10px] text-cyan-400 uppercase font-black tracking-widest leading-none">Platform</p>
+            </div>
+          </div>
+
+          <nav className="flex-1 space-y-2">
+            {[
+              { id: "home", icon: "Home", label: "Bosh sahifa" },
+              { id: "search", icon: "Search", label: "Qidiruv" },
+              { id: "favorites", icon: "Heart", label: "Saralanganlar" },
+              { id: "chat", icon: "MessageSquare", label: "Suhbatlar" },
+              { id: "profile", icon: "User", label: "Profil" },
+            ].map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleNavigation(item.id as AppScreen)}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
+                  currentScreen === item.id 
+                    ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" 
+                    : "text-slate-500 hover:bg-black/5 dark:hover:bg-white/5 hover:text-foreground"
+                }`}
+              >
+                <span className="text-xl">
+                  {item.id === "home" && "🏠"}
+                  {item.id === "search" && "🔍"}
+                  {item.id === "favorites" && "❤️"}
+                  {item.id === "chat" && "💬"}
+                  {item.id === "profile" && "👤"}
+                </span>
+                <span className="font-bold text-sm">{item.label}</span>
+              </button>
+            ))}
+          </nav>
+
+          <button
+            onClick={() => handleNavigation("add")}
+            className="w-full py-4 mt-4 rounded-2xl bg-cyan-500 text-slate-950 font-black uppercase tracking-widest text-xs active:scale-95 transition-all shadow-lg shadow-cyan-500/20"
+          >
+            E'lon berish
+          </button>
+        </div>
+      )}
+
+      {/* Main Content Area */}
+      <div className="relative h-full flex-1 overflow-hidden bg-background">
+        <div className={`h-full w-full mx-auto ${showBottomNav ? "max-w-7xl" : "max-w-md"}`}>
+          <AnimatePresence mode="wait">
+            {renderScreen()}
+          </AnimatePresence>
+        </div>
 
         {showBottomNav && (
-          <motion.div initial={{ y: 100 }} animate={{ y: 0 }} transition={{ type: "spring", stiffness: 300, damping: 30 }}>
+          <motion.div 
+            className="md:hidden"
+            initial={{ y: 100 }} 
+            animate={{ y: 0 }} 
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
             <BottomNav active={currentScreen} onNavigate={(screen) => handleNavigation(screen as AppScreen)} />
           </motion.div>
         )}
