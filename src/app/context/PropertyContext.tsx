@@ -53,10 +53,21 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     let parsed: Property[] = saved ? JSON.parse(saved) : [];
     
     // STRICT FILTER: Remove any properties that are not from Qashqadaryo
-    // This handles cleaning up old localStorage data from other regions
     parsed = parsed.filter(p => p.region === "Qashqadaryo");
+
+    // FIX BROKEN IMAGE PATHS in localStorage data
+    parsed = parsed.map(p => {
+      if (p.image && p.image.startsWith("/images/houses/")) {
+        return {
+          ...p,
+          image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+          images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c"]
+        };
+      }
+      return p;
+    });
     
-    // Ensure all combined properties (including dummyData) are present
+    // Ensure all combined properties (including fixed dummyData) are present
     const existingIds = new Set(parsed.map((p) => p.id));
     const missingProperties = COMBINED_PROPERTIES.filter((p) => !existingIds.has(p.id));
     
