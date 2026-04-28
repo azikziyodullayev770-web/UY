@@ -124,7 +124,13 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const [properties, setProperties] = useState<Property[]>(() => {
     const saved = localStorage.getItem("app_properties");
-    return saved ? JSON.parse(saved) : COMBINED_PROPERTIES;
+    const parsed: Property[] = saved ? JSON.parse(saved) : [];
+    
+    // Ensure all combined properties (including dummyData) are present
+    const existingIds = new Set(parsed.map((p) => p.id));
+    const missingProperties = COMBINED_PROPERTIES.filter((p) => !existingIds.has(p.id));
+    
+    return [...parsed, ...missingProperties];
   });
 
   const [favorites, setFavorites] = useState<number[]>(() => {

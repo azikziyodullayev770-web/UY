@@ -1,3 +1,4 @@
+import { qashqadaryoListings } from './qashqadaryoData';
 export const realisticListings = [
   {
     id: 101,
@@ -233,3 +234,5 @@ for (let i = 11; i <= 50; i++) {
     createdAt: Date.now() - (i * 86400000)
   });
 }
+
+realisticListings.push(...qashqadaryoListings);

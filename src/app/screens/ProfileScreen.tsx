@@ -36,10 +36,38 @@ export function ProfileScreen({ onNavigate, onLanguageChange, onLogout }: Profil
   const menuItems = [
     { icon: Globe, label: t("profile.language"), onClick: onLanguageChange },
     { icon: Bell, label: t("profile.notifications"), onClick: () => setShowNotifications(true) },
-    { icon: Wallet, label: t("profile.balance"), onClick: () => {}, badge: "12,500 " + t("common.currency") },
+    { icon: Wallet, label: t("profile.balance"), onClick: () => handlePayment(12500), badge: "12,500 " + t("common.currency") },
     { icon: Settings, label: t("profile.settings"), onClick: () => setShowSettings(true) },
     { icon: LogOut, label: t("profile.logout"), onClick: onLogout, danger: true },
   ];
+
+  const handlePayment = async (amount: number) => {
+    try {
+      // Calling the backend API (proxied via Vite)
+      const response = await fetch("/api/pay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: amount,
+          userId: user?.uid,
+        })
+      });
+
+      if (!response.ok) throw new Error("Payment request failed");
+
+      const data = await response.json();
+      
+      if (data.payment_url) {
+        console.log(`Redirecting to: ${data.payment_url}`);
+        window.location.href = data.payment_url;
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      // Fallback for demo if backend is not running
+      const mockPaymentUrl = `https://checkout.paycom.uz/` + btoa(`m=64352f754a6c8e32900c6d94;ac.user_id=${user?.uid};a=${amount * 100}`);
+      window.location.href = mockPaymentUrl;
+    }
+  };
 
   const userNameDisplay = user?.displayName ? user.displayName : "No name provided";
 
@@ -226,6 +254,20 @@ export function ProfileScreen({ onNavigate, onLanguageChange, onLogout }: Profil
                       {theme === 'dark' ? <Moon className="w-3 h-3" /> : <Sun className="w-3 h-3" />}
                     </motion.div>
                   </button>
+                </div>
+
+                <div className="h-px bg-white/5" />
+
+                <div className="space-y-4">
+                  <h4 className="font-bold text-foreground text-sm">Hamyon</h4>
+                  <button 
+                    onClick={() => handlePayment(12500)}
+                    className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 shadow-xl shadow-cyan-500/20 active:scale-95 transition-all"
+                  >
+                    <Wallet className="w-4 h-4" />
+                    Balans va To‘lovlar
+                  </button>
+                  <p className="text-[10px] text-center text-muted-foreground uppercase tracking-widest font-black">Payme / Click orqali to‘lov</p>
                 </div>
               </div>
             </motion.div>

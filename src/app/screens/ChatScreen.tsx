@@ -258,11 +258,11 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
       </div>
 
       {/* Input Area */}
-      <div className="p-6 bg-background/80 backdrop-blur-2xl border-t border-black/5 dark:border-white/5">
-        <div className="flex items-center gap-3">
+      <div className="shrink-0 px-6 pt-4 pb-[calc(80px+24px)] bg-transparent">
+        <div className="flex items-center gap-3 p-2 bg-background/80 backdrop-blur-2xl border border-black/10 dark:border-white/10 rounded-3xl shadow-xl">
           <button 
             onClick={handleImageSend}
-            className="w-12 h-12 flex items-center justify-center rounded-2xl bg-black/5 dark:bg-white/5 text-muted-foreground border border-black/10 dark:border-white/10 hover:text-foreground transition-all active:scale-90"
+            className="w-10 h-10 flex shrink-0 items-center justify-center rounded-2xl bg-black/5 dark:bg-white/5 text-muted-foreground hover:text-foreground transition-all active:scale-90"
           >
             <Image className="h-5 w-5" />
           </button>
@@ -273,11 +273,11 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
               onChange={(e) => setInputText(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSend()}
               placeholder={t("profile.chatPlaceholder")}
-              className="w-full h-12 pl-5 pr-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-foreground placeholder-slate-500 outline-none transition-all focus:border-cyan-500/50"
+              className="w-full h-10 pl-4 pr-12 rounded-xl bg-transparent text-foreground placeholder-slate-500 outline-none transition-all"
             />
             <button 
               onClick={handleSend}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-xl bg-cyan-500 text-slate-950 hover:bg-cyan-400 active:scale-90 transition-all"
+              className="absolute right-1 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-[0.8rem] bg-cyan-500 text-slate-950 hover:bg-cyan-400 active:scale-90 transition-all shadow-md shadow-cyan-500/20"
             >
               <Send className="h-4 w-4" />
             </button>

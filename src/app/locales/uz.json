@@ -19,7 +19,8 @@
     "save": "Saqlash",
     "delete": "O'chirish",
     "mapLegend": "Xarita afsonasi",
-    "available": "Mavjud e'lonlar"
+    "available": "Mavjud e'lonlar",
+    "currency": "so'm"
   },
   "nav": {
     "home": "Asosiy",

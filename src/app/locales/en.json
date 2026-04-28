@@ -19,7 +19,8 @@
     "save": "Save",
     "delete": "Delete",
     "mapLegend": "Map Legend",
-    "available": "Available Properties"
+    "available": "Available Properties",
+    "currency": "sum"
   },
   "nav": {
     "home": "Home",
