@@ -120,7 +120,7 @@ function AppContent() {
     setCurrentScreen("login");
   };
 
-  const showBottomNav = role === "user" && ["home", "search", "map", "chat", "profile", "favorites", "myListings"].includes(currentScreen);
+  const showBottomNav = role === "user" && ["home", "search", "map", "profile", "favorites", "myListings"].includes(currentScreen);
 
   const renderScreen = () => {
     const fadeProps = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
@@ -199,7 +199,6 @@ function AppContent() {
               { id: "home", icon: "Home", label: "Bosh sahifa" },
               { id: "search", icon: "Search", label: "Qidiruv" },
               { id: "favorites", icon: "Heart", label: "Saralanganlar" },
-              { id: "chat", icon: "MessageSquare", label: "Suhbatlar" },
               { id: "profile", icon: "User", label: "Profil" },
             ].map((item) => (
               <button
@@ -215,7 +214,6 @@ function AppContent() {
                   {item.id === "home" && "🏠"}
                   {item.id === "search" && "🔍"}
                   {item.id === "favorites" && "❤️"}
-                  {item.id === "chat" && "💬"}
                   {item.id === "profile" && "👤"}
                 </span>
                 <span className="font-bold text-sm">{item.label}</span>

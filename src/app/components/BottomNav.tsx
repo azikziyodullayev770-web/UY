@@ -15,7 +15,6 @@ export function BottomNav({ active, onNavigate }: BottomNavProps) {
     { id: "search", icon: Search, label: t("nav.search") },
     { id: "add", icon: PlusCircle, label: t("nav.add"), special: true },
     { id: "favorites", icon: Heart, label: t("nav.favorites") },
-    { id: "chat", icon: MessageSquare, label: t("nav.chat") },
     { id: "profile", icon: User, label: t("nav.profile") },
   ];
 

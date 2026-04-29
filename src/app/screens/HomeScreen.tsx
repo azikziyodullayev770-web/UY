@@ -28,7 +28,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
 
   const now = Date.now();
   const approvedProperties = properties.filter((p: Property) => p.status === "approved");
-  const topListings = approvedProperties.filter((p: Property) => p.isTop && (!p.topExpiresAt || p.topExpiresAt > now));
+  const topListings = approvedProperties.filter((p: Property) => p.isTop && (!p.topExpiresAt || p.topExpiresAt > now)).slice(0, 3);
   const newListings = approvedProperties.filter((p: Property) => !p.isTop || (p.topExpiresAt && p.topExpiresAt <= now));
 
   return (

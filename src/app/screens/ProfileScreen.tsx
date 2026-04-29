@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { User, Heart, Home, Settings, Globe, LogOut, Shield, ChevronRight, Bell, Wallet, MapPin, X, Moon, Sun } from "lucide-react";
+import { User, Heart, Home, Settings, Globe, LogOut, Shield, ChevronRight, Bell, Wallet, MapPin, X, Moon, Sun, MessageCircle } from "lucide-react";
 import { GlassCard } from "../components/GlassCard";
 import { Badge } from "../components/Badge";
 import { useAuth } from "../context/AuthContext";
@@ -35,6 +35,7 @@ export function ProfileScreen({ onNavigate, onLanguageChange, onLogout }: Profil
 
   const menuItems = [
     { icon: Globe, label: t("profile.language"), onClick: onLanguageChange },
+    { icon: MessageCircle, label: t("nav.chat"), onClick: () => onNavigate("chat") },
     { icon: Bell, label: t("profile.notifications"), onClick: () => setShowNotifications(true) },
     { icon: Wallet, label: t("profile.balance"), onClick: () => handlePayment(12500), badge: "12,500 " + t("common.currency") },
     { icon: Settings, label: t("profile.settings"), onClick: () => setShowSettings(true) },

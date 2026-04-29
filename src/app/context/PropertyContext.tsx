@@ -104,7 +104,10 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
       "https://images.unsplash.com/photo-1600566753190-17f0bcd2a6c4",
       "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0",
       "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9",
-      "https://images.unsplash.com/photo-1600585154542-6379b74b401c"
+      "https://images.unsplash.com/photo-1600585154542-6379b74b401c",
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea",
+      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde",
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d"
     ];
 
     parsed = parsed.map(p => {
@@ -121,7 +124,18 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     const existingIds = new Set(parsed.map((p) => p.id));
     const missingProperties = COMBINED_PROPERTIES.filter((p) => !existingIds.has(p.id));
     
-    return [...parsed, ...missingProperties];
+    const combined = [...parsed, ...missingProperties];
+    
+    // FINAL DEDUPLICATION: Remove entries with identical price, title, and location in the same region
+    const seen = new Set();
+    const unique = combined.filter(p => {
+      const key = `${p.price}-${p.title}-${p.location}-${p.region}`.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    return unique;
   });
 
   const [favorites, setFavorites] = useState<number[]>(() => {
