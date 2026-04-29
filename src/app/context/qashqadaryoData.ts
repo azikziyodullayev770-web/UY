@@ -22,6 +22,7 @@ export const qashqadaryoListings: any[] = [
     "description": "Kitob shahrining eng markazida joylashgan premium hovli. Barcha sharoitlar mavjud, yevro ta'mirlangan.",
     "sellerName": "Qashqadaryo Uy Bozori",
     "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now()
   },
   {
@@ -45,6 +46,7 @@ export const qashqadaryoListings: any[] = [
     "description": "Qarshi shahrida joylashgan juda katta hovli. Katta oilalar uchun juda mos keladi.",
     "sellerName": "Qashqadaryo Uy Bozori",
     "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 3600000
   },
   {

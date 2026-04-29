@@ -271,11 +271,17 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
 
           <motion.button
             whileTap={{ scale: 0.95 }}
-            onClick={() => onNavigate("chat", { uid: property.userId, displayName: property.sellerName })}
+            onClick={() => {
+              if (property.sellerTelegram) {
+                window.open(`https://t.me/${property.sellerTelegram.replace("@", "")}`, "_blank");
+              } else {
+                onNavigate("chat", { uid: property.userId, displayName: property.sellerName });
+              }
+            }}
             className="flex-[1.5] h-14 rounded-2xl bg-white text-slate-950 flex items-center justify-center gap-3 font-black uppercase tracking-widest shadow-xl shadow-white/5"
           >
             <MessageCircle className="h-5 w-5" />
-            <span>{t("profile.message")}</span>
+            <span>{property.sellerTelegram ? "Messenger" : t("profile.message")}</span>
           </motion.button>
         </div>
       </div>
