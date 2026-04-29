@@ -39,7 +39,7 @@ export function LocationPicker({ onClose, onSelect, initialLocation }: LocationP
       mapRef.current = map;
 
       // Add a center pin behavior
-      map.events.add("actionend", () => {
+      map.events.add("boundschange", () => {
         const center = map.getCenter();
         const newCoords = { lat: center[0], lng: center[1] };
         setCoords(newCoords);
