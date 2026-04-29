@@ -166,7 +166,9 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
         title: formData.title,
         price: formData.currency === "USD" 
           ? `$${Number(formData.price).toLocaleString()}` 
-          : `${Number(formData.price).toLocaleString()} UZS`,
+          : Number(formData.price) >= 1000000 
+            ? `${(Number(formData.price) / 1000000).toLocaleString()} mln so'm`
+            : `${Number(formData.price).toLocaleString()} so'm`,
         location: `${formData.district}, ${formData.address.split(",")[0]}`,
         address: formData.address,
         district: formData.district,

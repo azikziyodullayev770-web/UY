@@ -69,19 +69,33 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
         };
       }
 
+      // FORCE PRICE CLEANUP: Convert any large prices or old formats to the new 'mln' format
+      p.price = p.price.toString();
+      if (p.price.includes("$")) {
+        const val = parseInt(p.price.replace(/\D/g, "")) || 0;
+        p.price = `${Math.min(600, Math.max(100, val / 1000))} mln so'm`;
+      } else if (p.price.includes("mln so'm")) {
+        const val = parseInt(p.price.replace(/\D/g, "")) || 0;
+        if (val > 1000) {
+          p.price = `${Math.round(val / 10)} mln so'm`;
+        }
+      }
+
       // FIX SPECIFIC BROKEN LISTINGS FROM SCREENSHOT (User's local data)
-      if (p.price === "$120,000" && (!p.title || p.title === "")) {
+      if (p.price.includes("120") && (!p.title || p.title === "")) {
         return {
           ...p,
           title: "Kitob shahar markazida hashamatli 5 xonali hovli",
+          price: "120 mln so'm",
           image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
           images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"]
         };
       }
-      if (p.price === "$110,000" && (!p.title || p.title === "")) {
+      if (p.price.includes("110") && (!p.title || p.title === "")) {
         return {
           ...p,
           title: "Qarshi shahrida katta va keng 8 xonali hovli",
+          price: "110 mln so'm",
           image: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&fit=crop&w=800&q=80",
           images: ["https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&fit=crop&w=800&q=80"]
         };

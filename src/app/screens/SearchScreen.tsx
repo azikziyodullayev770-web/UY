@@ -29,7 +29,7 @@ export function SearchScreen({ onNavigate }: SearchScreenProps) {
     type: "all", // sale, rent, all
     propertyType: "all", // house, apartment, etc
     district: "all",
-    maxPrice: 2000000,
+    maxPrice: 2000,
     maxSize: 500,
   });
 
@@ -160,13 +160,17 @@ export function SearchScreen({ onNavigate }: SearchScreenProps) {
                 <div className="space-y-4">
                   <div className="flex justify-between items-baseline">
                     <label className="text-sm font-bold text-slate-500 uppercase tracking-widest">{t("search.maxPrice")}</label>
-                    <span className="text-lg font-bold text-foreground">${filters.maxPrice.toLocaleString()}</span>
+                    <span className="text-lg font-bold text-foreground">
+                      {filters.maxPrice >= 1000 
+                        ? `${(filters.maxPrice / 1000).toFixed(1).replace('.0', '')} mlrd so'm` 
+                        : `${filters.maxPrice.toLocaleString()} mln so'm`}
+                    </span>
                   </div>
                   <input
                     type="range"
-                    min="10000"
-                    max="2000000"
-                    step="10000"
+                    min="10"
+                    max="2000"
+                    step="50"
                     value={filters.maxPrice}
                     onChange={(e) => setFilters({ ...filters, maxPrice: parseInt(e.target.value) })}
                     className="w-full accent-cyan-500"
