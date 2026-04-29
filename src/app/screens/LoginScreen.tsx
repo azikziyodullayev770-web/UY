@@ -200,7 +200,7 @@ export function LoginScreen({ onLogin, onSkip }: LoginScreenProps) {
           <p className="text-amber-200 text-[10px] font-black uppercase tracking-widest leading-tight">
             DEMO REJIM <span className="text-foreground opacity-40 mx-2">|</span> OTP: <span className="text-foreground">123456</span> 
             <br />
-            <span className="text-[8px] text-amber-400/60 font-medium normal-case tracking-normal">Hamma funksiyalar mahalliy xotira orqali ishlaydi</span>
+            <span className="text-amber-400">Admin: admin@gmail.com / admin777 | Mod: moderator@gmail.com / moderator777</span>
           </p>
         </motion.div>
       )}

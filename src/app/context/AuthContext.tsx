@@ -223,15 +223,19 @@ function useDemoAuth() {
   };
 
   const login = (username: string, password: string): boolean => {
-    const admins = ["superadmin", "admin", "moderator"];
-    if (admins.includes(username.toLowerCase()) && password === "222222") {
-      const assignedRole = username.toLowerCase() as Role;
+    const userLower = username.toLowerCase();
+    const isSuper = userLower === "superadmin" && password === "super777";
+    const isAdmin = userLower === "admin" && password === "admin777";
+    const isMod = userLower === "moderator" && password === "moderator777";
+
+    if (isSuper || isAdmin || isMod) {
+      const assignedRole = userLower as Role;
       setRole(assignedRole);
       setIsAuthenticated(true);
       setUser({
-        uid: `admin-${username}`,
-        email: `${username}@uyjoy.uz`,
-        displayName: username.charAt(0).toUpperCase() + username.slice(1),
+        uid: `admin-${userLower}`,
+        email: `${userLower}@uyjoy.uz`,
+        displayName: userLower.charAt(0).toUpperCase() + userLower.slice(1),
         phoneNumber: "+998 90 000 00 00",
         photoURL: null,
         role: assignedRole,
@@ -402,15 +406,19 @@ function useFirebaseAuth() {
   };
 
   const login = (username: string, password: string): boolean => {
-    const admins = ["superadmin", "admin", "moderator"];
-    if (admins.includes(username.toLowerCase()) && password === "222222") {
-      const assignedRole = username.toLowerCase() as Role;
+    const userLower = username.toLowerCase();
+    const isSuper = userLower === "superadmin" && password === "super777";
+    const isAdmin = userLower === "admin" && password === "admin777";
+    const isMod = userLower === "moderator" && password === "moderator777";
+
+    if (isSuper || isAdmin || isMod) {
+      const assignedRole = userLower as Role;
       setRole(assignedRole);
       setIsAuthenticated(true);
       setUser({
-        uid: `admin-${username}`,
-        email: `${username}@uyjoy.uz`,
-        displayName: username.charAt(0).toUpperCase() + username.slice(1),
+        uid: `admin-${userLower}`,
+        email: `${userLower}@uyjoy.uz`,
+        displayName: userLower.charAt(0).toUpperCase() + userLower.slice(1),
         phoneNumber: "+998 90 000 00 00",
         photoURL: null,
         role: assignedRole,

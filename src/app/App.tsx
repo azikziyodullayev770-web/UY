@@ -26,6 +26,7 @@ import { AdminDashboardScreen } from "./screens/AdminDashboardScreen";
 import { LanguageProvider, useTranslation } from "./context/LanguageContext";
 import { ChatProvider } from "./context/ChatContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { NewsProvider } from "./context/NewsContext";
 
 import logo from "./assets/logo.png";
 
