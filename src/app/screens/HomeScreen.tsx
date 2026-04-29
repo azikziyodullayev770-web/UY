@@ -142,6 +142,39 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
             ))}
           </div>
         </motion.section>
+
+        {/* Guest CTA Section */}
+        {!isAuthenticated && (
+          <motion.section
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="mt-10"
+          >
+            <GlassCard className="p-8 bg-gradient-to-br from-cyan-500/10 to-blue-600/10 border-cyan-500/20 text-center space-y-6 relative overflow-hidden">
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/20 blur-[80px] rounded-full" />
+              
+              <div className="space-y-2 relative z-10">
+                <h3 className="text-2xl font-black text-foreground uppercase tracking-tight">{t("login.welcome")}</h3>
+                <p className="text-sm text-slate-400 max-w-xs mx-auto">
+                  O'z uyingizni sotishni yoki ijaraga berishni xohlaysizmi? Hoziroq ro'yxatdan o'ting!
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3 relative z-10">
+                <button 
+                  onClick={() => onNavigate("login")}
+                  className="w-full py-4 rounded-2xl bg-cyan-500 text-slate-950 font-black uppercase tracking-widest text-xs shadow-xl shadow-cyan-500/20 active:scale-95 transition-all"
+                >
+                  {t("login.register")}
+                </button>
+                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">
+                  Barcha imkoniyatlardan foydalaning
+                </p>
+              </div>
+            </GlassCard>
+          </motion.section>
+        )}
       </div>
     </div>
   );
