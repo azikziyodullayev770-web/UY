@@ -219,8 +219,8 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
         {property.lat && property.lng && (
           <section className="space-y-4">
             <h3 className="text-sm font-black text-slate-500 uppercase tracking-[0.2em]">{t("detail.map")}</h3>
-            <div className="h-48 overflow-hidden rounded-3xl border border-black/5 dark:border-white/5 bg-card ring-1 ring-white/5">
-              <div ref={mapContainerRef} className="h-full w-full grayscale contrast-125 opacity-70" />
+            <div className="h-48 overflow-hidden rounded-3xl border border-black/5 dark:border-white/5 bg-card ring-1 ring-cyan-500/10">
+              <div ref={mapContainerRef} className="h-full w-full opacity-90 shadow-inner" />
             </div>
           </section>
         )}
