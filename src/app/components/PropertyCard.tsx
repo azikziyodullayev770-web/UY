@@ -41,11 +41,14 @@ export function PropertyCard({
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden">
         <motion.img 
-          src={image} 
+          src={image || "https://images.unsplash.com/photo-1663756915304-40b7eda63e41?w=1080"} 
           alt={location} 
           className="h-full w-full object-cover"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.6 }}
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1663756915304-40b7eda63e41?w=1080";
+          }}
         />
         
         {/* Badges Overlay */}
@@ -81,7 +84,9 @@ export function PropertyCard({
 
       <div className="p-4 space-y-4">
         <div className="space-y-1">
-          {title && <h3 className="text-sm font-bold text-foreground/90 truncate mb-1">{title}</h3>}
+          <h3 className="text-sm font-bold text-foreground/90 truncate mb-1">
+            {title || `${rooms ? rooms + ' xonali ' : ''}${location}`}
+          </h3>
           <div className="flex items-baseline gap-1">
             <span className="text-2xl font-black text-foreground tracking-tight">{price}</span>
             <span className="text-cyan-400 text-xs font-bold uppercase tracking-wider italic">Kelishiladi</span>
