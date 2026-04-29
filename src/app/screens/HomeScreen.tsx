@@ -1,10 +1,10 @@
 import { motion } from "motion/react";
-import { Search, MapPin, SlidersHorizontal } from "lucide-react";
+import { Search, MapPin, SlidersHorizontal, ChevronRight } from "lucide-react";
 import { PropertyCard } from "../components/PropertyCard";
 import { GlassCard } from "../components/GlassCard";
 import { useProperties, Property } from "../context/PropertyContext.tsx";
+import { useNews } from "../context/NewsContext";
 import { useAuth } from "../context/AuthContext";
-
 import { useTranslation } from "../context/LanguageContext";
 
 import logo from "../assets/logo.png";
@@ -15,6 +15,7 @@ interface HomeScreenProps {
 
 export function HomeScreen({ onNavigate }: HomeScreenProps) {
   const { properties, favorites, toggleFavorite } = useProperties();
+  const { news } = useNews();
   const { isAuthenticated } = useAuth();
   const { t } = useTranslation();
 
@@ -72,9 +73,50 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
           </GlassCard>
         </motion.div>
       </div>
-
+      
       {/* Content */}
       <div className="space-y-10 px-6 py-8">
+        {/* News Section */}
+        {news.length > 0 && (
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Yangiliklar va E'lonlar</h2>
+              <div className="flex items-center gap-1 text-cyan-400 text-[10px] font-black uppercase tracking-widest">
+                Hammasi <ChevronRight className="w-3 h-3" />
+              </div>
+            </div>
+            
+            <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar -mx-6 px-6">
+              {news.map((item) => (
+                <motion.div
+                  key={item.id}
+                  whileTap={{ scale: 0.98 }}
+                  className="min-w-[280px] max-w-[280px]"
+                >
+                  <GlassCard className="h-full border-black/5 dark:border-white/5 overflow-hidden">
+                    {item.image && (
+                      <div className="h-32 w-full overflow-hidden">
+                        <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                    <div className="p-4 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className={`text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md ${
+                          item.category === 'muhim' ? 'bg-red-500/20 text-red-400' : 'bg-cyan-500/20 text-cyan-400'
+                        }`}>
+                          {item.category}
+                        </span>
+                        <span className="text-[9px] text-slate-500 font-bold">{item.date}</span>
+                      </div>
+                      <h3 className="font-bold text-foreground text-sm line-clamp-1">{item.title}</h3>
+                      <p className="text-[11px] text-muted-foreground line-clamp-2 leading-relaxed">{item.content}</p>
+                    </div>
+                  </GlassCard>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+        )}
         {/* Top Listings */}
         {topListings.length > 0 && (
           <motion.section

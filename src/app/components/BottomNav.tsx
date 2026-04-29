@@ -1,4 +1,4 @@
-import { Home, Search, PlusCircle, MessageSquare, User, Heart } from "lucide-react";
+import { Home, Search, PlusCircle, User, Heart } from "lucide-react";
 import { motion } from "motion/react";
 import { useTranslation } from "../context/LanguageContext";
 

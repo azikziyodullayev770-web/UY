@@ -260,9 +260,11 @@ export default function App() {
       <LanguageProvider>
         <AuthProvider>
           <PropertyProvider>
-            <ChatProvider>
-              <AppContent />
-            </ChatProvider>
+            <NewsProvider>
+              <ChatProvider>
+                <AppContent />
+              </ChatProvider>
+            </NewsProvider>
           </PropertyProvider>
         </AuthProvider>
       </LanguageProvider>
