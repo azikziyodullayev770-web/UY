@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "motion/react";
 import { GlassCard } from "../components/GlassCard";
 import {
-  Building2,
   ArrowRight,
   ShieldCheck,
   ChevronLeft,
@@ -18,6 +17,8 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useTranslation } from "../context/LanguageContext";
 import { FIREBASE_READY } from "../services/firebase";
+
+import logo from "../assets/logo.png";
 
 interface LoginScreenProps {
   onLogin: () => void;
@@ -227,9 +228,9 @@ export function LoginScreen({ onLogin, onSkip }: LoginScreenProps) {
           <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20 mb-6"
+            className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-black/5 dark:bg-white/5 overflow-hidden border border-black/10 dark:border-white/10 shadow-lg mb-6 p-4"
           >
-            <Building2 className="text-foreground w-10 h-10" />
+            <img src={logo} alt="UY JOY Logo" className="w-full h-full object-contain" />
           </motion.div>
           <h1 className="text-3xl font-black text-foreground tracking-tight mb-2 uppercase">
             {t("home.title")}

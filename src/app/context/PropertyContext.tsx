@@ -55,8 +55,17 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     // STRICT FILTER: Remove any properties that are not from Qashqadaryo
     parsed = parsed.filter(p => p.region === "Qashqadaryo");
 
-    // FIX BROKEN IMAGE PATHS in localStorage data
+    // FIX BROKEN IMAGE PATHS and update dummy data images in localStorage data
     parsed = parsed.map(p => {
+      const dummyMatch = COMBINED_PROPERTIES.find(d => d.id === p.id);
+      if (dummyMatch) {
+        return {
+          ...p,
+          image: dummyMatch.image,
+          images: dummyMatch.images
+        };
+      }
+
       if (p.image && p.image.startsWith("/images/houses/")) {
         return {
           ...p,
@@ -92,7 +101,7 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
       ...newProp,
       id: Date.now(),
       userId: user?.uid || "guest",
-      status: "pending",
+      status: "approved", // Changed from pending so it shows up immediately
       createdAt: Date.now(),
       region: "Qashqadaryo"
     };

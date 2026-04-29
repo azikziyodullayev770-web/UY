@@ -1,11 +1,13 @@
 import { motion } from "motion/react";
-import { Search, MapPin, SlidersHorizontal, Sparkles } from "lucide-react";
+import { Search, MapPin, SlidersHorizontal } from "lucide-react";
 import { PropertyCard } from "../components/PropertyCard";
 import { GlassCard } from "../components/GlassCard";
 import { useProperties, Property } from "../context/PropertyContext.tsx";
 import { useAuth } from "../context/AuthContext";
 
 import { useTranslation } from "../context/LanguageContext";
+
+import logo from "../assets/logo.png";
 
 interface HomeScreenProps {
   onNavigate: (screen: string, data?: any) => void;
@@ -43,7 +45,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-cyan-400" />
+              <img src={logo} alt="Logo" className="w-8 h-8 object-contain rounded-lg" />
               <div>
                 <h1 className="text-xl font-bold text-foreground tracking-tight">{t("home.title")}</h1>
                 <p className="text-[10px] text-cyan-400/80 uppercase font-black tracking-widest leading-none">{t("home.subtitle")}</p>

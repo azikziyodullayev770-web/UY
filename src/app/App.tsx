@@ -27,6 +27,8 @@ import { LanguageProvider, useTranslation } from "./context/LanguageContext";
 import { ChatProvider } from "./context/ChatContext";
 import { ThemeProvider } from "./context/ThemeContext";
 
+import logo from "./assets/logo.png";
+
 type AppScreen = "splash" | "language" | "login" | "adminLogin" | "adminDashboard" | "home" | "search" | "detail" | "map" | "chat" | "profile" | "add" | "favorites" | "myListings" | "edit";
 
 function AppContent() {
@@ -183,8 +185,8 @@ function AppContent() {
       {showBottomNav && (
         <div className="hidden md:flex h-full w-64 flex-col border-r border-black/5 dark:border-white/5 bg-background/80 backdrop-blur-xl p-6">
           <div className="flex items-center gap-2 mb-10">
-            <div className="w-10 h-10 bg-cyan-500 rounded-2xl flex items-center justify-center">
-              <span className="text-xl font-black text-slate-950">UY</span>
+            <div className="w-10 h-10 overflow-hidden rounded-xl">
+              <img src={logo} alt="Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <h2 className="text-lg font-bold text-foreground leading-none">UY JOY</h2>
