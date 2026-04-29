@@ -61,8 +61,11 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
       if (dummyMatch) {
         return {
           ...p,
+          title: dummyMatch.title,
           image: dummyMatch.image,
-          images: dummyMatch.images
+          images: dummyMatch.images,
+          isTop: dummyMatch.isTop !== undefined ? dummyMatch.isTop : p.isTop,
+          topExpiresAt: dummyMatch.topExpiresAt !== undefined ? dummyMatch.topExpiresAt : p.topExpiresAt
         };
       }
 
@@ -91,6 +94,26 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
           images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c"]
         };
       }
+      return p;
+    });
+
+    // Final safety check: Ensure TOP listings have unique images by injecting different Unsplash IDs if duplicates are found
+    const topImages = new Set();
+    const unsplashFallbacks = [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "https://images.unsplash.com/photo-1600566753190-17f0bcd2a6c4",
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9",
+      "https://images.unsplash.com/photo-1600585154542-6379b74b401c"
+    ];
+
+    parsed = parsed.map(p => {
+      if (p.isTop && topImages.has(p.image)) {
+        const nextImage = unsplashFallbacks.find(img => !topImages.has(img)) || p.image;
+        topImages.add(nextImage);
+        return { ...p, image: nextImage, images: [nextImage] };
+      }
+      if (p.isTop) topImages.add(p.image);
       return p;
     });
     
