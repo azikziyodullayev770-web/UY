@@ -96,6 +96,21 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("app_favorites", JSON.stringify(favorites));
   }, [favorites]);
 
+  // AUTOMATIC ADOPTION: If a guest registers/logs in, assign their "guest" properties to their new UID
+  useEffect(() => {
+    if (user?.uid && user.uid !== "guest") {
+      setProperties(prev => {
+        const hasGuestProps = prev.some(p => p.userId === "guest");
+        if (!hasGuestProps) return prev;
+        
+        console.info(`[PropertyContext] Adopting guest properties for user: ${user.uid}`);
+        return prev.map(p => 
+          p.userId === "guest" ? { ...p, userId: user.uid } : p
+        );
+      });
+    }
+  }, [user?.uid]);
+
   const addProperty = (newProp: Omit<Property, "id" | "status" | "createdAt" | "region" | "userId">) => {
     const property: Property = {
       ...newProp,

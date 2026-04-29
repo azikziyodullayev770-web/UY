@@ -103,14 +103,28 @@ function friendlyAuthError(error: unknown): string {
 
 // ─── DEMO MODE Auth (no Firebase required) ────────────────────────────────────
 function useDemoAuth() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState<Role>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem("demo_auth") === "true";
+  });
+  const [role, setRole] = useState<Role>(() => {
+    return (localStorage.getItem("demo_role") as Role) || null;
+  });
+  const [user, setUser] = useState<User | null>(() => {
+    const saved = localStorage.getItem("demo_user");
+    return saved ? JSON.parse(saved) : null;
+  });
   const [phoneAuthError, setPhoneAuthError] = useState<string | null>(null);
   const [googleAuthError, setGoogleAuthError] = useState<string | null>(null);
   const [isSendingOTP, setIsSendingOTP] = useState(false);
   const [isVerifyingOTP, setIsVerifyingOTP] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+
+  // Persist state to localStorage
+  useEffect(() => {
+    localStorage.setItem("demo_auth", isAuthenticated.toString());
+    localStorage.setItem("demo_role", role || "");
+    localStorage.setItem("demo_user", user ? JSON.stringify(user) : "");
+  }, [isAuthenticated, role, user]);
 
   // Simulate realistic delays
   const sendOTP = async (phoneNumber: string): Promise<boolean> => {
@@ -218,6 +232,9 @@ function useDemoAuth() {
     setUser(null);
     setRole(null);
     setIsAuthenticated(false);
+    localStorage.removeItem("demo_auth");
+    localStorage.removeItem("demo_role");
+    localStorage.removeItem("demo_user");
   };
 
   const clearErrors = () => {
