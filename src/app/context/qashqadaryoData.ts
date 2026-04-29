@@ -21,7 +21,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Kitob shahrining eng markazida joylashgan premium hovli. Barcha sharoitlar mavjud, yevro ta'mirlangan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now()
   },
   {
@@ -44,7 +45,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Qarshi shahrida joylashgan juda katta hovli. Katta oilalar uchun juda mos keladi.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 3600000
   },
   {
@@ -67,7 +69,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Uy judayam pishiq qurilgan bo'lib, hovlisida mevali daraxtlari bor. Atrofda maktab, bog'cha va bozor piyoda yetib borish masofasida joylashgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now()
   },
   {
@@ -90,7 +93,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Barcha qulayliklarga ega, ichki bezaklari yuqori sifatli materiallardan ishlangan. Yashash uchun to'liq tayyor, ko'chib kirish va yashash mumkin.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 1
   },
   {
@@ -113,7 +117,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Qo'shnilar judayam yaxshi va mahalla tinch osoyishta. Qishda issiq, yozda salqin bo'ladigan ajoyib uy, avtomobil uchun garaj ham mavjud.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 2
   },
   {
@@ -136,7 +141,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Uy zudlik bilan chet elga ketayotganlik sababli arzon narxda sotilyapti. Suv, gaz, svet doimiy, muammo yo'q.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 3
   },
   {
@@ -159,7 +165,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Yosh oilalar uchun ajoyib boshlang'ich imkoniyat bo'lishi mumkin. Uy ichida yangi isitish tizimi o'rnatilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 4
   },
   {
@@ -182,7 +189,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Katta yer maydoniga ega bo'lgan bu uy dehqonchilik qilish uchun qulay. Havosi toza, shovqindan uzoqda dam olib yashash uchun zo'r joy.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 5
   },
   {
@@ -205,7 +213,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Uyni o'zimiz uchun sifatli qilib qurganmiz, biroq pul zarurligi uchun sotilyapti. Ayrim mebellar xaridorga sovg'a sifatida qoldiriladi.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 6
   },
   {
@@ -228,7 +237,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Pishiq g'ishtdan qurilgan uy va usti sifatli tunuka bilan yopilgan. Keng va katta mehmonxonasi mehmon kutishni sevuvchilar uchun ideal.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 7
   },
   {
@@ -251,7 +261,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Hovlida yil davomida ishlaydigan va daromad keltiradigan issiqxona tayyor qilingan. Shuningdek, uy ham to'liq va sifatli yevro ta'mirdan chiqqan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 8
   },
   {
@@ -274,7 +285,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Transport infratuzilmasi yaxshi joylashgan, ko'chalar asfalt qilingan. Uyda internet, telefon tarmog'i va kabel televideniyasi mavjud.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 9
   },
   {
@@ -297,7 +309,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Hovli to'liq betonlangan va old qismi go'zal landshaftga ega. Xavfsizlik maqsadida videokuzatuv kameralari o'rnatilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 10
   },
   {
@@ -320,7 +333,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Asosiy yo'lga va do'konlarga yaqin, juda qulay hududda joylashgan. Oshxona jihozlari va qishki tayyorgarlik uchun alohida erto'lasi bor.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 11
   },
   {
@@ -343,7 +357,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "O'zining shaxsiy hovuziga va yozgi dam olish terassasiga ega ajoyib villa. Barcha santexnika va elektrik ishlari Yevropa standartida bajarilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 12
   },
   {
@@ -366,7 +381,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Tarix va zamonaviylik uyg'unlashgan dizayn, to'liq jihozlar bilan sotiladi. Hovlisiga ikki mashina bemalol sig'adi, atrofi yopiq va ishonchli.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 13
   },
   {
@@ -389,7 +405,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Quyosh nuri kun davomida uyga yaxshi tushadi, xonalar juda yorug'. Pol qismi sifatli laminat qoplama bilan qilingan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 14
   },
   {
@@ -412,7 +429,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Mol-qo'y saqlash uchun orqa hovlida katta og'ilxona tiklangan. Yaqinda yangi tomlar yopilib, tashqi ko'rinishi yangilangan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 15
   },
   {
@@ -435,7 +453,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Hovlidagi ko'katlar va boshqa ekinlardan doimiy tarzda oilaviy ehtiyoj uchun foydalanish mumkin. Kanalizatsiya tarmog'i yangilangan va hovli toza.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 16
   },
   {
@@ -458,7 +477,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Havo harorati har doim a'lo darajada va toza kislorodga boy joy. Yozgi oqshomlarda o'tirish uchun maxsus yopiq so'ri qurilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 17
   },
   {
@@ -481,7 +501,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Kichik oilalar uchun ortiqcha harajatsiz yashash uchun juda to'g'ri tanlov. Elektr ta'minoti va gaz umuman uzilmaydigan mahallada.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 18
   },
   {
@@ -504,7 +525,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Uyning hovlisida ikkita alohida issiq suv bilan isitiladigan hammom bor. Katta oilalar bemalol sig'adigan 6 ta yashash xonasidan iborat.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 19
   },
   {
@@ -527,7 +549,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Katta ko'chaga yaqin bo'lganligi uchun savdo do'koni ochishga juda mos. Derazalari va eshiklari yuqori sifatli akfa romlaridan qilingan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 20
   },
   {
@@ -550,7 +573,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Poydevori juda mustahkam qilingan va keyinchalik ikkinchi qavatni ko'tarish imkoniyati bor. Bog'da gilos va yong'oq daraxtlari hosilga kirgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 21
   },
   {
@@ -573,7 +597,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Yangi kelin-kuyovlar uchun ajoyib qilib dizayn berilgan shinam hovli. Atrofida savdo markazlari va sport majmuasi faoliyat olib boradi.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 22
   },
   {
@@ -596,7 +621,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Er maydoni kattaligi sababli uy hayvonlari saqlashga yoki yangi bino qurishga qulay. Narxi kelishiladigan va ozgina kami bor xonadon.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 23
   },
   {
@@ -619,7 +645,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Binoning tashqi fasadi to'liq travertin bilan ishlov berilgan va obodonlashtirilgan. Katta mehmonxona, maxsus xobbixona va ikkita avtomobilga mo'ljallangan yopiq garaj bor.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 24
   },
   {
@@ -642,7 +669,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Sanuzellar ichkarida qilingan va sifatli kafel qoplamalari bilan bezatilgan. Qish oylarida butun uy bo'ylab 'issiq pol' tizimi yoqib qo'yiladi.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 25
   },
   {
@@ -665,7 +693,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Sayyohlik zonasiga yaqin joyda joylashgani uchun turistik ijaraga ham berish mumkin. Uyning orqa tomonida kichik ariq oqib o'tadi.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 26
   },
   {
@@ -688,7 +717,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Ichki ishlari shahar standartlariga mos, tashqarisi esa qishloq tabiatiga boy qilib tiklangan. Elektr tarmoqlaridan uzilishlar umuman kuzatilmaydi.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 27
   },
   {
@@ -711,7 +741,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Yaqlinda to'liq kosmetik ta'mirdan chiqqan, hali hech kim yashamagan toza xonadon. Darvozadan kirish qismi chiroyli arklar va tok novdalari bilan bezatilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 28
   },
   {
@@ -734,7 +765,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Uyning asosiy ustunligi - bu yuzlab tupdan ortiq turli xil mevali daraxtlarga ega bog'dir. Toza tabiat ixlosmandlari uchun aynan mos tushadigan manzil.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 29
   },
   {
@@ -757,7 +789,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Shahar markazidan bir oz uzoqroqda, lekin transport harakati juda yaxshi yo'lga qo'yilgan. Atrofida poliklinika va savdo majmualari bir qadam masofada.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 30
   },
   {
@@ -780,7 +813,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Uyning pastki erto'lasi butun xonalar ostida keng o'rin egallagan va sport zali uchun ishlatilishi mumkin. Hovli juda obod hamda saranjom saqlangan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 31
   },
   {
@@ -803,7 +837,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Er maydoni juda katta va burchakda joylashgani uchun sex yoki kichik korxona qurishga qulay. Uy qismi hozir ham yashashga to'liq javob beradigan holatda.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 32
   },
   {
@@ -826,7 +861,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Turli xil manzarali gullar ekilgan go'zal hovli va qulay dam olish zonasi bor. Oshxonada havo tortgich, yangi mebellar va sifatli maishiy texnikalar mavjud.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 33
   },
   {
@@ -849,7 +885,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Maxsus dizayn proyekt orqali ta'mirlangan, har bir xona o'ziga xos uslubga ega. Barcha xonalarga avtomatik iqlim nazorati apparati o'rnatilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 34
   },
   {
@@ -872,7 +909,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Qalin devorlar uyni qishda yaxshi isitadi, yozda esa salqin saqlaydi. Elektr toki va gaz ulanishi uchun shaxsiy podstansiya o'rnatilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 35
   },
   {
@@ -897,7 +935,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Premium darajadagi xaridorlar uchun ikki qavatli, basseyn va sauna bilan jihozlangan hovli. Mehmonlar kutish xonasi juda katta maydonni egallagan va hashamatli qandillar o'rnatilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 36
   },
   {
@@ -920,7 +959,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Ikkinchi qavatdan tog'lar manzarasi juda ajoyib ko'rinadi. Ko'cha asfatlangan bo'lib, uy atrofi to'liq ko'kalamzorlashtirilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 37
   },
   {
@@ -943,7 +983,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "O'zining ko'rinishi bilan boshqa uylardan ajralib turadigan go'zal kottej. Xonalar keng va shifti ancha baland qilib barpo etilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 38
   },
   {
@@ -966,7 +1007,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Mahalla odamlari juda samimiy va ko'chalar tungi chiroqlar bilan yoritilgan. Uy hovlisida ikkita alohida tapchan va tandirxona barpo etilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 39
   },
   {
@@ -989,7 +1031,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Barcha kommunikatsiyalar ulangan, umuman yashash uchun to'siq yo'q. Faqat tez sotish maqsadida bozor narxidan sezilarli darajada tushirib beriladi.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 40
   },
   {
@@ -1012,7 +1055,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Sun'iy sharshara va yashil maydon hovliga o'ziga xos go'zallik baxsh etadi. Shuningdek, qo'shimcha bino qilib mehmonlar uchun alohida hujra qurilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 41
   },
   {
@@ -1035,7 +1079,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Uzoq muddat o'z mustahkamligini yo'qotmaydigan zamonaviy qurilish mollari ishlatilgan. Derazalarga temir panjaralar va darvozaga sifatli avtomatik qulf qo'yilgan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 42
   },
   {
@@ -1058,7 +1103,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Oila xavfsizligi va qulayligini birinchi o'ringa qo'yib loyihalashtirilgan. Maktab o'quvchilari uchun uy yonida zamonaviy sport va o'yin maydonchasi qurilmoqda.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 43
   },
   {
@@ -1081,7 +1127,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "To'ylar o'tkazish, mehmon kutish uchun hovli maydoni yetarli darajada katta. Uyni yozgi oshxonasida ikkita qozon o'choq va milliy tandir tayyor qilingan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 44
   },
   {
@@ -1104,7 +1151,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Hozirgi vaqtda trendda bo'lgan ochiq ranglar uyg'unligida ichki ta'mirlash o'tkazilgan. Uy ichida alohida kiyim almashtirish xonasi va katta dahliz bor.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 45
   },
   {
@@ -1127,7 +1175,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Asosiy trassa yoqasida bo'lishiga qaramay ichki xonalarda umuman shovqin eshitilmaydi. Mashinalar uchun xavfsiz to'xtash joyi va alohida darvozasi bor.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 46
   },
   {
@@ -1150,7 +1199,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Qishloq xo'jaligi va shaxsiy tomorqa uchun mo'ljallangan yerni o'z ichiga oladi. Uyni sotib oluvchilar uchun uy hujjatlari to'liq va muammosiz tayyorlangan.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 47
   },
   {
@@ -1175,7 +1225,8 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Ushbu imorat shaharning eng qimmat mavzelaridan birida qad rostlagan bo'lib, o'zining dizayni bilan ajralib turadi. Faqat sifatni qadrlaydigan premium xaridorlar uchun eksklyuziv taklif hisoblanadi.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 48
   },
   {
@@ -1198,9 +1249,11 @@ export const qashqadaryoListings: any[] = [
     "status": "approved",
     "description": "Uy qadimiy obidalarga piyoda borish mumkin bo'lgan uzoqlikda joylashgan, shu bilan birga u mutlaqo zamonaviy. Xorijiy mehmonlarni ijaraga qo'yib yaxshi biznes qilishga juda yaxshi tanlov.",
     "sellerName": "Qashqadaryo Uy Bozori",
-    "sellerPhone": "+998 90 000 00 00",`n    "sellerTelegram": "@uybozori_admin1",
+    "sellerPhone": "+998 90 000 00 00",
+    "sellerTelegram": "@uybozori_admin1",
     "createdAt": Date.now() - 86400000 * 49
   }
 ];
+
 
 

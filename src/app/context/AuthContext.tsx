@@ -47,8 +47,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // ─── Role map (add UIDs/emails → roles here) ─────────────────────────────────
 const ROLE_MAP: Record<string, Role> = {
   "superadmin@uyjoy.uz": "superadmin",
-  "admin@uyjoy.uz": "admin",
-  "moderator@uyjoy.uz": "moderator",
+  "admin@gmail.com": "admin",
+  "moderator@gmail.com": "moderator",
 };
 
 // ─── Demo mode users ──────────────────────────────────────────────────────────
@@ -179,15 +179,28 @@ function useDemoAuth() {
     return true;
   };
 
-  const loginWithEmail = async (email: string, _password: string): Promise<boolean> => {
+  const loginWithEmail = async (email: string, password: string): Promise<boolean> => {
     setIsGoogleLoading(true);
     await new Promise(r => setTimeout(r, 1200));
     setIsGoogleLoading(false);
-    const assignedRole = ROLE_MAP[email.toLowerCase()] ?? "user";
+    
+    const emailLower = email.toLowerCase();
+    
+    // Admin/Moderator credentials check
+    if (emailLower === "admin@gmail.com" && password !== "admin777") {
+      setGoogleAuthError("Noto'g'ri parol. Admin uchun: admin777");
+      return false;
+    }
+    if (emailLower === "moderator@gmail.com" && password !== "moderator777") {
+      setGoogleAuthError("Noto'g'ri parol. Moderator uchun: moderator777");
+      return false;
+    }
+
+    const assignedRole = ROLE_MAP[emailLower] ?? "user";
     setUser({
-      uid: `demo-email-login`,
-      email,
-      displayName: email.split("@")[0],
+      uid: `demo-email-${emailLower}`,
+      email: emailLower,
+      displayName: emailLower.split("@")[0],
       phoneNumber: null,
       photoURL: null,
       role: assignedRole,
