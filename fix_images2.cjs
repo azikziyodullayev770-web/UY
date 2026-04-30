@@ -33,6 +33,6 @@ content = content.replace(/"images":\s*\["https:\/\/images\.unsplash\.com\/photo
   index++;
   return '"images": ["' + img + '"]';
 });
-
+//backend ozi . tomoggni qanday togrlasa bolad, dorimi
 fs.writeFileSync(path, content);
 console.log('Fixed broken Unsplash images successfully!');
