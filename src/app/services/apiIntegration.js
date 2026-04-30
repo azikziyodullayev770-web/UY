@@ -19,10 +19,18 @@ async function apiCall(endpoint, options = {}) {
     headers.set('Authorization', `Bearer ${token}`);
   }
 
-  let response = await fetch(`${API_URL}${endpoint}`, {
-    ...options,
-    headers,
-  });
+  let response;
+  try {
+    response = await fetch(`${API_URL}${endpoint}`, {
+      ...options,
+      headers,
+    });
+  } catch (err) {
+    if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
+      throw new Error('Network error: Cannot connect to the server. Please check your internet connection or try again later.');
+    }
+    throw err;
+  }
 
   // Handle Token Expiration (401) via Refresh Token
   if (response.status === 401 && endpoint !== '/auth/login' && endpoint !== '/auth/refresh') {
