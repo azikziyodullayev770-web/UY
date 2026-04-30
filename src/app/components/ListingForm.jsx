@@ -43,18 +43,18 @@ export default function ListingForm({ onSuccess }) {
       
       <div>
         <label className="block text-sm font-medium">Title</label>
-        <input required type="text" className="w-full border p-2 rounded" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <input required minLength={5} maxLength={100} type="text" className="w-full border p-2 rounded" value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
       
       <div>
         <label className="block text-sm font-medium">Description</label>
-        <textarea required className="w-full border p-2 rounded" value={description} onChange={(e) => setDescription(e.target.value)} />
+        <textarea required minLength={10} maxLength={1000} className="w-full border p-2 rounded min-h-[100px]" value={description} onChange={(e) => setDescription(e.target.value)} />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium">Price</label>
-          <input required type="number" className="w-full border p-2 rounded" value={price} onChange={(e) => setPrice(e.target.value)} />
+          <label className="block text-sm font-medium">Price ($)</label>
+          <input required type="number" min="1" className="w-full border p-2 rounded" value={price} onChange={(e) => setPrice(e.target.value)} />
         </div>
         <div>
           <label className="block text-sm font-medium">Location</label>

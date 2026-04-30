@@ -1,45 +1,27 @@
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
 
-// Ensure uploads directory exists
-const uploadDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Set storage engine
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir); 
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Check File Type
-function checkFileType(file, cb) {
-  // Allowed ext
-  const filetypes = /jpeg|jpg|png|gif|webp/;
-  // Check ext
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  // Check mime
-  const mimetype = filetypes.test(file.mimetype);
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'house_listings',
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+  },
+});
 
-  if (mimetype && extname) {
-    return cb(null, true);
-  } else {
-    cb('Error: Images Only!');
-  }
-}
-
-// Init upload
-const upload = multer({
+const upload = multer({ 
   storage: storage,
-  limits: { fileSize: 5000000 }, // 5MB limit
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
+  limits: { 
+    fileSize: 5 * 1024 * 1024, // 5MB max file size
+    files: 5 // maximum 5 files per request
   }
 });
 

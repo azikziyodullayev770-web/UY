@@ -2,16 +2,30 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-// Get token from model, create cookie and send response
-const sendTokenResponse = (user, statusCode, res) => {
-  // Create token
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE,
+// Helper to generate tokens
+const generateTokens = (id) => {
+  const accessToken = jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE || '15m',
   });
+  
+  const refreshToken = jwt.sign({ id }, process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET, {
+    expiresIn: '7d',
+  });
+
+  return { accessToken, refreshToken };
+};
+
+const sendTokenResponse = async (user, statusCode, res) => {
+  const { accessToken, refreshToken } = generateTokens(user._id);
+
+  // Save refresh token to user
+  user.refreshToken = refreshToken;
+  await user.save({ validateBeforeSave: false });
 
   res.status(statusCode).json({
     success: true,
-    token,
+    token: accessToken,
+    refreshToken,
     user: {
       id: user._id,
       name: user.name,
@@ -21,65 +35,83 @@ const sendTokenResponse = (user, statusCode, res) => {
   });
 };
 
-// @desc    Register user
-// @route   POST /api/auth/register
-// @access  Public
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;
-
-    // Check if user exists
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ success: false, error: 'User already exists' });
+      res.status(400);
+      throw new Error('User already exists');
     }
-
-    // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create user
     const user = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-      role: role || 'user',
+      name, email, password: hashedPassword, role: role || 'user',
     });
-
     sendTokenResponse(user, 201, res);
   } catch (err) {
-    res.status(400).json({ success: false, error: err.message });
+    next(err);
   }
 };
 
-// @desc    Login user
-// @route   POST /api/auth/login
-// @access  Public
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
-    // Validate email and password
     if (!email || !password) {
-      return res.status(400).json({ success: false, error: 'Please provide an email and password' });
+      res.status(400);
+      throw new Error('Please provide an email and password');
     }
-
-    // Check for user
     const user = await User.findOne({ email }).select('+password');
-
-    if (!user) {
-      return res.status(401).json({ success: false, error: 'Invalid credentials' });
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      res.status(401);
+      throw new Error('Invalid credentials');
     }
-
-    // Check if password matches
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      return res.status(401).json({ success: false, error: 'Invalid credentials' });
-    }
-
     sendTokenResponse(user, 200, res);
   } catch (err) {
-    res.status(400).json({ success: false, error: err.message });
+    next(err);
+  }
+};
+
+exports.refreshToken = async (req, res, next) => {
+  try {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+      res.status(401);
+      throw new Error('Refresh token is required');
+    }
+
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user || user.refreshToken !== refreshToken) {
+      res.status(401);
+      throw new Error('Invalid refresh token');
+    }
+
+    const tokens = generateTokens(user._id);
+    user.refreshToken = tokens.refreshToken;
+    await user.save({ validateBeforeSave: false });
+
+    res.status(200).json({
+      success: true,
+      token: tokens.accessToken,
+      refreshToken: tokens.refreshToken
+    });
+  } catch (err) {
+    res.status(401);
+    next(new Error('Session expired. Please log in again.'));
+  }
+};
+
+exports.logout = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (user) {
+      user.refreshToken = undefined;
+      await user.save({ validateBeforeSave: false });
+    }
+    res.status(200).json({ success: true, data: {} });
+  } catch (err) {
+    next(err);
   }
 };

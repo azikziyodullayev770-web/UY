@@ -68,17 +68,30 @@ export default function ListingsPage() {
       )}
 
       {loading ? (
-        <p>Loading listings...</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="border p-4 rounded shadow bg-white animate-pulse">
+              <div className="w-full h-48 bg-gray-200 rounded mb-4"></div>
+              <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+              <div className="h-6 bg-gray-200 rounded w-1/4 mb-4"></div>
+            </div>
+          ))}
+        </div>
       ) : error ? (
         <p className="text-red-500">{error}</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {listings.length === 0 && <p>No listings found.</p>}
+          {listings.length === 0 && (
+            <div className="col-span-1 md:col-span-2 text-center py-10 bg-gray-50 border border-dashed rounded-lg">
+              <h3 className="text-xl font-medium text-gray-500">No house listings found</h3>
+              <p className="text-gray-400 mt-2">Be the first to create one!</p>
+            </div>
+          )}
           {listings.map((listing) => (
             <div key={listing._id} className="border p-4 rounded shadow bg-white">
               {listing.images && listing.images.length > 0 && (
                 <img 
-                  src={`http://localhost:5000${listing.images[0]}`} 
+                  src={listing.images[0].startsWith('http') ? listing.images[0] : `http://localhost:5000${listing.images[0]}`} 
                   alt={listing.title} 
                   className="w-full h-48 object-cover mb-4 rounded"
                 />

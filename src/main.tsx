@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./app/App.tsx";
 import IntegrationApp from "./app/IntegrationApp.jsx";
+import ErrorBoundary from "./app/components/ErrorBoundary.jsx";
 import "./styles/index.css";
 
 // The app always renders.
@@ -9,6 +10,8 @@ import "./styles/index.css";
 // (Original App is preserved in ./app/App.tsx)
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <IntegrationApp />
+    <ErrorBoundary>
+      <IntegrationApp />
+    </ErrorBoundary>
   </StrictMode>
 );
