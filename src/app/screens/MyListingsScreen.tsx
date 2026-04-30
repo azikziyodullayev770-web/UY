@@ -63,7 +63,7 @@ export function MyListingsScreen({ onBack, onEdit }: MyListingsScreenProps) {
         </button>
         <div>
           <h1 className="text-xl font-black text-foreground tracking-tight">{t("profile.myListings")}</h1>
-          <p className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">{myListings.length} e'lonlar</p>
+          <p className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">{myListings.length} {t("profile.listingsCount")}</p>
         </div>
       </div>
 
@@ -75,8 +75,8 @@ export function MyListingsScreen({ onBack, onEdit }: MyListingsScreenProps) {
                 <Home className="w-10 h-10 text-slate-700" />
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-black text-foreground uppercase tracking-tight">E'lonlar yo'q</h3>
-                <p className="text-sm text-slate-500 px-10">Siz hali birorta ham e'lon joylamagansiz.</p>
+                <h3 className="text-xl font-black text-foreground uppercase tracking-tight">{t("profile.noListings")}</h3>
+                <p className="text-sm text-slate-500 px-10">{t("profile.noListingsDesc")}</p>
               </div>
             </div>
           ) : (
@@ -107,7 +107,9 @@ export function MyListingsScreen({ onBack, onEdit }: MyListingsScreenProps) {
                         <div className="flex items-center justify-between">
                           <div className={`px-2 py-0.5 rounded-full flex items-center gap-1 ${getStatusColor(listing.status)}`}>
                             {getStatusIcon(listing.status)}
-                            <span className="text-[8px] font-black uppercase tracking-widest">{listing.status}</span>
+                            <span className="text-[8px] font-black uppercase tracking-widest">
+                              {t(`profile.status_${listing.status}`) || listing.status}
+                            </span>
                           </div>
                           <span className="text-[10px] text-slate-500 font-bold tracking-wider">{new Date(listing.createdAt).toLocaleDateString()}</span>
                         </div>
@@ -142,7 +144,7 @@ export function MyListingsScreen({ onBack, onEdit }: MyListingsScreenProps) {
                           onClick={() => updatePropertyStatus(listing.id, "sold")}
                           className="px-4 h-10 rounded-xl bg-black/5 dark:bg-white/5 text-muted-foreground text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all"
                         >
-                          Sotildi
+                          {t("profile.sold")}
                         </button>
                       )}
                       <button 

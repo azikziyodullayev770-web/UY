@@ -35,7 +35,10 @@
     "subtitle": "Qashqadaryo Region",
     "topListings": "TOP Listings",
     "newListings": "New Listings",
-    "searchPlaceholder": "Location or type..."
+    "searchPlaceholder": "Location or type...",
+    "newsTitle": "News and Announcements",
+    "guestDesc": "Do you want to sell or rent your house? Register now!",
+    "guestFooter": "Use all opportunities"
   },
   "search": {
     "title": "Search",
@@ -125,14 +128,53 @@
     "logout": "Log Out",
     "proAccount": "PRO Account",
     "proDesc": "Go Pro to increase your sales by 3x",
+    "proMore": "Learn More",
     "verified": "Verified",
     "status": "Status",
     "message": "Message",
     "chatPlaceholder": "Type a message...",
-    "noFavorites": "No favorites yet"
+    "noFavorites": "No favorites yet",
+    "noListings": "No Listings",
+    "noListingsDesc": "You haven't posted any listings yet.",
+    "listingsCount": "listings",
+    "sold": "Sold",
+    "status_approved": "Approved",
+    "status_active": "Active",
+    "status_pending": "Pending",
+    "status_draft": "Draft",
+    "status_rejected": "Rejected",
+    "status_sold": "Sold"
   },
   "language": {
     "title": "Select Language",
     "subtitle": "Choose your preferred language"
+  },
+  "chat": {
+    "title": "Chats",
+    "search": "Search...",
+    "noResults": "No chats found",
+    "archive": "Archive",
+    "delete": "Delete",
+    "typing": "Typing...",
+    "online": "Online",
+    "imageSent": "Image sent"
+  },
+  "notifications": {
+    "msgTitle": "New message",
+    "msgDesc": "You have a new message about your listing.",
+    "msgTime": "10 minutes ago",
+    "approvedTitle": "Listing approved",
+    "approvedDesc": "Your listing was successfully approved.",
+    "approvedTime": "2 hours ago",
+    "systemTitle": "System update",
+    "systemDesc": "New features have been added to the app.",
+    "systemTime": "1 day ago"
+  },
+  "settings": {
+    "themeMode": "Theme Mode",
+    "themeDesc": "Toggle between Light and Dark themes",
+    "wallet": "Wallet",
+    "balanceAndPayments": "Balance & Payments",
+    "paymentMethod": "Payment via Payme / Click"
   }
 }

@@ -32,6 +32,7 @@ interface ChatContextType {
   deleteConversation: (id: string) => void;
   typingConversations: Record<string, boolean>;
   markAsSeen: (id: string) => void;
+  startConversation: (participant: { id: string, name: string, photoURL?: string }, initialProperty?: any) => string;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -227,6 +228,23 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     setConversations(prev => prev.map(conv => conv.id === id ? { ...conv, isArchived: true } : conv));
   };
 
+  const startConversation = (participant: { id: string, name: string, photoURL?: string }) => {
+    const existing = conversations.find(c => c.participants.some(p => p.id === participant.id));
+    if (existing) {
+      setActiveConversation(existing.id);
+      return existing.id;
+    }
+    const newId = `conv-${Date.now()}`;
+    const newConv: Conversation = {
+      id: newId,
+      participants: [participant],
+      unreadCount: 0
+    };
+    setConversations(prev => [newConv, ...prev]);
+    setActiveConversation(newId);
+    return newId;
+  };
+
   const deleteConversation = (id: string) => {
     setConversations(prev => prev.filter(conv => conv.id !== id));
     setMessages(prev => {
@@ -253,7 +271,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       archiveConversation,
       deleteConversation,
       typingConversations,
-      markAsSeen
+      markAsSeen,
+      startConversation
     }}>
       {children}
     </ChatContext.Provider>

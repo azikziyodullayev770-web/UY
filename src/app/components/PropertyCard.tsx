@@ -1,6 +1,7 @@
 import { Heart, MapPin, Bed, Maximize, Star } from "lucide-react";
 import { motion } from "motion/react";
 import { GlassCard } from "./GlassCard";
+import { useTranslation } from "../context/LanguageContext";
 
 interface PropertyCardProps {
   id: number;
@@ -31,6 +32,7 @@ export function PropertyCard({
   onToggleFavorite,
   onClick,
 }: PropertyCardProps) {
+  const { t } = useTranslation();
   const isTopActive = isTop && (!topExpiresAt || topExpiresAt > Date.now());
   return (
     <GlassCard 
@@ -89,7 +91,7 @@ export function PropertyCard({
           </h3>
           <div className="flex items-baseline gap-1">
             <span className="text-2xl font-black text-foreground tracking-tight">{price}</span>
-            <span className="text-cyan-400 text-xs font-bold uppercase tracking-wider italic">Kelishiladi</span>
+            <span className="text-cyan-400 text-xs font-bold uppercase tracking-wider italic">{t("common.kelishiladi")}</span>
           </div>
           <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
             <MapPin className="h-3.5 w-3.5 text-cyan-500/70" />
@@ -101,16 +103,16 @@ export function PropertyCard({
           <div className="flex gap-4">
             {rooms && (
               <div className="flex flex-col">
-                <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">Xonalar</span>
+                <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">{t("common.rooms")}</span>
                 <div className="flex items-center gap-1.5">
                   <Bed className="h-4 w-4 text-foreground/60" />
-                  <span className="text-foreground font-medium">{rooms} xona</span>
+                  <span className="text-foreground font-medium">{rooms} {t("common.rooms").toLowerCase()}</span>
                 </div>
               </div>
             )}
             {size && (
               <div className="flex flex-col">
-                <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">Maydon</span>
+                <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">{t("common.size")}</span>
                 <div className="flex items-center gap-1.5">
                   <Maximize className="h-4 w-4 text-foreground/60" />
                   <span className="text-foreground font-medium">{size} m²</span>

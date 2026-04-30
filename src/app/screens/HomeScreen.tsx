@@ -80,9 +80,9 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
         {news.length > 0 && (
           <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">Yangiliklar va E'lonlar</h2>
+              <h2 className="text-[11px] font-black text-slate-500 uppercase tracking-[0.3em]">{t("home.newsTitle")}</h2>
               <div className="flex items-center gap-1 text-cyan-400 text-[10px] font-black uppercase tracking-widest">
-                Hammasi <ChevronRight className="w-3 h-3" />
+                {t("common.all")} <ChevronRight className="w-3 h-3" />
               </div>
             </div>
             
@@ -199,7 +199,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
               <div className="space-y-2 relative z-10">
                 <h3 className="text-2xl font-black text-foreground uppercase tracking-tight">{t("login.welcome")}</h3>
                 <p className="text-sm text-slate-400 max-w-xs mx-auto">
-                  O'z uyingizni sotishni yoki ijaraga berishni xohlaysizmi? Hoziroq ro'yxatdan o'ting!
+                  {t("home.guestDesc")}
                 </p>
               </div>
 
@@ -211,7 +211,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
                   {t("login.register")}
                 </button>
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">
-                  Barcha imkoniyatlardan foydalaning
+                  {t("home.guestFooter")}
                 </p>
               </div>
             </GlassCard>

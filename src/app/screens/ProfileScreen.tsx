@@ -28,9 +28,9 @@ export function ProfileScreen({ onNavigate, onLanguageChange, onLogout }: Profil
   const favoriteListings = properties.filter(p => favorites.includes(p.id));
 
   const dummyNotifications = [
-    { id: 1, title: "Yangi xabar", description: "Sizning e'loningiz bo'yicha yangi xabar keldi.", time: "10 daqiqa oldin" },
-    { id: 2, title: "E'lon tasdiqlandi", description: "Sizning e'loningiz muvaffaqiyatli tasdiqlandi.", time: "2 soat oldin" },
-    { id: 3, title: "Tizim yangilanishi", description: "Ilovada yangi xususiyatlar qo'shildi.", time: "1 kun oldin" },
+    { id: 1, title: t("notifications.msgTitle"), description: t("notifications.msgDesc"), time: t("notifications.msgTime") },
+    { id: 2, title: t("notifications.approvedTitle"), description: t("notifications.approvedDesc"), time: t("notifications.approvedTime") },
+    { id: 3, title: t("notifications.systemTitle"), description: t("notifications.systemDesc"), time: t("notifications.systemTime") },
   ];
 
   const menuItems = [
@@ -240,8 +240,8 @@ export function ProfileScreen({ onNavigate, onLanguageChange, onLogout }: Profil
               <div className="p-6 space-y-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-bold text-foreground text-sm">Theme Mode</h4>
-                    <p className="text-xs text-muted-foreground">Toggle between Light and Dark themes</p>
+                    <h4 className="font-bold text-foreground text-sm">{t("settings.themeMode")}</h4>
+                    <p className="text-xs text-muted-foreground">{t("settings.themeDesc")}</p>
                   </div>
                   <button 
                     onClick={toggleTheme}
@@ -260,15 +260,15 @@ export function ProfileScreen({ onNavigate, onLanguageChange, onLogout }: Profil
                 <div className="h-px bg-white/5" />
 
                 <div className="space-y-4">
-                  <h4 className="font-bold text-foreground text-sm">Hamyon</h4>
+                  <h4 className="font-bold text-foreground text-sm">{t("settings.wallet")}</h4>
                   <button 
                     onClick={() => handlePayment(12500)}
                     className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 shadow-xl shadow-cyan-500/20 active:scale-95 transition-all"
                   >
                     <Wallet className="w-4 h-4" />
-                    Balans va To‘lovlar
+                    {t("settings.balanceAndPayments")}
                   </button>
-                  <p className="text-[10px] text-center text-muted-foreground uppercase tracking-widest font-black">Payme / Click orqali to‘lov</p>
+                  <p className="text-[10px] text-center text-muted-foreground uppercase tracking-widest font-black">{t("settings.paymentMethod")}</p>
                 </div>
               </div>
             </motion.div>

@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "motion/react";
+﻿import { motion, AnimatePresence } from "motion/react";
 import { 
   ArrowLeft, Send, Image, MoreHorizontal, CheckCheck, 
   Search, Archive, Trash2, MoreVertical
@@ -52,8 +52,8 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
 
   const handleImageSend = () => {
     if (activeConversation) {
-      const mockImage = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c";
-      sendMessage(activeConversation, "Rasm yuborildi", mockImage);
+      const mockImage = "https://frankfurt.apollo.olxcdn.com/v1/files/1vvnyyeonws3-UZ/image;s=960x1280";
+      sendMessage(activeConversation, t("chat.imageSent"), mockImage);
     }
   };
 
@@ -70,8 +70,8 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
               <ArrowLeft className="h-5 w-5" />
             </button>
             <div>
-              <h1 className="text-2xl font-black text-foreground tracking-tight">{t("nav.chat")}</h1>
-              <p className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">{conversations.length} suhbatlar</p>
+              <h1 className="text-2xl font-black text-foreground tracking-tight">{t("chat.title")}</h1>
+              <p className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">{conversations.length} {t("chat.title").toLowerCase()}</p>
             </div>
           </div>
 
@@ -82,7 +82,7 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Qidiruv..."
+              placeholder={t("chat.search")}
               className="w-full h-12 pl-12 pr-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-foreground text-sm outline-none focus:border-cyan-500/50 transition-all"
             />
           </div>
@@ -94,7 +94,7 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
             {filteredConversations.length === 0 ? (
               <div className="h-64 flex flex-col items-center justify-center text-slate-600">
                 <Search className="w-12 h-12 mb-4 opacity-20" />
-                <p className="text-xs font-bold uppercase tracking-widest">Suhbatlar topilmadi</p>
+                <p className="text-xs font-bold uppercase tracking-widest">{t("chat.noResults")}</p>
               </div>
             ) : (
               filteredConversations.map((chat, index) => (
@@ -160,14 +160,14 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
                             className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-black/5 dark:bg-white/5 text-muted-foreground hover:text-foreground transition-all"
                           >
                             <Archive className="w-4 h-4" />
-                            <span className="text-xs font-bold uppercase tracking-wider">Arxivlash</span>
+                            <span className="text-xs font-bold uppercase tracking-wider">{t("chat.archive")}</span>
                           </button>
                           <button 
                             onClick={(e) => { e.stopPropagation(); deleteConversation(chat.id); setShowOptions(null); }}
                             className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-red-500/10 text-muted-foreground hover:text-red-500 transition-all"
                           >
                             <Trash2 className="w-4 h-4" />
-                            <span className="text-xs font-bold uppercase tracking-wider">O'chirish</span>
+                            <span className="text-xs font-bold uppercase tracking-wider">{t("chat.delete")}</span>
                           </button>
                         </motion.div>
                       )}
@@ -202,7 +202,7 @@ export function ChatScreen({ onBack }: ChatScreenProps) {
         <div className="flex-1 min-w-0">
           <h2 className="font-bold text-foreground truncate">{activeConvData?.participants[0].name}</h2>
           <p className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">
-            {activeConversation && typingConversations[activeConversation] ? "Yozmoqda..." : "Online"}
+            {activeConversation && typingConversations[activeConversation] ? t("chat.typing") : t("chat.online")}
           </p>
         </div>
         <button className="p-2 text-slate-500 hover:text-foreground">

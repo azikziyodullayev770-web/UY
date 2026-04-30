@@ -1,5 +1,0 @@
-- [x] Setup HTTP package in pubspec.yaml
-- [x] Add `imageUrls` to `Property` model
-- [x] Create `AdminModerationAIService` internally handling Gemini API mapping
-- [x] Create `AdminPropertyReviewScreen` for panel integration keeping Human-In-Loop logic
-- [x] Structure MultiModal validation logic for Image Analysis handling against Real Estate characteristics

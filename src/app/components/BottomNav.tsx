@@ -1,4 +1,4 @@
-import { Home, Search, PlusCircle, User, Heart } from "lucide-react";
+import { Home, Search, PlusCircle, User, Heart, MessageCircle } from "lucide-react";
 import { motion } from "motion/react";
 import { useTranslation } from "../context/LanguageContext";
 
@@ -13,6 +13,7 @@ export function BottomNav({ active, onNavigate }: BottomNavProps) {
   const items = [
     { id: "home", icon: Home, label: t("nav.home") },
     { id: "search", icon: Search, label: t("nav.search") },
+    { id: "chat", icon: MessageCircle, label: t("nav.chat") },
     { id: "add", icon: PlusCircle, label: t("nav.add"), special: true },
     { id: "favorites", icon: Heart, label: t("nav.favorites") },
     { id: "profile", icon: User, label: t("nav.profile") },

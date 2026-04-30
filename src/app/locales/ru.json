@@ -35,7 +35,10 @@
     "subtitle": "Кашкадарьинская область",
     "topListings": "ТОП Объявления",
     "newListings": "Новые Объявления",
-    "searchPlaceholder": "Местоположение или тип..."
+    "searchPlaceholder": "Местоположение или тип...",
+    "newsTitle": "Новости и Объявления",
+    "guestDesc": "Хотите продать или сдать свой дом? Зарегистрируйтесь сейчас!",
+    "guestFooter": "Воспользуйтесь всеми возможностями"
   },
   "search": {
     "title": "Поиск",
@@ -125,14 +128,53 @@
     "logout": "Выйти",
     "proAccount": "PRO Аккаунт",
     "proDesc": "Станьте Pro, чтобы увеличить продажи в 3 раза",
+    "proMore": "Подробнее",
     "verified": "Подтверждено",
     "status": "Статус",
     "message": "Сообщение",
     "chatPlaceholder": "Введите сообщение...",
-    "noFavorites": "Ничего не сохранено"
+    "noFavorites": "Ничего не сохранено",
+    "noListings": "Нет объявлений",
+    "noListingsDesc": "Вы еще не разместили ни одного объявления.",
+    "listingsCount": "объявлений",
+    "sold": "Продано",
+    "status_approved": "Одобрено",
+    "status_active": "Активно",
+    "status_pending": "В ожидании",
+    "status_draft": "Черновик",
+    "status_rejected": "Отклонено",
+    "status_sold": "Продано"
   },
   "language": {
     "title": "Выберите язык",
     "subtitle": "Выберите удобный для вас язык"
+  },
+  "chat": {
+    "title": "Чаты",
+    "search": "Поиск...",
+    "noResults": "Чаты не найдены",
+    "archive": "Архивировать",
+    "delete": "Удалить",
+    "typing": "Печатает...",
+    "online": "В сети",
+    "imageSent": "Фото отправлено"
+  },
+  "notifications": {
+    "msgTitle": "Новое сообщение",
+    "msgDesc": "Вы получили новое сообщение по вашему объявлению.",
+    "msgTime": "10 минут назад",
+    "approvedTitle": "Объявление одобрено",
+    "approvedDesc": "Ваше объявление успешно подтверждено.",
+    "approvedTime": "2 часа назад",
+    "systemTitle": "Обновление системы",
+    "systemDesc": "В приложение добавлены новые функции.",
+    "systemTime": "1 день назад"
+  },
+  "settings": {
+    "themeMode": "Режим темы",
+    "themeDesc": "Переключение между светлой и темной темой",
+    "wallet": "Кошелек",
+    "balanceAndPayments": "Баланс и Оплаты",
+    "paymentMethod": "Оплата через Payme / Click"
   }
 }

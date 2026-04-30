@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import { useProperties } from "../context/PropertyContext";
 import { useAuth } from "../context/AuthContext";
 import { useTranslation } from "../context/LanguageContext";
+import { useChat } from "../context/ChatContext";
 
 declare const ymaps: any;
 
@@ -19,6 +20,7 @@ interface PropertyDetailScreenProps {
 export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyDetailScreenProps) {
   const { favorites, toggleFavorite, properties } = useProperties();
   const { isAuthenticated } = useAuth();
+  const { startConversation } = useChat();
   const { t } = useTranslation();
   const [currentImage, setCurrentImage] = useState(0);
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -185,7 +187,9 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
 
         {/* Seller Profile */}
         <section className="space-y-4">
-          <h3 className="text-sm font-black text-slate-500 uppercase tracking-[0.2em]">{t("detail.seller")}</h3>
+          <h3 className="text-sm font-black text-slate-500 uppercase tracking-[0.2em]">
+            {(property.sellerTelegram?.toLowerCase()?.includes("admin") || ["superadmin", "admin", "moderator"].includes((property as any).role)) ? "Administrator" : t("detail.seller")}
+          </h3>
           <div className="flex items-center justify-between p-4 rounded-3xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 p-0.5">
@@ -196,7 +200,9 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
               <div>
                 <h4 className="font-bold text-foreground">{property.sellerName || "Premium Broker"}</h4>
                 <div className="flex flex-col gap-0.5">
-                  <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Sotuvchi</p>
+                  <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">
+                    {(property.sellerTelegram?.toLowerCase()?.includes("admin") || ["superadmin", "admin", "moderator"].includes((property as any).role)) ? "Administrator" : t("detail.seller")}
+                  </p>
                   {property.sellerTelegram && (
                     <p className="text-[10px] text-cyan-400 font-bold">@{property.sellerTelegram.replace("@", "")}</p>
                   )}
@@ -272,16 +278,17 @@ export function PropertyDetailScreen({ property, onNavigate, onBack }: PropertyD
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => {
-              if (property.sellerTelegram) {
-                window.open(`https://t.me/${property.sellerTelegram.replace("@", "")}`, "_blank");
-              } else {
-                onNavigate("chat", { uid: property.userId, displayName: property.sellerName });
-              }
+              startConversation({
+                id: property.userId || "u-new",
+                name: property.sellerName || "Sotuvchi",
+                photoURL: `https://i.pravatar.cc/150?u=${property.userId || "u-new"}`
+              });
+              onNavigate("chat");
             }}
             className="flex-[1.5] h-14 rounded-2xl bg-white text-slate-950 flex items-center justify-center gap-3 font-black uppercase tracking-widest shadow-xl shadow-white/5"
           >
             <MessageCircle className="h-5 w-5" />
-            <span>{property.sellerTelegram ? "Messenger" : t("profile.message")}</span>
+            <span>{t("nav.chat")}</span>
           </motion.button>
         </div>
       </div>

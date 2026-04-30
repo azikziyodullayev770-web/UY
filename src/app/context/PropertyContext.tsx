@@ -55,6 +55,24 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     // STRICT FILTER: Remove any properties that are not from Qashqadaryo
     parsed = parsed.filter(p => p.region === "Qashqadaryo");
 
+    // REPLACE OLD UNSPLASH IMAGES with real property images
+    const realImages = [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNXyKMzyEQPeK7o_TUyOZ19I_-2pGfvvWbTWNALvnQYw&s=10",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/nr0kqeezyxd71-UZ/image;s=1280x960",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/e98jxo36j6zs2-UZ/image;s=1280x960",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs4QCE2dxR5x4hkmmXfmKtgQBzk8QJSTWJpA&s",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/1vvnyyeonws3-UZ/image;s=960x1280"
+    ];
+    let imgIdx = 0;
+    parsed = parsed.map(p => {
+      if (p.image && p.image.includes("unsplash.com")) {
+        const newImg = realImages[imgIdx % realImages.length];
+        imgIdx++;
+        return { ...p, image: newImg, images: [newImg] };
+      }
+      return p;
+    });
+
     // FIX BROKEN IMAGE PATHS and update dummy data images in localStorage data
     parsed = parsed.map(p => {
       const dummyMatch = COMBINED_PROPERTIES.find(d => d.id === p.id);
@@ -87,8 +105,8 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
           ...p,
           title: "Kitob shahar markazida hashamatli 5 xonali hovli",
           price: "120 mln so'm",
-          image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-          images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"]
+          image: "https://frankfurt.apollo.olxcdn.com/v1/files/1vvnyyeonws3-UZ/image;s=960x1280",
+          images: ["https://frankfurt.apollo.olxcdn.com/v1/files/1vvnyyeonws3-UZ/image;s=960x1280"]
         };
       }
       if (p.price.includes("110") && (!p.title || p.title === "")) {
@@ -96,37 +114,37 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
           ...p,
           title: "Qarshi shahrida katta va keng 8 xonali hovli",
           price: "110 mln so'm",
-          image: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&fit=crop&w=800&q=80",
-          images: ["https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&fit=crop&w=800&q=80"]
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNXyKMzyEQPeK7o_TUyOZ19I_-2pGfvvWbTWNALvnQYw&s=10",
+          images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNXyKMzyEQPeK7o_TUyOZ19I_-2pGfvvWbTWNALvnQYw&s=10"]
         };
       }
 
       if (p.image && p.image.startsWith("/images/houses/")) {
         return {
           ...p,
-          image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-          images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c"]
+          image: "https://frankfurt.apollo.olxcdn.com/v1/files/nr0kqeezyxd71-UZ/image;s=1280x960",
+          images: ["https://frankfurt.apollo.olxcdn.com/v1/files/nr0kqeezyxd71-UZ/image;s=1280x960"]
         };
       }
       return p;
     });
 
-    // Final safety check: Ensure TOP listings have unique images by injecting different Unsplash IDs if duplicates are found
+    // Final safety check: Ensure TOP listings have unique images if duplicates are found
     const topImages = new Set();
-    const unsplashFallbacks = [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-      "https://images.unsplash.com/photo-1600566753190-17f0bcd2a6c4",
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0",
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9",
-      "https://images.unsplash.com/photo-1600585154542-6379b74b401c",
-      "https://images.unsplash.com/photo-1600566752355-35792bedcfea",
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde",
-      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d"
+    const fallbackImages = [
+      "https://frankfurt.apollo.olxcdn.com/v1/files/nr0kqeezyxd71-UZ/image;s=1280x960",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/e98jxo36j6zs2-UZ/image;s=1280x960",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs4QCE2dxR5x4hkmmXfmKtgQBzk8QJSTWJpA&s",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/1vvnyyeonws3-UZ/image;s=960x1280",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNXyKMzyEQPeK7o_TUyOZ19I_-2pGfvvWbTWNALvnQYw&s=10",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/nr0kqeezyxd71-UZ/image;s=1280x960",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/e98jxo36j6zs2-UZ/image;s=1280x960",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs4QCE2dxR5x4hkmmXfmKtgQBzk8QJSTWJpA&s"
     ];
 
     parsed = parsed.map(p => {
       if (p.isTop && topImages.has(p.image)) {
-        const nextImage = unsplashFallbacks.find(img => !topImages.has(img)) || p.image;
+        const nextImage = fallbackImages.find(img => !topImages.has(img)) || p.image;
         topImages.add(nextImage);
         return { ...p, image: nextImage, images: [nextImage] };
       }

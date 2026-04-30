@@ -35,7 +35,10 @@
     "subtitle": "Qashqadaryo viloyati",
     "topListings": "TOP E'lonlar",
     "newListings": "Yangi E'lonlar",
-    "searchPlaceholder": "Joylashuv yoki tur..."
+    "searchPlaceholder": "Joylashuv yoki tur...",
+    "newsTitle": "Yangiliklar va E'lonlar",
+    "guestDesc": "O'z uyingizni sotishni yoki ijaraga berishni xohlaysizmi? Hoziroq ro'yxatdan o'ting!",
+    "guestFooter": "Barcha imkoniyatlardan foydalaning"
   },
   "search": {
     "title": "Qidiruv",
@@ -145,14 +148,53 @@
     "logout": "Chiqish",
     "proAccount": "PRO Account",
     "proDesc": "Sotuvlaringizni 3x barobarga oshirish uchun Pro-ga o'ting",
+    "proMore": "Batafsil",
     "verified": "Tasdiqlangan",
     "status": "Status",
     "message": "Xabar",
     "chatPlaceholder": "Xabaringizni yozing...",
-    "noFavorites": "Hali hech narsa saqlanmagan"
+    "noFavorites": "Hali hech narsa saqlanmagan",
+    "noListings": "E'lonlar yo'q",
+    "noListingsDesc": "Siz hali birorta ham e'lon joylamagansiz.",
+    "listingsCount": "e'lonlar",
+    "sold": "Sotildi",
+    "status_approved": "Tasdiqlangan",
+    "status_active": "Faol",
+    "status_pending": "Kutilmoqda",
+    "status_draft": "Qoralama",
+    "status_rejected": "Rad etilgan",
+    "status_sold": "Sotilgan"
   },
   "language": {
     "title": "Tilni tanlang",
     "subtitle": "O'zingizga qulay tilni tanlang"
+  },
+  "chat": {
+    "title": "Suhbatlar",
+    "search": "Qidiruv...",
+    "noResults": "Suhbatlar topilmadi",
+    "archive": "Arxivlash",
+    "delete": "O'chirish",
+    "typing": "Yozmoqda...",
+    "online": "Online",
+    "imageSent": "Rasm yuborildi"
+  },
+  "notifications": {
+    "msgTitle": "Yangi xabar",
+    "msgDesc": "Sizning e'loningiz bo'yicha yangi xabar keldi.",
+    "msgTime": "10 daqiqa oldin",
+    "approvedTitle": "E'lon tasdiqlandi",
+    "approvedDesc": "Sizning e'loningiz muvaffaqiyatli tasdiqlandi.",
+    "approvedTime": "2 soat oldin",
+    "systemTitle": "Tizim yangilanishi",
+    "systemDesc": "Ilovada yangi xususiyatlar qo'shildi.",
+    "systemTime": "1 kun oldin"
+  },
+  "settings": {
+    "themeMode": "Mavzu rejimi",
+    "themeDesc": "Yorug' va Qorong'u rejimlarini almashtirish",
+    "wallet": "Hamyon",
+    "balanceAndPayments": "Balans va To'lovlar",
+    "paymentMethod": "Payme / Click orqali to'lov"
   }
 }

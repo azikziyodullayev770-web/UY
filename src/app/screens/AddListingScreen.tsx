@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "motion/react";
+﻿import { motion, AnimatePresence } from "motion/react";
 import { 
   ArrowLeft, MapPin, DollarSign, Phone, AlertCircle, Info, 
   Maximize, Bed, Star, CheckCircle2, CreditCard, Loader2, 
@@ -161,7 +161,7 @@ export function AddListingScreen({ onBack, onSubmit, editProperty }: AddListingS
     setIsProcessing(true);
     setTimeout(() => {
       const propertyData = {
-        image: formData.images[0] || "https://images.unsplash.com/photo-1663756915304-40b7eda63e41?w=1080",
+        image: formData.images[0] || "https://frankfurt.apollo.olxcdn.com/v1/files/nr0kqeezyxd71-UZ/image;s=1280x960",
         images: formData.images,
         title: formData.title,
         price: formData.currency === "USD" 
